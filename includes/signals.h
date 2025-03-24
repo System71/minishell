@@ -1,33 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/03/24 13:57:37 by prigaudi         ###   ########.fr       */
+/*   Created: 2025/03/24 11:18:34 by prigaudi          #+#    #+#             */
+/*   Updated: 2025/03/24 14:10:29 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
+# include <signal.h>
 
-int	main(int argc, char **argv, char **envp)
-{
-	char *line;
-
-	(void)argc;
-	(void)argv;
-	(void)envp;
-
-	signals();
-
-	while (1)
-	{
-		line = readline("minishell> ");
-
-		printf("%s\n", line);
-		if (!ft_strncmp(line, "exit", 5))
-			break ;
-	}
-}
+#endif

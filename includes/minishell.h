@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/03/24 13:57:37 by prigaudi         ###   ########.fr       */
+/*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
+/*   Updated: 2025/03/24 14:01:55 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
+# define _XOPEN_SOURCE 700
+# include "../libft/libft.h"
+# include "signals.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-int	main(int argc, char **argv, char **envp)
-{
-	char *line;
+// ========== SIGNALS ==========
+void	signals(void);
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-
-	signals();
-
-	while (1)
-	{
-		line = readline("minishell> ");
-
-		printf("%s\n", line);
-		if (!ft_strncmp(line, "exit", 5))
-			break ;
-	}
-}
+#endif
