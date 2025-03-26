@@ -6,7 +6,7 @@
 #    By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 13:04:53 by prigaudi          #+#    #+#              #
-#    Updated: 2025/03/24 13:31:33 by prigaudi         ###   ########.fr        #
+#    Updated: 2025/03/26 09:38:49 by prigaudi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 SRC_DIR = src
 SRC = 		$(SRC_DIR)/main.c		\
-			$(SRC_DIR)/signals.c
+			$(SRC_DIR)/signals.c	\
+			$(SRC_DIR)/builtin.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

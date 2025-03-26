@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/03/24 13:57:37 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:06:52 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,29 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell> ");
-
-		printf("%s\n", line);
-		if (!ft_strncmp(line, "exit", 5))
+		if (!line)
 			break ;
+		if (*line)
+			add_history(line);
+
+		if (!ft_strncmp(line, "exit", 4))
+		{
+			free(line);
+			break ;
+		}
+		else if (!ft_strncmp(line, "pwd", 3))
+			pwd();
+		else if (!ft_strncmp(line, "echo", 5))
+			echo(NULL, "coucou");
+		else if (!ft_strncmp(line, "env", 3))
+			env(envp);
+		else if (!ft_strncmp(line, "export", 6))
+			export(envp, "coucou=hello");
+		else
+		{
+			ft_putstr_fd(line, 2);
+			ft_putstr_fd(": command not found\n", 2);
+		}
+		free(line);
 	}
 }
