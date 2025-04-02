@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/03/26 15:06:52 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:27:01 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 		else if (!ft_strncmp(line, "env", 3))
 			env(envp);
 		else if (!ft_strncmp(line, "export", 6))
-			export(envp, "coucou=hello");
+			export(&envp, "coucou=hello");
 		else
 		{
 			ft_putstr_fd(line, 2);
