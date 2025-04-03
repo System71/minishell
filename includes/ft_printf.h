@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 11:02:24 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 09:35:35 by prigaudi         ###   ########.fr       */
+/*   Created: 2024/11/24 14:53:32 by prigaudi          #+#    #+#             */
+/*   Updated: 2024/12/02 09:07:15 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <stdarg.h>
+# include <unistd.h>
 
-// Action to Ctrl-C
-static void	sigint_act(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+int		ft_printf(const char *str, ...);
+int		ft_character(int current_value);
+int		ft_string(char *current_value);
+int		ft_pointer(unsigned long current_value);
+int		ft_decimal(int current_value);
+int		ft_base(unsigned long current_value, char type);
+size_t	ft_strlen(const char *str);
 
-void	signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint_act;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL))
-		perror("sigaction");
-}
+#endif

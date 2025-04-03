@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 11:02:24 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 09:35:35 by prigaudi         ###   ########.fr       */
+/*   Created: 2024/11/20 14:30:16 by prigaudi          #+#    #+#             */
+/*   Updated: 2024/11/20 14:48:46 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// Action to Ctrl-C
-static void	sigint_act(int signum)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint_act;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL))
-		perror("sigaction");
+	while (lst)
+	{
+		(*f)(lst->content);
+		lst = lst->next;
+	}
 }

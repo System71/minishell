@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 11:02:24 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 09:35:35 by prigaudi         ###   ########.fr       */
+/*   Created: 2024/11/18 13:34:51 by prigaudi          #+#    #+#             */
+/*   Updated: 2024/11/20 18:19:04 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// Action to Ctrl-C
-static void	sigint_act(int signum)
+void	*ft_memchr(const void *str, int c, size_t n)
 {
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	size_t			i;
+	unsigned char	*mystr;
 
-void	signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint_act;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL))
-		perror("sigaction");
+	mystr = (unsigned char *)str;
+	i = 0;
+	while (i < n)
+	{
+		if (mystr[i] == (unsigned char)c)
+			return (&mystr[i]);
+		i++;
+	}
+	return (NULL);
 }

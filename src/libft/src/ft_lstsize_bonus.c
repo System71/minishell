@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 11:02:24 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 09:35:35 by prigaudi         ###   ########.fr       */
+/*   Created: 2024/11/19 19:52:53 by prigaudi          #+#    #+#             */
+/*   Updated: 2024/11/20 14:43:48 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// Action to Ctrl-C
-static void	sigint_act(int signum)
+int	ft_lstsize(t_list *lst)
 {
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	int	counter;
 
-void	signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint_act;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL))
-		perror("sigaction");
+	counter = 0;
+	while (lst)
+	{
+		counter++;
+		lst = lst->next;
+	}
+	return (counter);
 }

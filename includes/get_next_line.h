@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 11:02:24 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 09:35:35 by prigaudi         ###   ########.fr       */
+/*   Created: 2024/12/05 13:01:49 by prigaudi          #+#    #+#             */
+/*   Updated: 2025/02/11 11:46:13 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-// Action to Ctrl-C
-static void	sigint_act(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+char	*get_next_line(int fd);
+char	*ft_strnjoin(char *s1, char *s2, int byte_nbr);
+void	*ft_memmove(void *dest, const void *src, size_t c);
+size_t	ft_strlen(const char *str);
 
-void	signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint_act;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL))
-		perror("sigaction");
-}
+#endif

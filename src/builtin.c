@@ -6,11 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/02 13:37:26 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:13:12 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 // getcwd(NULL,0) allows memory to be allocated dynamically
 void	pwd(void)
@@ -24,10 +24,10 @@ void	pwd(void)
 	ft_putstr_fd("\n", 1);
 	free(buffer);
 }
-void	echo(char *flag, char *str)
+void	echo(char **full_cmd)
 {
-	ft_putstr_fd(str, 1);
-	if (ft_strncmp(flag, "-n", 3))
+	ft_putstr_fd(full_cmd[2], 1);
+	if (ft_strncmp(full_cmd[1], "-n", 3))
 		ft_putstr_fd("\n", 1);
 }
 
@@ -39,4 +39,13 @@ void	env(char **envp)
 		ft_putstr_fd("\n", 1);
 		envp++;
 	}
+}
+
+void	cd(char *full_cmd)
+{
+	return ;
+}
+void	exit_minishell(void)
+{
+	return ;
 }

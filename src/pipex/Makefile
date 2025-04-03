@@ -6,38 +6,35 @@
 #    By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 13:04:53 by prigaudi          #+#    #+#              #
-#    Updated: 2025/04/03 11:47:16 by prigaudi         ###   ########.fr        #
+#    Updated: 2025/04/03 09:40:02 by prigaudi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
-NAME = minishell
+NAME = pipex
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I includes/
+CFLAGS = -Wall -Werror -Wextra -I ../../includes/
 
-LIBFT_DIR = ./src/libft
+LIBFT_DIR = ../libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-PIPEX_DIR = ./src/pipex
-PIPEX = $(PIPEX_DIR)/pipex
-
 SRC_DIR = src
-SRC = 		$(SRC_DIR)/main.c		\
-			$(SRC_DIR)/signals.c	\
-			$(SRC_DIR)/builtin.c	\
-			$(SRC_DIR)/export.c		\
-			$(SRC_DIR)/pipe_cmd.c
+SRC = 		$(SRC_DIR)/pipex.c						\
+			$(SRC_DIR)/children.c					\
+			$(SRC_DIR)/heredoc.c					\
+			$(SRC_DIR)/utils.c						\
+			$(SRC_DIR)/cmd.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all: make_libft make_pipex $(NAME)
+all: make_libft $(NAME)
 
-$(NAME): $(LIBFT) $(PIPEX) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) -lreadline
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c includes/minishell.h Makefile | $(OBJ_DIR) 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ../../includes/pipex.h Makefile | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
@@ -46,11 +43,10 @@ $(OBJ_DIR):
 make_libft:
 	make -C $(LIBFT_DIR) --no-print-directory
 
-make_pipex :
-	make -C $(PIPEX_DIR) --no-print-directory
-
 clean:
-	find . -name $(OBJ_DIR) -type d -exec rm -rf {} +
+	find . -name "*.o" -type f -delete
+	find . -type d -empty -delete
 fclean: clean
+	find . -name "*.a" -type f -delete
 	rm -f $(NAME)
 re: fclean all

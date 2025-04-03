@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 11:02:24 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 09:35:35 by prigaudi         ###   ########.fr       */
+/*   Created: 2024/11/07 14:46:28 by prigaudi          #+#    #+#             */
+/*   Updated: 2024/11/20 18:30:42 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-// Action to Ctrl-C
-static void	sigint_act(int signum)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	char	*str;
+	int		i;
 
-void	signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint_act;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL))
-		perror("sigaction");
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (*s1 != '\0')
+	{
+		str[i] = *s1;
+		s1++;
+		i++;
+	}
+	while (*s2 != '\0')
+	{
+		str[i] = *s2;
+		s2++;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

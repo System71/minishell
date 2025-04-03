@@ -6,45 +6,56 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/02 14:03:06 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:10:14 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	get_len_env(char **envp)
-{
-	int	len;
-
-	len = 0;
-	while (*envp)
-	{
-		len++;
-		envp++;
-	}
-	return (len);
-}
-
-void	export(char ***envp, char *str)
 {
 	char	**temp;
 	int		len;
 
-	len = get_len_env(envp);
+	temp = envp;
+	len = 0;
+	while (*temp)
+	{
+		len++;
+		temp++;
+	}
+	return (len);
+}
+// A REVOIR ENTIEREMENT AVEC LES NOUVEAUX ARGUMENTS EN LISTE CHAINEE
+void	export(char ***envp, char **full_cmd)
+{
+	char	**temp;
+	char	**backup;
+	int		len;
+	int		i;
+
+	len = get_len_env(*envp);
+	temp = *envp;
 	*envp = malloc(sizeof(char *) * (len + 2));
 	if (!envp)
 	{
 		perror("malloc envp");
-		free(temp);
 		exit(EXIT_FAILURE);
 	}
-	temp = *envp;
+	backup = *envp;
+	i = 0;
 	while (*temp)
 	{
 		**envp = strdup(*temp);
+		printf("%s\n", **envp);
+		(**envp)++;
 		temp++;
-		(*envp)++;
 	}
-	**envp = strdup(str);
-	*envp = temp;
+	**envp = strdup(*full_cmd);
+	*envp = backup;
+}
+
+void	unset(char **envp, char **full_cmd)
+{
+	return ;
 }
