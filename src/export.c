@@ -6,13 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 14:10:14 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:18:30 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_len_env(char **envp)
+static int	get_len_env(char **envp)
 {
 	char	**temp;
 	int		len;
@@ -27,7 +27,7 @@ int	get_len_env(char **envp)
 	return (len);
 }
 // A REVOIR ENTIEREMENT AVEC LES NOUVEAUX ARGUMENTS EN LISTE CHAINEE
-void	export(char ***envp, char **full_cmd)
+int	export(char ***envp, char **full_cmd)
 {
 	char	**temp;
 	char	**backup;
@@ -53,9 +53,10 @@ void	export(char ***envp, char **full_cmd)
 	}
 	**envp = strdup(*full_cmd);
 	*envp = backup;
+	return (1);
 }
 
-void	unset(char **envp, char **full_cmd)
+int	unset(char **envp, char **full_cmd)
 {
-	return ;
+	return (1);
 }

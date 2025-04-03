@@ -6,7 +6,7 @@
 #    By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 13:04:53 by prigaudi          #+#    #+#              #
-#    Updated: 2025/04/03 11:47:16 by prigaudi         ###   ########.fr        #
+#    Updated: 2025/04/03 17:29:33 by prigaudi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,14 @@ PIPEX_DIR = ./src/pipex
 PIPEX = $(PIPEX_DIR)/pipex
 
 SRC_DIR = src
-SRC = 		$(SRC_DIR)/main.c		\
-			$(SRC_DIR)/signals.c	\
-			$(SRC_DIR)/builtin.c	\
-			$(SRC_DIR)/export.c		\
-			$(SRC_DIR)/pipe_cmd.c
+SRC = 		$(SRC_DIR)/main.c			\
+			$(SRC_DIR)/signals.c		\
+			$(SRC_DIR)/builtin.c		\
+			$(SRC_DIR)/export.c			\
+			$(SRC_DIR)/pipe_cmd.c		\
+			$(SRC_DIR)/non_built.c		\
+			$(SRC_DIR)/cmd_process.c	\
+			$(SRC_DIR)/utils.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

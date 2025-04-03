@@ -6,14 +6,14 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 14:13:12 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:18:01 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // getcwd(NULL,0) allows memory to be allocated dynamically
-void	pwd(void)
+int	pwd(void)
 {
 	char	*buffer;
 
@@ -23,15 +23,17 @@ void	pwd(void)
 	ft_putstr_fd(buffer, 1);
 	ft_putstr_fd("\n", 1);
 	free(buffer);
+	return (1);
 }
-void	echo(char **full_cmd)
+int	echo(char **full_cmd)
 {
 	ft_putstr_fd(full_cmd[2], 1);
 	if (ft_strncmp(full_cmd[1], "-n", 3))
 		ft_putstr_fd("\n", 1);
+	return (1);
 }
 
-void	env(char **envp)
+int	env(char **envp)
 {
 	while (*envp)
 	{
@@ -39,13 +41,14 @@ void	env(char **envp)
 		ft_putstr_fd("\n", 1);
 		envp++;
 	}
+	return (1);
 }
 
-void	cd(char *full_cmd)
+int	cd(char *full_cmd)
 {
-	return ;
+	return (1);
 }
-void	exit_minishell(void)
+int	exit_minishell(void)
 {
-	return ;
+	return (1);
 }

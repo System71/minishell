@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 14:14:22 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:30:50 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,24 @@ typedef struct s_command
 void					signals(void);
 
 // ========== BUILTIN ==========
-void					pwd(void);
-void					echo(char **argv);
-void					env(char **envp);
-void					cd(char *full_cmd);
-void					exit_minishell(void);
+int						pwd(void);
+int						echo(char **argv);
+int						env(char **envp);
+int						cd(char *full_cmd);
+int						exit_minishell(void);
 
 // ========== EXPORT ==========
-void					export(char ***envp, char *str);
-void					unset(char **envp, char **full_cmd);
+int						export(char ***envp, char *str);
+int						unset(char **envp, char **full_cmd);
 
-// ========== CMD ==========
+// ========== CMD PROCESS ==========
+int						cmd_process(t_command *cmd, char **envp);
 void					child(t_command *cmds, int pipefd[2], char **envp);
+
+// ========== CMD NOT BUILT ==========
+int						cmd_not_built(char **envp, char **full_cmd);
+
+// ========== UTILS ==========
+int						exit_failure(char **message);
 
 #endif
