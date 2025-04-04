@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 11:19:14 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/01 14:27:53 by okientzl         ###   ########.fr       */
+/*   Created: 2025/04/02 19:47:53 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/03 14:47:56 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,13 @@ t_token_type get_token_type(const char *str)
     return T_WORD;
 }
 
-t_token *create_empty_token_list(void)
-{
-    return NULL;
-}
 
 int is_special_char(char c)
 {
     return (c == '|' || c == '<' || c == '>' || c == '$');
 }
 
-t_token *add_token(t_token *list, const char *content)
+t_token *add_token(t_token *list, char *content)
 {
     t_token *new_token = malloc(sizeof(t_token));
     if (!new_token)
@@ -56,14 +52,14 @@ t_token *add_token(t_token *list, const char *content)
     return list;
 }
 
-void flush_buffer(char *buffer, int *buf_index, t_token **tokens)
+void flush_buffer(t_utils_lexer *storage, t_token **tokens)
 {
-    if (*buf_index > 0)
+    if (storage->buf_index > 0)
     {
-        buffer[*buf_index] = '\0';
-        *tokens = add_token(*tokens, buffer);
-        *buf_index = 0;
-        memset(buffer, 0, BUFFER_SIZE);
+        storage->buffer[storage->buf_index] = '\0';
+        *tokens = add_token(*tokens,storage->buffer);
+        storage->buf_index = 0;
+        memset(storage->buffer, 0, BUFFER_SIZE);
     }
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 11:20:22 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/01 13:04:34 by okientzl         ###   ########.fr       */
+/*   Created: 2025/04/02 19:46:53 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/03 14:52:27 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mini.h"
@@ -18,69 +18,39 @@
 ** NORMAL, SINGLE_QUOTE et DOUBLE_QUOTE. Le contenu est stocké dans un buffer
 ** et "flusher" dès qu'un séparateur (espace ou caractère spécial) est rencontré.
 */
+
+// Gerer les $ en envoyer string, ou var_env;
+void	init_utils_lexer(t_utils_lexer *storage)
+{
+	storage->state = LEXER_NORMAL;
+	storage->buf_index = 0;
+    memset(storage->buffer, 0, BUFFER_SIZE);
+	storage->spl_quote_open = false;
+	storage->dbl_quote_open = false;
+	storage->i = 0;	
+}
+
 t_token *lexer(const char *input)
 {
-    t_token *tokens = create_empty_token_list();
-    t_lexer_state state = LEXER_NORMAL;
-    char buffer[BUFFER_SIZE];
-    int buf_index = 0;
-    
-    memset(buffer, 0, BUFFER_SIZE);
-    
-    for (int i = 0; input[i] != '\0'; i++)
+    t_token			*tokens;
+	t_utils_lexer	storage;
+
+	tokens = NULL;
+	init_utils_lexer(&storage);
+     while (input[storage.i] != '\0')
     {
-        char c = input[i];
+        storage.c = input[storage.i];
         
-        if (state == LEXER_NORMAL)
+        if (storage.state == LEXER_NORMAL)
         {
-            if (isspace(c))
-            {
-                flush_buffer(buffer, &buf_index, &tokens);
-            }
-            else if (c == '\'')
-            {
-                state = LEXER_SINGLE_QUOTE;
-            }
-            else if (c == '\"')
-            {
-                state = LEXER_DOUBLE_QUOTE;
-            }
-            else if (is_special_char(c))
-            {
-                flush_buffer(buffer, &buf_index, &tokens);
-                // Vérifie si le caractère spécial peut être doublé (>> ou <<)
-                if ((c == '>' || c == '<') && input[i + 1] != '\0' && input[i + 1] == c)
-                {
-                    char dbl[3] = { c, c, '\0' };
-                    tokens = add_token(tokens, dbl);
-                    i++; // On saute le prochain caractère.
-                }
-                else
-                {
-                    char single[2] = { c, '\0' };
-                    tokens = add_token(tokens, single);
-                }
-            }
-            else
-            {
-                buffer[buf_index++] = c;
-            }
+			process_normal_char(&storage, input, &tokens);
         }
-        else if (state == LEXER_SINGLE_QUOTE)
-        {
-            if (c == '\'')
-                state = LEXER_NORMAL;
-            else
-                buffer[buf_index++] = c;
+        else
+		{
+			process_quote_char(&storage);
         }
-        else if (state == LEXER_DOUBLE_QUOTE)
-        {
-            if (c == '\"')
-                state = LEXER_NORMAL;
-            else
-                buffer[buf_index++] = c;
-        }
+		storage.i++;
     }
-    flush_buffer(buffer, &buf_index, &tokens);
+    flush_buffer(&storage, &tokens);
     return tokens;
 }

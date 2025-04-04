@@ -3,51 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 11:19:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/01 13:04:57 by okientzl         ###   ########.fr       */
+/*   Created: 2025/04/02 19:47:06 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/03 18:11:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini.h"
 
-void process_normal_char(char c, const char *input, int *i, t_lexer_state *state,
-                         char *buffer, int *buf_index, t_token **tokens)
+void process_normal_char(t_utils_lexer *storage, const char *input, t_token **tokens)
 {
-    if (isspace(c))
-        flush_buffer(buffer, buf_index, tokens);
-    else if (c == '\'')
-        *state = LEXER_SINGLE_QUOTE;
-    else if (c == '\"')
-        *state = LEXER_DOUBLE_QUOTE;
-    else if (is_special_char(c))
-    {
-        flush_buffer(buffer, buf_index, tokens);
-        // Vérifie si le caractère spécial est doublé
-        if ((c == '>' || c == '<') && input[*i + 1] && input[*i + 1] == c)
-        {
-            char dbl[3] = { c, c, '\0' };
-            *tokens = add_token(*tokens, dbl);
-            (*i)++;
-        }
-        else
-        {
-            char single[2] = { c, '\0' };
-            *tokens = add_token(*tokens, single);
-        }
-    }
-    else
-        buffer[(*buf_index)++] = c;
+
+            if (isspace(storage->c))
+            {
+                flush_buffer(storage, tokens);
+            }
+            else if (storage->c == '\'')
+            {
+                storage->state = LEXER_SINGLE_QUOTE;
+				storage->spl_quote_open = true;
+            }
+            else if (storage->c == '\"')
+            {
+                storage->state = LEXER_DOUBLE_QUOTE;
+				storage->dbl_quote_open = true;
+            }
+            else if (is_special_char(storage->c))
+            {
+                flush_buffer(storage, tokens);
+                // Vérifie si le caractère spécial peut être doublé (>> ou <<)
+                if ((storage->c == '>' || storage->c == '<') &&
+					input[storage->i + 1] != '\0' && input[storage->i + 1] == storage->c)
+                {
+                    char dbl[3] = { storage->c, storage->c, '\0' };
+                    *tokens = add_token(*tokens, dbl);
+                    storage->i++; // On saute le prochain caractère.
+                }
+                else
+                {
+                    char single[2] = { storage->c, '\0' };
+                    *tokens = add_token(*tokens, single);
+                }
+            }
+            else
+            {
+                storage->buffer[storage->buf_index++] = storage->c;
+            }
+
 }
 
-void process_quote_char(char c, t_lexer_state *state, char *buffer, int *buf_index)
+void process_quote_char(t_utils_lexer *storage)
 {
-    if ((*state == LEXER_SINGLE_QUOTE && c == '\'') ||
-        (*state == LEXER_DOUBLE_QUOTE && c == '\"'))
+    if (storage->state == LEXER_SINGLE_QUOTE && storage->c == '\'')
     {
-        *state = LEXER_NORMAL;
+		if (storage->spl_quote_open == true)
+        	storage->state = LEXER_NORMAL;
     }
+	else	if (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"')
+	{
+		if (storage->dbl_quote_open == true)
+        	storage->state = LEXER_NORMAL;
+	}
     else
-        buffer[(*buf_index)++] = c;
+        storage->buffer[(storage->buf_index)++] = storage->c;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commande.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 13:56:54 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/01 14:18:24 by okientzl         ###   ########.fr       */
+/*   Created: 2025/04/02 19:46:34 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/02 19:46:34 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_command *create_command(void)
     return cmd;
 }
 
-void add_argument(t_command *cmd, const char *arg)
+void add_argument(t_command *cmd, t_token *token, t_token_type type)
 {
     if (!cmd)
         return;
@@ -34,7 +34,8 @@ void add_argument(t_command *cmd, const char *arg)
     if (!new_argv)
         return;
     cmd->argv = new_argv;
-    cmd->argv[cmd->argc] = strdup(arg);
+	cmd->type = type;
+    cmd->argv[cmd->argc] = strdup(token->content);
     cmd->argc++;
     cmd->argv[cmd->argc] = NULL;
 }
@@ -42,9 +43,10 @@ void add_argument(t_command *cmd, const char *arg)
 void print_commands(t_command *cmd_list)
 {
     int cmd_index = 1;
+	printf("Listes des commandes :\n");
     for (t_command *cmd = cmd_list; cmd; cmd = cmd->next)
     {
-        printf("Commande %d:\n", cmd_index);
+        printf("Commande %d: types: %s:\n", cmd_index, token_type_to_string(cmd->type));
         for (int i = 0; i < cmd->argc; i++)
         {
             printf("  argv[%d] = %s\n", i, cmd->argv[i]);
