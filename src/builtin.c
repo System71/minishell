@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 17:18:01 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:07:33 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,33 @@ int	pwd(void)
 	ft_putstr_fd(buffer, 1);
 	ft_putstr_fd("\n", 1);
 	free(buffer);
-	return (1);
+	return (0);
 }
 int	echo(char **full_cmd)
 {
 	ft_putstr_fd(full_cmd[2], 1);
 	if (ft_strncmp(full_cmd[1], "-n", 3))
 		ft_putstr_fd("\n", 1);
-	return (1);
+	return (0);
 }
 
-int	env(char **envp)
+int	env(char ***my_env)
 {
-	while (*envp)
+	while (**my_env)
 	{
-		ft_putstr_fd(*envp, 1);
+		ft_putstr_fd(**my_env, 1);
 		ft_putstr_fd("\n", 1);
-		envp++;
+		(*my_env)++;
 	}
-	return (1);
+	return (0);
 }
 
-int	cd(char *full_cmd)
+int	cd(char **full_cmd)
 {
-	return (1);
+	(void)full_cmd;
+	return (0);
 }
 int	exit_minishell(void)
 {
-	return (1);
+	return (0);
 }

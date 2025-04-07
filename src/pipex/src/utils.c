@@ -6,11 +6,38 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:27:20 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 17:23:25 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:24:04 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	**get_paths(char **envp)
+{
+	char	**paths;
+	char	*substr;
+	char	*extracted_path;
+
+	while (*envp)
+	{
+		substr = ft_substr(*envp, 0, 5);
+		if (!substr)
+			return (NULL);
+		if (ft_strncmp(substr, "PATH=", 5) == 0)
+		{
+			extracted_path = ft_substr(*envp, 5, ft_strlen(*envp));
+			free(substr);
+			break ;
+		}
+		free(substr);
+		envp++;
+	}
+	paths = ft_split(extracted_path, ':');
+	if (!paths)
+		return (NULL);
+	free(extracted_path);
+	return (paths);
+}
 
 void	error_failure(char *arg, char *message)
 {
@@ -43,7 +70,6 @@ void	free_split(char **split)
 	}
 	free(split);
 }
-
 
 void	free_child_struct(t_child child)
 {

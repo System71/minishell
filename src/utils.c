@@ -6,12 +6,59 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 17:30:32 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:36:06 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	exit_failure(char **message)
+#include "minishell.h"
+
+char	**env_cpy(char **envp)
+{
+	char	**cpy;
+	int		envp_len;
+	int		i;
+
+	envp_len = 0;
+	while (envp[envp_len])
+		envp_len++;
+	cpy = malloc(sizeof(char *) * (envp_len + 1));
+	if (!cpy)
+		return (NULL);
+	i = 0;
+	while (i < envp_len)
+	{
+		cpy[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	cpy[i] = NULL;
+	return (cpy);
+}
+
+void	free_split(char **split)
+{
+	char	**temp;
+
+	temp = split;
+	while (*temp)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(split);
+}
+
+int	exit_failure(char *message)
 {
 	perror(message);
 	return (0);
+}
+
+void	free_all(char **paths, char **full_cmd, char *end_path)
+{
+	if (paths)
+		free_split(paths);
+	if (full_cmd)
+		free_split(full_cmd);
+	if (end_path)
+		free(end_path);
 }

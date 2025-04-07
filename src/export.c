@@ -6,57 +6,62 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 17:18:30 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:07:44 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_len_env(char **envp)
+static int	get_len_env(char **my_env)
 {
-	char	**temp;
-	int		len;
+	int	len;
 
-	temp = envp;
 	len = 0;
-	while (*temp)
-	{
+	while (my_env[len])
 		len++;
-		temp++;
-	}
 	return (len);
 }
 // A REVOIR ENTIEREMENT AVEC LES NOUVEAUX ARGUMENTS EN LISTE CHAINEE
-int	export(char ***envp, char **full_cmd)
+// On passe l'adresse de **my_env pour pouvoir le modifier
+int	export(char ***my_env, char **full_cmd)
 {
 	char	**temp;
-	char	**backup;
 	int		len;
 	int		i;
 
-	len = get_len_env(*envp);
-	temp = *envp;
-	*envp = malloc(sizeof(char *) * (len + 2));
-	if (!envp)
+	temp = *my_env;
+	len = get_len_env(*my_env);
+	*my_env = malloc(sizeof(char *) * (len + 2));
+	if (!*my_env)
 	{
 		perror("malloc envp");
 		exit(EXIT_FAILURE);
 	}
-	backup = *envp;
 	i = 0;
-	while (*temp)
+	while (i < len)
 	{
-		**envp = strdup(*temp);
-		printf("%s\n", **envp);
-		(**envp)++;
-		temp++;
+		(*my_env)[i] = strdup(temp[i]);
+		i++;
 	}
-	**envp = strdup(*full_cmd);
-	*envp = backup;
-	return (1);
+	(*my_env)[i++] = strdup(full_cmd[1]);
+	(*my_env)[i] = NULL;
+	return (0);
 }
 
-int	unset(char **envp, char **full_cmd)
+int	unset(char ***my_env, char **full_cmd)
 {
-	return (1);
+	int	i;
+
+	(void)my_env;
+	(void)full_cmd;
+	i = 0;
+	while ((*my_env)[i])
+	{
+		if (!ft_strncmp(full_cmd[1], (my_env)[i], ft_strlen(full_cmd[1])))
+		{
+			break ;
+		}
+		i++;
+	}
+	return (0);
 }

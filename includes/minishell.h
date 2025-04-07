@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/03 17:30:50 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:23:35 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,25 @@ void					signals(void);
 // ========== BUILTIN ==========
 int						pwd(void);
 int						echo(char **argv);
-int						env(char **envp);
-int						cd(char *full_cmd);
+int						env(char ***my_env);
+int						cd(char **full_cmd);
 int						exit_minishell(void);
 
 // ========== EXPORT ==========
-int						export(char ***envp, char *str);
-int						unset(char **envp, char **full_cmd);
+int						export(char ***my_env, char **full_cmd);
+int						unset(char ***my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
-int						cmd_process(t_command *cmd, char **envp);
+int						cmd_process(t_command *cmd, char ***my_env);
 void					child(t_command *cmds, int pipefd[2], char **envp);
 
 // ========== CMD NOT BUILT ==========
-int						cmd_not_built(char **envp, char **full_cmd);
+int						cmd_not_built(char ***envp, char **full_cmd);
 
 // ========== UTILS ==========
-int						exit_failure(char **message);
+int						exit_failure(char *message);
+void					free_all(char **paths, char **full_cmd, char *end_path);
+void					free_split(char **split);
+char					**env_cpy(char **envp);
 
 #endif
