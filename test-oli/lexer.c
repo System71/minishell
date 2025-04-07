@@ -27,7 +27,9 @@ void	init_utils_lexer(t_utils_lexer *storage)
     memset(storage->buffer, 0, BUFFER_SIZE);
 	storage->spl_quote_open = false;
 	storage->dbl_quote_open = false;
-	storage->i = 0;	
+	storage->i = 0;
+    storage->current_quote = QUOTE_NONE;
+
 }
 
 t_token *lexer(const char *input)

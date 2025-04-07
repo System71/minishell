@@ -34,13 +34,14 @@ int is_special_char(char c)
     return (c == '|' || c == '<' || c == '>' || c == '$');
 }
 
-t_token *add_token(t_token *list, char *content)
+t_token *add_token(t_token *list, char *content, t_quote_type quote)
 {
     t_token *new_token = malloc(sizeof(t_token));
     if (!new_token)
         return list; // En cas d'erreur, retourne la liste existante.
     new_token->type = get_token_type(content);
     new_token->content = strdup(content);
+	new_token->quote = quote;
     new_token->next = NULL;
     
     if (!list)
@@ -57,9 +58,11 @@ void flush_buffer(t_utils_lexer *storage, t_token **tokens)
     if (storage->buf_index > 0)
     {
         storage->buffer[storage->buf_index] = '\0';
-        *tokens = add_token(*tokens,storage->buffer);
+        *tokens = add_token(*tokens,storage->buffer,storage->current_quote);
         storage->buf_index = 0;
         memset(storage->buffer, 0, BUFFER_SIZE);
+        storage->current_quote = QUOTE_NONE;
+
     }
 }
 

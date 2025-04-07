@@ -23,11 +23,13 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
             {
                 storage->state = LEXER_SINGLE_QUOTE;
 				storage->spl_quote_open = true;
+		        storage->current_quote = QUOTE_SINGLE;
             }
             else if (storage->c == '\"')
             {
                 storage->state = LEXER_DOUBLE_QUOTE;
 				storage->dbl_quote_open = true;
+		        storage->current_quote = QUOTE_DOUBLE;
             }
             else if (is_special_char(storage->c))
             {
@@ -37,13 +39,13 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 					input[storage->i + 1] != '\0' && input[storage->i + 1] == storage->c)
                 {
                     char dbl[3] = { storage->c, storage->c, '\0' };
-                    *tokens = add_token(*tokens, dbl);
+                    *tokens = add_token(*tokens, dbl, storage->current_quote);
                     storage->i++; // On saute le prochain caractère.
                 }
                 else
                 {
                     char single[2] = { storage->c, '\0' };
-                    *tokens = add_token(*tokens, single);
+                    *tokens = add_token(*tokens, single, storage->current_quote);
                 }
             }
             else

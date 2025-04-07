@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/03 20:11:58 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:59:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,20 @@ t_command *parser(t_token *tokens)
 			// Le token suivant est supposé contenir le délimiteur.
 			if (tokens->next && tokens->next->type == T_WORD)
 			{
-				char *delimiter = tokens->next->content;
-				char *here_doc_content = read_here_doc(delimiter);
+				tokens = tokens->next;
+				char *here_doc_content = read_here_doc(tokens->content);
 				// Par exemple, tu peux stocker ici_doc_content dans current_cmd
 				// ou créer un token spécifique pour le contenu du here_doc.
+
+				tokens->content = strdup(here_doc_content);
 				add_argument(current_cmd, tokens, T_HEREDOC); // ou un nouveau type, par exemple T_HEREDOC_CONTENT
 				// Ici, tu pourrais par exemple remplacer le contenu du token T_HEREDOC :
-				free(tokens->content);
-				tokens->content = here_doc_content;
+
 
 				// Passe le token du délimiteur pour ne pas le traiter à nouveau
 				tokens = tokens->next;
+				current_cmd->next = create_command();
+    			current_cmd = current_cmd->next;
 			}
 			else
 		{
