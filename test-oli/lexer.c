@@ -9,24 +9,14 @@
 /*   Updated: 2025/04/03 14:52:27 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "mini.h"
-
-/*
-** Implémentation du lexer
-**
-** Le lexer parcourt l'entrée caractère par caractère en gérant trois états :
-** NORMAL, SINGLE_QUOTE et DOUBLE_QUOTE. Le contenu est stocké dans un buffer
-** et "flusher" dès qu'un séparateur (espace ou caractère spécial) est rencontré.
-*/
+#include "lexer.h"
 
 // Gerer les $ en envoyer string, ou var_env;
 void	init_utils_lexer(t_utils_lexer *storage)
 {
 	storage->state = LEXER_NORMAL;
 	storage->buf_index = 0;
-    memset(storage->buffer, 0, BUFFER_SIZE);
-	storage->spl_quote_open = false;
-	storage->dbl_quote_open = false;
+    storage->buffer = init_dynamic_buffer();
 	storage->i = 0;
     storage->current_quote = QUOTE_NONE;
 

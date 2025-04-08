@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/04 12:59:48 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:10:08 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_command *parser(t_token *tokens)
 			head = create_command();
 			current_cmd = head;
 		}
-		if (tokens->type == T_HEREDOC)
+		else if (tokens->type == T_HEREDOC)
 		{
 			// Le token suivant est supposé contenir le délimiteur.
 			if (tokens->next && tokens->next->type == T_WORD)
@@ -54,23 +54,23 @@ t_command *parser(t_token *tokens)
 				printf("Erreur : here_doc sans délimiteur.\n");
 			}
 		}
-		if (tokens->type == T_WORD ||
+		else if (tokens->type == T_WORD ||
 			tokens->type == T_SINGLE_QUOTE ||
 			tokens->type == T_DOUBLE_QUOTE )
 		{
 			/*printf("HERE\n");*/
-
+//			if (tokens->content == echo) gerer differement
 			add_argument(current_cmd, tokens, tokens->type);
 		}
-		if (tokens->type == T_PIPE)
+		else if (tokens->type == T_PIPE)
 		{
 			manage_pipe(&tokens, &current_cmd);
 		}
-		if (tokens->type == T_REDIRECT_IN)
+		else if (tokens->type == T_REDIRECT_IN)
 		{
 			manage_redirect_in(&tokens, &current_cmd);
 		}
-		if (tokens->type == T_REDIRECT_OUT )
+		else if (tokens->type == T_REDIRECT_OUT )
 		{
 			manage_redirect_out(&tokens, &current_cmd);
 		}
@@ -91,9 +91,9 @@ void	manage_pipe(t_token **tokens, t_command **current_cmd)
 		return;
 	}
 	*tokens = (*tokens)->next;	
-	add_argument(*current_cmd, *tokens, T_PIPE);
 	(*current_cmd)->next = create_command();
     *current_cmd = (*current_cmd)->next;
+	add_argument(*current_cmd, *tokens, T_PIPE);
 }
 void	manage_redirect_in(t_token **tokens, t_command **current_cmd)
 {
@@ -109,7 +109,12 @@ void	manage_redirect_in(t_token **tokens, t_command **current_cmd)
 	}
 	*tokens = (*tokens)->next;
 	add_argument(*current_cmd, *tokens, T_REDIRECT_IN);
-
+    if ((*tokens)->next != NULL)
+    {
+		printf("WOW\n");
+        (*current_cmd)->next = create_command();
+        *current_cmd = (*current_cmd)->next;
+    }	
 }
 void	manage_redirect_out(t_token **tokens, t_command **current_cmd)
 {
@@ -125,7 +130,11 @@ void	manage_redirect_out(t_token **tokens, t_command **current_cmd)
 	}
 	*tokens = (*tokens)->next;
 	add_argument(*current_cmd, *tokens, T_REDIRECT_OUT);
-
+	if ((*tokens)->next != NULL)
+    {
+        (*current_cmd)->next = create_command();
+        *current_cmd = (*current_cmd)->next;
+    }
 }
 
 char *ft_strjoin(const char *s1, const char *s2) {
