@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:15 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/07 12:46:33 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:07:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int main(void)
         fprintf(stderr, "Aucun token généré.\n");
         return EXIT_FAILURE;
     }
-
-    // Affichage des tokens (debug)
+		/*printf("Before group\n");*/
+    /*print_tokens(tokens);*/
+	tokens = group_tokens(tokens);
+		printf("\nAfter group\n");
     print_tokens(tokens);
     // À condition d'avoir une fonction print_tokens(...) ou similaire
     // print_tokens(tokens);

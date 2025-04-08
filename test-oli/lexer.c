@@ -44,5 +44,9 @@ t_token *lexer(const char *input)
 		storage.i++;
     }
     flush_buffer(&storage, &tokens);
+	if (storage.state != LEXER_NORMAL)
+	{
+		printf("Error quote ! \n");
+	}
     return tokens;
 }

@@ -43,7 +43,7 @@ void print_tokens(t_token *tokens)
     printf("Liste des tokens générés:\n");
     for (t_token *tmp = tokens; tmp != NULL; tmp = tmp->next)
     {
-        printf("Type: %d (%s), Contenu: %s\n",
-               tmp->type, token_type_to_string(tmp->type), tmp->content);
+        printf("Type: %d(%s), Quote: %s, Merg: %d, Contenu: \"%s\" \n",
+               tmp->type, token_type_to_string(tmp->type), token_quote_to_string(tmp->quote),tmp->mergeable, tmp->content);
     }
 }

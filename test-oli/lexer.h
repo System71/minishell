@@ -39,6 +39,7 @@ typedef struct s_token {
     t_token_type   type;
     char          *content;
 	t_quote_type  quote;
+	bool          mergeable;
     struct s_token *next;
 } t_token;
 
@@ -57,27 +58,26 @@ typedef struct s_utils_lexer{
     t_quote_type		current_quote;
 } t_utils_lexer;
 
-int				is_special_char(char c);
-t_token *add_token(t_token **list, const char *content, t_quote_type quote);
-void			flush_buffer(t_utils_lexer *storage, t_token **tokens);
-t_token_type	get_token_type(const char *str);
-
-void			print_tokens(t_token *tokens);
+t_token_type		get_token_type(const char *str);
+void				print_tokens(t_token *tokens);
 
 // LEXER
-
-
-t_token *lexer(const char *input);
-
+t_token				*lexer(const char *input);
 
 // LEXER UTILS
-void			process_normal_char(t_utils_lexer *storage, const char *input, t_token **tokens);
-void			process_quote_char(t_utils_lexer *storage);
+void				process_normal_char(t_utils_lexer *storage, const char *input, t_token **tokens);
+void				process_quote_char(t_utils_lexer *storage);
+int					is_special_char(char c);
+t_token				*add_token(t_token **list, const char *content, t_quote_type quote, bool mergeable);
+void				flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable);
 
 // DYNAMIC_BUFFER
-t_dynamic_buffer *init_dynamic_buffer(void);
-int append_char(t_dynamic_buffer *buf, char c);
-void free_dynamic_buffer(t_dynamic_buffer *buf);
+t_dynamic_buffer	*init_dynamic_buffer(void);
+int					append_char(t_dynamic_buffer *buf, char c);
+void				free_dynamic_buffer(t_dynamic_buffer *buf);
+
+// GROUP_TOKENS
+t_token				*group_tokens(t_token *tokens);
 
 #endif
 

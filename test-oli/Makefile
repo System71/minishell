@@ -12,6 +12,7 @@ SRC = commande.c \
       lexer.c \
       parser.c \
       lexer_utils.c \
+	  group_tokens.c \
       token.c \
       main.c	\
 	  buffer_dynamic.c

@@ -55,8 +55,8 @@ t_command *parser(t_token *tokens)
 			}
 		}
 		else if (tokens->type == T_WORD ||
-			tokens->type == T_SINGLE_QUOTE ||
-			tokens->type == T_DOUBLE_QUOTE )
+			tokens->type == LEXER_SINGLE_QUOTE ||
+			tokens->type == LEXER_DOUBLE_QUOTE )
 		{
 			/*printf("HERE\n");*/
 //			if (tokens->content == echo) gerer differement
