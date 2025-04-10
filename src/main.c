@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/07 18:08:56 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:59:43 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(int argc, char **argv, char **envp)
 	t_command	*current;
 	char		**my_env;
 	char		*line;
-	int			cmd_result;
 
 	(void)argc;
 	(void)argv;
@@ -64,8 +63,10 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (*line)
 			add_history(line);
+		// PROVISOIRE
+		if (!ft_strncmp(line, "exit", 5))
+			return (0);
 		cmd_list = init_test_list(line);
-		printf("cmd=%s\n", cmd_list->argv[0]);
 		head = cmd_list;
 		current = head;
 		// !!!! ATTENTION OBlIGATION DE CREE UN FORK POUR POUVOIR EXECUTER LA COMMANDE SANS QUITTER MNISHELL !!!!
@@ -74,28 +75,11 @@ int	main(int argc, char **argv, char **envp)
 		// Il faudra free la liste chainée
 		while (current)
 		{
-			cmd_result = cmd_process(current, &my_env);
-			if (cmd_result == 1 && current->next == NULL)
-			{
-				// free(line);
-				break ;
-				// return (1);
-			}
-			else if (cmd_result == -1 || (cmd_result == 0
-					&& current->next == NULL))
-			{
-				// free(line);
-				break ;
-				// return (0);
-			}
-			else if (cmd_result == 127 && current->next == NULL)
-			{
-				// free(line);
-				break ;
-				// return (127);
-			}
-			else
-				current = current->next;
+			current->pid = fork();
+			if (!current->next && current->pid == 0)
+				cmd_process(current, &my_env);
+			waitpid(current->pid, current->status, 0);
+			current = current->next;
 		}
 		free(line);
 	}

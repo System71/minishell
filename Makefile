@@ -6,7 +6,7 @@
 #    By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 13:04:53 by prigaudi          #+#    #+#              #
-#    Updated: 2025/04/07 14:41:31 by prigaudi         ###   ########.fr        #
+#    Updated: 2025/04/10 11:28:15 by prigaudi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,10 @@ SRC_DIR = src
 SRC = 		$(SRC_DIR)/main.c			\
 			$(SRC_DIR)/signals.c		\
 			$(SRC_DIR)/builtin.c		\
-			$(SRC_DIR)/export.c			\
+			$(SRC_DIR)/change_env.c		\
 			$(SRC_DIR)/non_built.c		\
 			$(SRC_DIR)/cmd_process.c	\
+			$(SRC_DIR)/cd.c				\
 			$(SRC_DIR)/utils.c
 
 OBJ_DIR = obj

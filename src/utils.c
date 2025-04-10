@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/07 17:36:06 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:41:47 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	free_split(char **split)
 
 int	exit_failure(char *message)
 {
-	perror(message);
-	return (0);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(message, 2);
+	return (1);
 }
 
 void	free_all(char **paths, char **full_cmd, char *end_path)
