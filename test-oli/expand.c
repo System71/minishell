@@ -9,9 +9,15 @@
 /*   Updated: 2025/04/08 11:54:08 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "lexer.h"
 
 char *expand_variables(const char *input, t_quote_type quote)
 {
+	size_t	i;
+	size_t	k;
+
+	k = 0;
+	i = 0;
     // Si le token est entre quotes simples, on retourne simplement une copie
     if (quote == QUOTE_SINGLE)
         return strdup(input);
@@ -28,8 +34,10 @@ char *expand_variables(const char *input, t_quote_type quote)
     if (!result)
         return NULL;
 
-    for (size_t i = 0; input[i] != '\0'; i++) {
-        if (input[i] == '$') {
+    while (input[i] != '\0')
+	{
+        if (input[i] == '$')
+		{
             // On identifie la variable : on suppose ici qu'elle est constituée de lettres, chiffres et '_'
             size_t j = i + 1;
             while (isalnum(input[j]) || input[j] == '_')
@@ -39,16 +47,21 @@ char *expand_variables(const char *input, t_quote_type quote)
             char *var_value = getenv(var_name);
             free(var_name);
             // Si la variable n'existe pas, on peut la remplacer par une chaîne vide.
-            if (var_value) {
-                for (size_t k = 0; var_value[k] != '\0'; k++) {
+            if (var_value)
+			{
+                while (var_value[k] != '\0')
+				{
                     append_char(result, var_value[k]);
+					k++;
                 }
             }
             // On saute le nom de variable
             i = j - 1;
-        } else {
+        } else
+		{
             append_char(result, input[i]);
         }
+	i++;
     }
     char *expanded = strdup(result->data);
     free_dynamic_buffer(result);

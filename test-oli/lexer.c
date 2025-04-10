@@ -29,7 +29,7 @@ t_token *lexer(const char *input)
 
 	tokens = NULL;
 	init_utils_lexer(&storage);
-     while (input[storage.i] != '\0')
+    while (input[storage.i] != '\0')
     {
         storage.c = input[storage.i];
         
@@ -43,7 +43,7 @@ t_token *lexer(const char *input)
         }
 		storage.i++;
     }
-    flush_buffer(&storage, &tokens);
+    flush_buffer(&storage, &tokens, false);//WARNING FALSE maybe TRUE
 	if (storage.state != LEXER_NORMAL)
 	{
 		printf("Error quote ! \n");

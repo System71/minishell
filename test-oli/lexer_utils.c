@@ -32,20 +32,21 @@ int is_special_char(char c)
 
 t_token *add_token(t_token **list, const char *content, t_quote_type quote, bool mergeable)
 {
-    t_token *new_token = malloc(sizeof(t_token));
-    if (!new_token)
-        return *list;  // Gérer l'erreur autrement si besoin
+    t_token	*new_token;
 
+	new_token = malloc(sizeof(t_token));
+    if (!new_token)
+        return (NULL);  // Warning error manage
     new_token->type = get_token_type(content);
-    new_token->content = strdup(content);
-    if (!new_token->content) {
+    new_token->content = strdup(content); // ft_strdup replace
+    if (!new_token->content)
+	{
         free(new_token);
-        return *list;  // Gérer l'erreur
+        return (NULL);   // Warning error manage
     }
     new_token->quote = quote;
     new_token->mergeable = mergeable;
     new_token->next = NULL;
-    
     if (!*list)
     {
         *list = new_token;

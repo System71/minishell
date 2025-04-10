@@ -24,8 +24,8 @@ t_token *group_tokens(t_token *tokens)
             char *new_content = malloc(len1 + len2 + 1);
             if (!new_content)
             {
-                fprintf(stderr, "Error: allocation failed in group_tokens\n");
-                exit(EXIT_FAILURE);
+                printf(stderr, "Error: allocation failed in group_tokens\n"); //maybe replace fonction printf
+                return (NULL);
             }
             strcpy(new_content, current->content);
             strcat(new_content, current->next->content);
@@ -44,5 +44,5 @@ t_token *group_tokens(t_token *tokens)
             current = current->next;
         }
     }
-    return tokens;
+    return (tokens);
 }

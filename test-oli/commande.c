@@ -17,7 +17,9 @@
 
 t_command *create_command(void)
 {
-	t_command *cmd = malloc(sizeof(t_command));
+	t_command	*cmd;
+
+	cmd = malloc(sizeof(t_command));
 	if (!cmd)
 		return NULL;
 	/*cmd->type = T_UNDEFINED;*/
@@ -29,9 +31,10 @@ t_command *create_command(void)
 
 void add_argument(t_command *cmd, t_token *token, t_token_type type)
 {
+	char	**new_argv;
     if (!cmd)
         return;
-    char **new_argv = realloc(cmd->argv, sizeof(char *) * (cmd->argc + 2));
+    new_argv = realloc(cmd->argv, sizeof(char *) * (cmd->argc + 2));
     if (!new_argv)
         return;
     cmd->argv = new_argv;
@@ -40,7 +43,7 @@ void add_argument(t_command *cmd, t_token *token, t_token_type type)
 		cmd->type = type;
 	}
 	cmd->quote = token->quote;
-    cmd->argv[cmd->argc] = strdup(token->content);
+    cmd->argv[cmd->argc] = strdup(token->content);//ft_strdup +securisation
     cmd->argc++;
     cmd->argv[cmd->argc] = NULL;
 }

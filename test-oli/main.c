@@ -6,11 +6,11 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:15 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/08 14:07:26 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:41:56 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+/*#include "mini.h"*/
 #include "lexer.h"
 
 int main(void)
@@ -37,13 +37,14 @@ int main(void)
         fprintf(stderr, "Aucun token généré.\n");
         return EXIT_FAILURE;
     }
-		/*printf("Before group\n");*/
-    /*print_tokens(tokens);*/
-	tokens = group_tokens(tokens);
-		printf("\nAfter group\n");
+	printf("Before group\n");
     print_tokens(tokens);
-    // À condition d'avoir une fonction print_tokens(...) ou similaire
-    // print_tokens(tokens);
+	tokens = group_tokens(tokens);
+	printf("\nAfter group\n");
+    print_tokens(tokens);
+    
+	//	Here_doc et $EXPAND
+	
 
     // Parser minimal
     /*t_command *cmd_list = parser(tokens);*/
