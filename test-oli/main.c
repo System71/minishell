@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:15 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/10 11:41:56 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:17:44 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,35 @@ int main(void)
         fprintf(stderr, "Aucun token généré.\n");
         return EXIT_FAILURE;
     }
+		printf("################################################\n");
+		printf("################################################\n");
 	printf("Before group\n");
     print_tokens(tokens);
-	tokens = group_tokens(tokens);
-	printf("\nAfter group\n");
-    print_tokens(tokens);
+
+	// Group_token
+	/*tokens = group_tokens(tokens);*/
+	/*	printf("################################################\n");*/
+	/*	printf("################################################\n");*/
+	/*printf("\nAfter group\n");*/
+	/*   print_tokens(tokens);*/
     
-	//	Here_doc et $EXPAND
-	
+	//	Here_doc
+	/*if (heredoc_handle(tokens) == -1)*/
+	/*		printf("Error Heredoc exit !");*/
+	/*else*/
+	/*{*/
+	/*	printf("################################################\n");*/
+	/*	printf("################################################\n");*/
+	/*	printf("Here_doc\n");*/
+	/*	print_tokens(tokens);*/
+	/*}*/
+
+	// $$$$$$$$$$$$$
+	/*expand_handle(tokens);*/
+	/*	printf("################################################\n");*/
+	/*	printf("################################################\n");*/
+	/*	printf("Expand\n");*/
+	/*	print_tokens(tokens);*/
 
     // Parser minimal
     /*t_command *cmd_list = parser(tokens);*/

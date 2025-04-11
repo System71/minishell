@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/07 14:30:44 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:44:18 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,24 @@ const char *token_type_to_string(t_token_type type)
     }
 }
 
+
+/* Fonction de débogage : affiche la liste des tokens et leurs segments */
 void print_tokens(t_token *tokens)
 {
-    printf("Liste des tokens générés:\n");
-    for (t_token *tmp = tokens; tmp != NULL; tmp = tmp->next)
+    int token_num = 1;
+    while (tokens)
     {
-        printf("Type: %d(%s), Quote: %s, Merg: %d, Contenu: \"%s\" \n",
-               tmp->type, token_type_to_string(tmp->type), token_quote_to_string(tmp->quote),tmp->mergeable, tmp->content);
+        printf("Token %d: Type: %d\n", token_num, tokens->type);
+        t_token_segment *seg = tokens->segments;
+        int seg_num = 1;
+        while (seg)
+        {
+            printf("  Segment %d: Quote: %d, Content: \"%s\"\n",
+                   seg_num, seg->quote, seg->content);
+            seg = seg->next;
+            seg_num++;
+        }
+        tokens = tokens->next;
+        token_num++;
     }
 }

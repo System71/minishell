@@ -14,6 +14,7 @@ SRC = commande.c \
       lexer_utils.c \
 	  group_tokens.c \
       token.c \
+	  heredoc_handle.c	\
       main.c	\
 	  buffer_dynamic.c
 

@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:25:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/08 13:56:58 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/11 08:27:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
@@ -24,7 +24,7 @@ t_token *group_tokens(t_token *tokens)
             char *new_content = malloc(len1 + len2 + 1);
             if (!new_content)
             {
-                printf(stderr, "Error: allocation failed in group_tokens\n"); //maybe replace fonction printf
+                printf("Error: allocation failed in group_tokens\n"); //maybe replace fonction printf
                 return (NULL);
             }
             strcpy(new_content, current->content);
