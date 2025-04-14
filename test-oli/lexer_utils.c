@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/14 12:30:06 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:13:15 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int is_special_char(char c)
 
 /* --- Structures de segments --- */
 /* Crée un segment de token */
-static t_token_segment *create_segment(const char *content, t_quote_type quote)
+t_token_segment *create_segment(const char *content, t_quote_type quote)
 {
     t_token_segment *seg = malloc(sizeof(t_token_segment));
     if (!seg)
@@ -140,15 +140,12 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	}
 	else if (storage->c == '\'')
 	{
-		/* Avant d'entrer en mode quote simple,
-		   on vide le buffer en indiquant que le segment précédent peut être fusionné */
 		if (storage->new_arg == true)
 			flush_buffer(storage, tokens, false);
 		else
 			flush_buffer(storage, tokens, true);
 		storage->state = LEXER_SINGLE_QUOTE;
 		storage->current_quote = QUOTE_SINGLE;
-		storage->new_arg = false;
 	}
 	else if (storage->c == '\"')
 	{
@@ -156,9 +153,9 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 			flush_buffer(storage, tokens, false);
 		else
 			flush_buffer(storage, tokens, true);
+
 		storage->state = LEXER_DOUBLE_QUOTE;
 		storage->current_quote = QUOTE_DOUBLE;
-		storage->new_arg = false;
 	}
 	else if (is_special_char(storage->c))
 	{
@@ -202,14 +199,19 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	}
 }
 
-void process_quote_char(t_utils_lexer *storage)
+void process_quote_char(t_utils_lexer *storage, t_token **tokens)
 {
     /* Si le caractère courant correspond à la quote fermante,
        on termine le mode quote */
     if ((storage->state == LEXER_SINGLE_QUOTE && storage->c == '\'') ||
         (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"'))
     {
+		if (storage->new_arg == true)
+			flush_buffer(storage, tokens, false);
+		else
+			flush_buffer(storage, tokens, true);
         storage->state = LEXER_NORMAL;
+		storage->new_arg = false;
     }
     else
     {

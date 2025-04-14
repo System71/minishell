@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:15 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/11 12:17:44 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:53:01 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int main(void)
     print_tokens(tokens);
 
 	// Group_token
-	/*tokens = group_tokens(tokens);*/
-	/*	printf("################################################\n");*/
-	/*	printf("################################################\n");*/
-	/*printf("\nAfter group\n");*/
-	/*   print_tokens(tokens);*/
+	tokens = group_tokens(tokens);
+		printf("################################################\n");
+		printf("################################################\n");
+	printf("\nAfter group\n");
+	   print_tokens(tokens);
     
 	//	Here_doc
 	/*if (heredoc_handle(tokens) == -1)*/

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "parser.h"
 
 void	manage_redirect_in(t_token **tokens, t_command **current_cmd);
 void	manage_pipe(t_token **tokens, t_command **current_cmd);

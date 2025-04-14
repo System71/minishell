@@ -6,11 +6,11 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/14 08:10:26 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:00:05 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "lexer.h"
 
 const char *token_quote_to_string(t_quote_type quote)
 {
@@ -32,7 +32,6 @@ const char *token_type_to_string(t_token_type type)
         case T_APPEND:        return "Append";
         case T_HEREDOC:       return "Heredoc";
         case T_PIPE:          return "Pipe";
-        case T_DOLLAR:        return "Dollar";
 
         default:              return "UNKNOWN";
     }

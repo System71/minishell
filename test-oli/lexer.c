@@ -38,7 +38,7 @@ t_token *lexer(const char *input)
 		}
 		else
 	{
-			process_quote_char(&storage);
+			process_quote_char(&storage, &tokens);
 		}
 		storage.i++;
 	}

@@ -9,9 +9,8 @@ CFLAGS = -Wall -Wextra -Werror -g
 HEADER = mini.h lexer.h
 
 SRC = lexer.c \
-       \
       lexer_utils.c \
-	  \
+	  group_tokens.c\
       token.c \
 	  	\
       main.c	\
