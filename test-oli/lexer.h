@@ -52,14 +52,6 @@ typedef struct s_token {
     struct s_token *next;       // Token suivant dans la liste globale
 } t_token;
 
-/*typedef struct s_token {*/
-/*    t_token_type   type;*/
-/*    char          *content;*/
-/*	t_quote_type  quote;*/
-/*	bool          mergeable;*/
-/*    struct s_token *next;*/
-/*} t_token;*/
-
 typedef enum e_lexer_state {
     LEXER_NORMAL,
     LEXER_SINGLE_QUOTE,
@@ -72,6 +64,7 @@ typedef struct s_utils_lexer{
 	char				c;
 	t_dynamic_buffer	*buffer;
     t_quote_type		current_quote;
+	bool				new_arg;
 } t_utils_lexer;
 
 t_token_type		get_token_type(const char *str);

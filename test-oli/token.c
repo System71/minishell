@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/11 13:44:18 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/14 08:10:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ const char *token_quote_to_string(t_quote_type quote)
 {
 	switch (quote)
 	{
-		case QUOTE_NONE:	  return "QUOTE_NONE";
-		case QUOTE_SINGLE:	  return "QUOTE_SINGLE";
-		case QUOTE_DOUBLE:	  return "QUOTE_DOUBLE";
+		case QUOTE_NONE:	  return "None";
+		case QUOTE_SINGLE:	  return "Single";
+		case QUOTE_DOUBLE:	  return "Double";
 	}
 }
 
@@ -26,13 +26,13 @@ const char *token_type_to_string(t_token_type type)
 {
     switch (type)
     {
-        case T_WORD:          return "T_WORD";
-        case T_REDIRECT_IN:   return "T_REDIRECT_IN";
-        case T_REDIRECT_OUT:  return "T_REDIRECT_OUT";
-        case T_APPEND:        return "T_APPEND";
-        case T_HEREDOC:       return "T_HEREDOC";
-        case T_PIPE:          return "T_PIPE";
-        case T_DOLLAR:        return "T_DOLLAR";
+        case T_WORD:          return "Word";
+        case T_REDIRECT_IN:   return "Redirect_In";
+        case T_REDIRECT_OUT:  return "Redirect_Out";
+        case T_APPEND:        return "Append";
+        case T_HEREDOC:       return "Heredoc";
+        case T_PIPE:          return "Pipe";
+        case T_DOLLAR:        return "Dollar";
 
         default:              return "UNKNOWN";
     }
@@ -45,16 +45,18 @@ void print_tokens(t_token *tokens)
     int token_num = 1;
     while (tokens)
     {
-        printf("Token %d: Type: %d\n", token_num, tokens->type);
+		printf("----------------------------------------------------------------------\n");
+        printf("Token %d: Type: %s\n", token_num, token_type_to_string(tokens->type));
         t_token_segment *seg = tokens->segments;
         int seg_num = 1;
         while (seg)
         {
-            printf("  Segment %d: Quote: %d, Content: \"%s\"\n",
-                   seg_num, seg->quote, seg->content);
+            printf("  Segment %d| Quote: %s, Content: \"%s\"\n",
+                   seg_num, token_quote_to_string(seg->quote), seg->content);
             seg = seg->next;
             seg_num++;
         }
+		printf("----------------------------------------------------------------------\n");
         tokens = tokens->next;
         token_num++;
     }

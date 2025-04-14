@@ -4,17 +4,16 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 HEADER = mini.h lexer.h
 
-SRC = commande.c \
-      lexer.c \
-      parser.c \
+SRC = lexer.c \
+       \
       lexer_utils.c \
-	  group_tokens.c \
+	  \
       token.c \
-	  heredoc_handle.c	\
+	  	\
       main.c	\
 	  buffer_dynamic.c
 
