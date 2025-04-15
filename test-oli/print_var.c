@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   print_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -58,5 +58,56 @@ void print_tokens(t_token *tokens)
 		printf("----------------------------------------------------------------------\n");
         tokens = tokens->next;
         token_num++;
+    }
+}
+
+// Fonction helper pour obtenir une chaîne correspondant au type de redirection
+static const char *get_redir_type_str(int type) {
+    switch (type) {
+        case T_REDIRECT_IN:
+            return "REDIRECT_IN (<)";
+        case T_REDIRECT_OUT:
+            return "REDIRECT_OUT (>)";
+        case T_APPEND:
+            return "APPEND (>>)";
+        case T_HEREDOC:
+            return "HEREDOC (<<)";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+// Fonction d'affichage des commandes
+void print_commands(t_command *cmd_list)
+{
+    int cmd_index = 0;
+    while (cmd_list) {
+        printf("Commande #%d:\n", cmd_index);
+        
+        // Affichage des arguments
+        if (cmd_list->args) {
+            printf("  Arguments:\n");
+            for (int i = 0; cmd_list->args[i] != NULL; i++) {
+                printf("    [%d] %s\n", i, cmd_list->args[i]);
+            }
+        } else {
+            printf("  (Aucun argument)\n");
+        }
+        
+        // Affichage des redirections
+        if (cmd_list->redirs) {
+            printf("  Redirections:\n");
+            t_redirection *redir = cmd_list->redirs;
+            while (redir) {
+                printf("    Type: %s, Cible: %s\n", get_redir_type_str(redir->type), redir->target);
+                redir = redir->next;
+            }
+        } else {
+            printf("  (Aucune redirection)\n");
+        }
+        
+        printf("\n");  // Séparation entre commandes
+        cmd_list = cmd_list->next;
+        cmd_index++;
     }
 }

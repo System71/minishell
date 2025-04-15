@@ -6,15 +6,18 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-HEADER = mini.h lexer.h
+HEADER = type.h lexer.h parser.h
 
-SRC = lexer.c \
-      lexer_utils.c \
-	  group_tokens.c\
-      token.c \
-	  	\
-      main.c	\
-	  buffer_dynamic.c
+SRC = lexer.c 					\
+      lexer_utils.c 			\
+	  buffer_dynamic.c			\
+	  group_tokens.c			\
+	  heredoc_handle.c			\
+	  expand.c					\
+	  parser.c					\
+	  generate_temp_filename.c	\
+      print_var.c	 			\
+      main.c			
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

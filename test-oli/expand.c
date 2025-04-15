@@ -9,107 +9,103 @@
 /*   Updated: 2025/04/11 09:54:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "lexer.h"
+#include "types.h"
 
+// On suppose que last_exit_code est une variable mise à jour après chaque commande.
+int last_exit_code = 0;
+
+// Fonction d'aide pour concaténer dynamiquement une chaîne.
+static void append_str(char **dest, const char *src)
+{
+	size_t old_len = *dest ? strlen(*dest) : 0;
+	size_t src_len = strlen(src);
+	char *new_str = realloc(*dest, old_len + src_len + 1);
+	if (!new_str)
+	{
+		free(*dest);
+		exit(EXIT_FAILURE);
+	}
+	memcpy(new_str + old_len, src, src_len);
+	new_str[old_len + src_len] = '\0';
+	*dest = new_str;
+}
+
+// Fonction qui effectue l'expansion d'une chaîne selon le type de quote.
+// Si quote == QUOTE_SINGLE, on ne fait aucune expansion.
 char *check_expand(const char *input, t_quote_type quote)
 {
-	size_t i;
-	size_t k;
-	
-	i = 0;
-	k = 0;
-	// Si le token est entre quotes simples, on ne fait aucune expansion.
-    if (quote == QUOTE_SINGLE)
-        return strdup(input);
+	// Si on est dans des quotes simples, renvoyer une copie de la chaîne.
+	if (quote == QUOTE_SINGLE)
+		return strdup(input);
+	char *result = NULL;
+	size_t i = 0;
+	while (input[i]) {
+		// Si on détecte un '$'
+		if (input[i] == '$') {
+			// Cas spécial $? : on remplace par le code de sortie de la dernière commande.
+			if (input[i + 1] == '?') {
+				char buffer[32];
+				snprintf(buffer, sizeof(buffer), "%d", last_exit_code);
+				append_str(&result, buffer);
+				i += 2; // on saute $ et ?
+				continue;
+			}
+			// Cas d'une variable d'environnement (nom composé de lettres, chiffres ou _).
+			else if ( (isalpha(input[i + 1]) || input[i + 1] == '_') )
+			{
+				size_t var_start = i + 1;
+				size_t var_len = 0;
+				while (input[var_start + var_len] &&
+					(isalnum(input[var_start + var_len]) || input[var_start + var_len] == '_'))
+				{
+					var_len++;
+				}
+				char *var_name = strndup(input + var_start, var_len);
+				char *var_value = getenv(var_name);
+				free(var_name);
+				// Si la variable n'existe pas, on insère une chaîne vide.
+				if (var_value)
+					append_str(&result, var_value);
+				else
+					append_str(&result, "");
+				i += 1 + var_len;
+				continue;
+			}
+			// Sinon, ce n'est pas une expansion valide, on ajoute simplement le '$'
+			else {
+				append_str(&result, "$");
+				i++;
+				continue;
+			}
+		}
+		else {
+			// On ajoute le caractère courant au résultat.
+			char tmp[2] = { input[i], '\0' };
+			append_str(&result, tmp);
+			i++;
+		}
+	}
+	// Retourne la chaîne construite.
+	return result;
 
-    t_dynamic_buffer *result = init_dynamic_buffer();
-    if (!result)
-        return NULL;
-
-    // Parcours de l'entrée caractère par caractère
-    while (input[i] != '\0')
-    {
-        // Si on rencontre le signe '$', tenter d'identifier une variable
-        if (input[i] == '$')
-        {
-            size_t j = i + 1;
-
-            // Ici, tu peux ajouter des cas spéciaux ($$, $?, etc.) si nécessaire.
-            // Pour l'instant, on suppose que seule une variable d'environnement est concernée.
-            while (isalnum(input[j]) || input[j] == '_')
-                j++;
-            
-            // S'il n'y a pas de variable (ex. "$ " ou "$,") on traite '$' comme caractère normal.
-            if (j == i + 1)
-            {
-                append_char(result, input[i]);
-                continue;
-            }
-
-            // Extraction du nom de la variable
-            size_t var_len = j - (i + 1);
-            char *var_name = strndup(input + i + 1, var_len);
-            if (!var_name)
-            {
-                free_dynamic_buffer(result);
-                return NULL;
-            }
-
-            // Recherche de la valeur dans l'environnement
-            char *var_value = getenv(var_name);
-            free(var_name);
-
-            // Si la variable existe, on copie sa valeur dans le buffer
-            if (var_value)
-            {
-                while (var_value[k] != '\0')
-                {
-                    if (!append_char(result, var_value[k]))
-                    {
-                        free_dynamic_buffer(result);
-                        return NULL;
-                    }
-					k++;
-                }
-            }
-            // Sinon, on remplace par une chaîne vide (i.e. rien)
-
-            // Mettre à jour l'indice pour sauter le nom de la variable déjà traité
-            i = j - 1; 
-        }
-        else
-        {
-            // Caractère normal : on l'ajoute au buffer
-            if (!append_char(result, input[i]))
-            {
-                free_dynamic_buffer(result);
-                return NULL;
-            }
-        }
-		i++;
-    }
-    // On duplique le contenu final du buffer
-    char *expanded = strdup(result->data);
-    free_dynamic_buffer(result);
-    return expanded;
 }
 
 
 void expand_handle(t_token *tokens)
 {
-    while (tokens)
-    {
-        if (tokens->type == T_WORD &&
-            (tokens->quote == QUOTE_DOUBLE || tokens->quote == QUOTE_NONE))
-        {
-            char *expanded = check_expand(tokens->content, tokens->quote);
-            if (expanded)
-            {
-                free(tokens->content);
-                tokens->content = expanded;
-            }
-        }
-        tokens = tokens->next;
-    }
+	t_token *curr = tokens;
+	while (curr)
+	{
+		t_token_segment *seg = curr->segments;
+		while (seg)
+		{
+			// Remplacer le contenu du segment par le contenu expansé.
+	 		char *expanded = check_expand(seg->content, seg->quote);
+			free(seg->content);
+			seg->content = expanded;
+			seg = seg->next;
+		}
+		curr = curr->next;
+	}
 }
 

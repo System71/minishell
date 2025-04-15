@@ -6,107 +6,69 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:56:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/11 08:50:31 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:45:52 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "types.h"
 
-char *read_here_doc(const char *delimiter);
+// Fonction d'aide pour concaténer une ligne lue (avec ajout d'un '\n') à un buffer existant.
+static char *append_line(char *dest, const char *line)
+{
+	size_t old_len = dest ? strlen(dest) : 0;
+	size_t line_len = strlen(line);
+	// On ajoute 1 pour le '\n' et 1 pour le '\0'
+	size_t new_len = old_len + line_len + 2;
+	char *new_str = realloc(dest, new_len);
+	if (!new_str)
+	{
+		free(dest);
+		return NULL;
+	}
+	// Copier la nouvelle ligne à la suite
+	memcpy(new_str + old_len, line, line_len);
+	new_str[old_len + line_len] = '\n';
+	// Ajout du saut de ligne
+	new_str[old_len + line_len + 1] = '\0';
+	return new_str;
+}
 
+// Fonction de gestion du heredoc.
+// Parcourt la liste des tokens et, pour chaque token de type T_HEREDOC,
+// lit les lignes jusqu'au délimiteur et remplace le contenu du token par le contenu du heredoc.
 int heredoc_handle(t_token *tokens)
 {
-    char *here_doc_content;
-    t_token *delim;
-
-    // Parcours la liste des tokens
-    while (tokens)
-    {
-        // Si on rencontre un token here_doc (qui contient l'opérateur <<)
-        if (tokens->type == T_HEREDOC)
-        {
-            // Le token suivant doit être le délimiteur
-            delim = tokens->next;
-            if (delim && delim->type == T_WORD)
-            {
-                // Conserver l'information du type de quote du délimiteur
-                tokens->quote = delim->quote;
-
-                // Lire le contenu du here_doc jusqu'au délimiteur
-                here_doc_content = read_here_doc(delim->content);
-                if (!here_doc_content)
-                {
-                    fprintf(stderr, "Error: here_doc reading failed\n");
-                    return (-1);
-                }
-
-                // Supprimer le token délimiteur de la chaîne
-                // Pour cela, on lie le here_doc token au token qui suit le délimiteur
-                tokens->next = delim->next;
-                
-                // Libérer le token délimiteur (et son contenu)
-                free(delim->content);
-                free(delim);
-
-                // Remplacer le contenu du token here_doc par le contenu recueilli
-                if (tokens->content)
-                    free(tokens->content);
-                tokens->content = strdup(here_doc_content);
-                if (!tokens->content)
-                {
-                    printf("Error: allocation failed for here_doc content\n");
-                    free(here_doc_content);
-                    return (-1);
-                }
-                free(here_doc_content);
-            }
-            else
-            {
-                // Si aucun délimiteur n'est trouvé, signaler une erreur
-                printf("Error: here_doc without delimiter.\n");
-                return (-1);
-            }
-        }
-        // Passer au token suivant dans la chaîne
-        tokens = tokens->next;
-    }
-    return (0);
-}
-char *ft_strjoin(const char *s1, const char *s2) {
-	size_t len1 = strlen(s1), len2 = strlen(s2);
-	char *res = malloc(len1 + len2 + 1);
-	if (!res) return NULL;
-	memcpy(res, s1, len1);
-	memcpy(res + len1, s2, len2);
-	res[len1 + len2] = '\0';
-	return res;
-}
-
-char *read_here_doc(const char *delimiter)
-{
-	char *line;
-	char *here_content = strdup(""); // contenu initial vide
-	char *tmp;
-
-	if (!here_content)
-		return NULL;
-
-	while (1)
+	t_token *curr = tokens;
+	while (curr)
 	{
-		line = readline("heredoc> ");
-		if (!line || strcmp(line, delimiter) == 0)
+		if (curr->type == T_HEREDOC)
 		{
-			free(line);
-			break;
+			// On suppose que le premier segment du token contient le délimiteur.
+			char *delimiter = curr->segments->content;
+			/*int quote = curr->segments->quote;*/
+			// On garde cette information pour l'expansion.
+			char *heredoc_content = NULL;
+			char *line = NULL;
+			// Affichage du prompt heredoc. On peut choisir le prompt voulu (ici "> ")
+			while ((line = readline("> ")) != NULL)//ET SIGNAUX
+			{
+				// Comparaison stricte : si la ligne saisie correspond exactement au délimiteur, on arrête.
+				if (strcmp(line, delimiter) == 0)
+				{
+					free(line);
+					break;
+				}
+				heredoc_content = append_line(heredoc_content, line);
+				free(line);
+			}
+			// Remplacer le contenu du premier segment par le contenu du heredoc
+			free(curr->segments->content);
+			// Si heredoc_content est NULL, on le remplace par une chaîne vide pour éviter un problème.
+			curr->segments->content = heredoc_content ? heredoc_content : strdup("");
+			// Le champ 'quote' reste inchangé afin qu'à l'étape d'expansion on puisse savoir
+			// si le contenu doit être expansé (exemple : avec ou sans expansion des variables).
 		}
-		// On concatène la ligne et un retour à la ligne
-		tmp = here_content;
-		here_content = ft_strjoin(here_content, line);
-		free(tmp);
-		tmp = here_content;
-		here_content = ft_strjoin(here_content, "\n");
-		free(tmp);
-		free(line);
+		curr = curr->next;
 	}
-	return here_content;
+	return 0;
 }
