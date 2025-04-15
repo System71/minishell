@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:29:09 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/07 10:23:44 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/15 09:18:51 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	cmd_launcher(char **envp, char *cmd)
 	full_cmd = ft_split(cmd, ' ');
 	if (!full_cmd)
 		error_failure("Error malloc : ", "full_cmd");
+	execve(full_cmd[0], full_cmd, envp);
 	end_path = ft_strjoin("/", full_cmd[0]);
 	if (!end_path)
 		error_failure("Error malloc : ", "end_path");

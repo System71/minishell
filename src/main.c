@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/10 16:59:43 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/15 09:19:29 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static t_command	*init_test_list(char *line)
 // VOIR POUR CREER UN PIPE UNIQUEMENT EN CAS DE BESOIN
 // UNE COMMANDE SEULE N'A PAS BESOIN PAR EXEMPLE
 // cmd_result = -1 si on recoit exit
+// CTRL+D : Lors du CTRL+D readline renvoie NULL,
+// on doit donc le traiter dans la boucle principale
 int	main(int argc, char **argv, char **envp)
 {
 	t_command	*cmd_list;
@@ -60,7 +62,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell> ");
 		if (!line)
+		{
+			ft_putstr_fd("exit\n", 2);
 			break ;
+		}
 		if (*line)
 			add_history(line);
 		// PROVISOIRE
@@ -69,10 +74,11 @@ int	main(int argc, char **argv, char **envp)
 		cmd_list = init_test_list(line);
 		head = cmd_list;
 		current = head;
-		// !!!! ATTENTION OBlIGATION DE CREE UN FORK POUR POUVOIR EXECUTER LA COMMANDE SANS QUITTER MNISHELL !!!!
+		// FIN PROVISOIRE
 		// INITIALISATION DE LA LISTE CHAINEE A FAIRE ICI
 		// Le free(line) avant les return peuvent ils etre fait avant?
 		// Il faudra free la liste chainée
+		// Comment sait on qu'on a un pipe?
 		while (current)
 		{
 			current->pid = fork();
