@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 11:19:40 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:52:43 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	{
 		if (storage->new_arg == true)
 		{	
+			if (storage->buffer->len > 0)
+				storage->new_arg = false;
 			flush_buffer(storage, tokens, false);
-        	storage->new_arg = false;
 		}
 		else
 			flush_buffer(storage, tokens, true);
@@ -145,9 +146,10 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	else if (storage->c == '\"')
 	{
 		if (storage->new_arg == true)
-		{	
+		{
+			if (storage->buffer->len > 0)
+				storage->new_arg = false;
 			flush_buffer(storage, tokens, false);
-        	storage->new_arg = false;
 		}
 		else
 			flush_buffer(storage, tokens, true);
@@ -194,13 +196,14 @@ void process_quote_char(t_utils_lexer *storage, t_token **tokens)
     if ((storage->state == LEXER_SINGLE_QUOTE && storage->c == '\'') ||
         (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"'))
     {
-		/*if (storage->new_arg == true)*/
-		/*	flush_buffer(storage, tokens, false);*/
-		/*else*/
-		/*	flush_buffer(storage, tokens, true);*/
-        flush_buffer(storage, tokens, true);
+		if (storage->new_arg == true)
+		{
+			storage->new_arg = false;
+			flush_buffer(storage, tokens, false);
+		}
+		else
+			flush_buffer(storage, tokens, true);
         storage->state = LEXER_NORMAL;
-		storage->new_arg = false;
     }
     else
     {
