@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:25:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/14 20:08:57 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:03:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
@@ -43,59 +43,33 @@ static void free_token_segments(t_token *token)
 	token->segments = NULL;
 }
 
-// Fusion des segments de deux tokens T_WORD.
-// On attache une copie des segments du token 'next' à la fin de 'curr'.
-static void merge_word_tokens(t_token *curr, t_token *next)
-{ 
-	// Trouver le dernier segment de curr.
-	t_token_segment *last_seg = curr->segments;
-	while (last_seg && last_seg->next)
-		last_seg = last_seg->next;
-	// Attacher une copie des segments du token suivant.
-	if (last_seg)
-		last_seg->next = duplicate_segments(next->segments);
-	else
-		curr->segments = duplicate_segments(next->segments);
-}
-
-// La fonction principale de regroupement.
 t_token *group_tokens(t_token *tokens)
 {
-	t_token *curr = tokens;
-	while (curr)
-	{
-		// 1. Fusionner les tokens T_WORD consécutifs 
-		if (curr->type == T_WORD)
-		{
-			while (curr->next && curr->next->type == T_WORD)
-			{
-				merge_word_tokens(curr, curr->next);
-				// On retire le token suivant de la liste.
- 				t_token *to_remove = curr->next;
-				curr->next = to_remove->next;
-				free(to_remove);
-			}
-		}
-		// 2. Regroupement pour les redirections
-		else if (is_redirection(curr->type))
-		{
-			if (curr->next && curr->next->type == T_WORD)
-			{
-				// On supprime les segments du token de redirection (le signe) et on y attache la cible.
- 				free_token_segments(curr);
-				curr->segments = duplicate_segments(curr->next->segments);
-				// On retire le token cible de la liste.
-			 	t_token *to_remove = curr->next;
-				curr->next = to_remove->next;
-				free(to_remove);
-			}
-			else
-			{
-				fprintf(stderr, "Erreur syntaxique: opérateur de redirection sans cible.\n");
-			}
-		} 
-		curr = curr->next;
-	}
-	return tokens;
+    t_token *curr = tokens;
+    while (curr)
+    {
+        // Ne rien faire si le token est de type T_WORD.
+        // On se contente uniquement de traiter les redirections.
+        if (is_redirection(curr->type))
+        {
+            if (curr->next && curr->next->type == T_WORD)
+            {
+                // Pour un opérateur de redirection, on veut que le token suivant (cible)
+                // soit "attaché" au token redirection, en remplaçant ses segments actuels (souvent le signe)
+                // par ceux du token cible.
+                free_token_segments(curr);
+                curr->segments = duplicate_segments(curr->next->segments);
+                // On retire le token cible de la chaîne.
+                t_token *to_remove = curr->next;
+                curr->next = to_remove->next;
+                free(to_remove);
+            }
+            else
+            {
+                fprintf(stderr, "Erreur syntaxique: opérateur de redirection sans cible.\n");
+            }
+        }
+        curr = curr->next;
+    }
+    return tokens;
 }
-

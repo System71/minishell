@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/14 20:13:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:23:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,20 +140,23 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	}
 	else if (storage->c == '\'')
 	{
-		if (storage->new_arg == true)
-			flush_buffer(storage, tokens, false);
-		else
-			flush_buffer(storage, tokens, true);
+		/*if (storage->new_arg == true)*/
+		/*	flush_buffer(storage, tokens, false);*/
+		/*else*/
+		/*	flush_buffer(storage, tokens, true);*/
+        storage->new_arg = false;
+        flush_buffer(storage, tokens, true);
 		storage->state = LEXER_SINGLE_QUOTE;
 		storage->current_quote = QUOTE_SINGLE;
 	}
 	else if (storage->c == '\"')
 	{
-		if (storage->new_arg == true)
-			flush_buffer(storage, tokens, false);
-		else
-			flush_buffer(storage, tokens, true);
-
+		/*if (storage->new_arg == true)*/
+		/*	flush_buffer(storage, tokens, false);*/
+		/*else*/
+		/*	flush_buffer(storage, tokens, true);*/
+        storage->new_arg = false;
+        flush_buffer(storage, tokens, true);
 		storage->state = LEXER_DOUBLE_QUOTE;
 		storage->current_quote = QUOTE_DOUBLE;
 	}
@@ -178,24 +181,14 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	}
 	else
 	{
-		/*// Avant d'ajouter, si le flag new_arg est true et que le buffer est vide,*/
-		/*// cela signifie qu'on doit démarrer un nouvel argument*/
-		/*if (storage->new_arg && storage->buffer->len == 0)*/
-		/*{*/
-		/*	// On force la création d'un nouveau token en appelant flush_buffer avec mergeable = false.*/
-		/*	// (Si le buffer est vide, flush_buffer ne fera rien, alors on pourra forcer la création*/
-		/*	// d'un token vide que l'on pourra compléter avec les caractères suivants.)*/
-		/*	// On flush pas ici on add_token c est normal ?*/
-		/*	add_token_or_segment(tokens, "", QUOTE_NONE, false);*/
-		/*	storage->new_arg = false;*/
-		/*}*/
-
 		/* Caractère normal : on l'ajoute au buffer dynamique */
 		if (!append_char(storage->buffer, storage->c))
 		{
 			fprintf(stderr, "Error: Allocation failed in append_char\n");
 			exit(EXIT_FAILURE);
 		}
+		    // Dès qu'un caractère normal est traité, on signale que l'on a commencé un argument.
+	    storage->new_arg = false;
 	}
 }
 
@@ -206,10 +199,11 @@ void process_quote_char(t_utils_lexer *storage, t_token **tokens)
     if ((storage->state == LEXER_SINGLE_QUOTE && storage->c == '\'') ||
         (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"'))
     {
-		if (storage->new_arg == true)
-			flush_buffer(storage, tokens, false);
-		else
-			flush_buffer(storage, tokens, true);
+		/*if (storage->new_arg == true)*/
+		/*	flush_buffer(storage, tokens, false);*/
+		/*else*/
+		/*	flush_buffer(storage, tokens, true);*/
+        flush_buffer(storage, tokens, true);
         storage->state = LEXER_NORMAL;
 		storage->new_arg = false;
     }

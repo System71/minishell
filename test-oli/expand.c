@@ -6,26 +6,26 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/11 09:54:59 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/16 07:55:25 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "types.h"
+#include "includes/lib_utils.h"
 
 // On suppose que last_exit_code est une variable mise à jour après chaque commande.
 int last_exit_code = 0;
 
-// Fonction d'aide pour concaténer dynamiquement une chaîne.
 static void append_str(char **dest, const char *src)
 {
 	size_t old_len = *dest ? strlen(*dest) : 0;
-	size_t src_len = strlen(src);
-	char *new_str = realloc(*dest, old_len + src_len + 1);
+	size_t src_len = ft_strlen(src);
+	char *new_str = ft_realloc(*dest, old_len, old_len + src_len + 1);
 	if (!new_str)
 	{
 		free(*dest);
 		exit(EXIT_FAILURE);
 	}
-	memcpy(new_str + old_len, src, src_len);
+	ft_memcpy(new_str + old_len, src, src_len);
 	new_str[old_len + src_len] = '\0';
 	*dest = new_str;
 }
