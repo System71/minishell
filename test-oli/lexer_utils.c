@@ -6,11 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 09:23:59 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:19:40 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
 t_token_type get_token_type(const char *str)
 {
     if (strcmp(str, "|") == 0)
@@ -25,13 +26,12 @@ t_token_type get_token_type(const char *str)
         return T_HEREDOC;
     return T_WORD;
 }
+
 int is_special_char(char c)
 {
     return (c == '|' || c == '<' || c == '>');
 }
 
-/* --- Structures de segments --- */
-/* Crée un segment de token */
 t_token_segment *create_segment(const char *content, t_quote_type quote)
 {
     t_token_segment *seg = malloc(sizeof(t_token_segment));
@@ -47,12 +47,11 @@ t_token_segment *create_segment(const char *content, t_quote_type quote)
     return seg;
 }
 
-/* Ajoute un segment à un token (en fin de liste des segments) */
 static void add_segment_to_token(t_token *token, const char *content, t_quote_type quote)
 {
     t_token_segment *new_seg = create_segment(content, quote);
     if (!new_seg)
-        return; // Gérer l'erreur comme tu veux
+        return; // Gérer l'erreur
     if (!token->segments)
     {
         token->segments = new_seg;
@@ -66,7 +65,6 @@ static void add_segment_to_token(t_token *token, const char *content, t_quote_ty
     }
 }
 
-/* Crée un nouveau token de type T_WORD initialisé avec un segment */
 static t_token *create_token_with_segment(const char *content, t_quote_type quote)
 {
     t_token *token = malloc(sizeof(t_token));
@@ -78,9 +76,6 @@ static t_token *create_token_with_segment(const char *content, t_quote_type quot
     return token;
 }
 
-/* Ajoute un token à la liste globale.
-   Si mergeable est vrai et le dernier token existe et est de type T_WORD,
-   on ajoute le segment au dernier token, sinon on crée un nouveau token. */
 static void add_token_or_segment(t_token **tokens, const char *content, t_quote_type quote, bool mergeable)
 {
     if (!*tokens || !mergeable)
@@ -116,9 +111,6 @@ static void add_token_or_segment(t_token **tokens, const char *content, t_quote_
 }
 
 
-/* --- Fonction flush_buffer --- */
-/* Vide le buffer dynamique et crée un segment dans un token T_WORD.
-   Le booléen mergeable indique si le segment doit être fusionné avec le dernier token existant. */
 void flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
 {
     if (storage->buffer->len > 0)
@@ -140,23 +132,26 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 	}
 	else if (storage->c == '\'')
 	{
-		/*if (storage->new_arg == true)*/
-		/*	flush_buffer(storage, tokens, false);*/
-		/*else*/
-		/*	flush_buffer(storage, tokens, true);*/
-        storage->new_arg = false;
-        flush_buffer(storage, tokens, true);
+		if (storage->new_arg == true)
+		{	
+			flush_buffer(storage, tokens, false);
+        	storage->new_arg = false;
+		}
+		else
+			flush_buffer(storage, tokens, true);
 		storage->state = LEXER_SINGLE_QUOTE;
 		storage->current_quote = QUOTE_SINGLE;
 	}
 	else if (storage->c == '\"')
 	{
-		/*if (storage->new_arg == true)*/
-		/*	flush_buffer(storage, tokens, false);*/
-		/*else*/
-		/*	flush_buffer(storage, tokens, true);*/
-        storage->new_arg = false;
-        flush_buffer(storage, tokens, true);
+		if (storage->new_arg == true)
+		{	
+			flush_buffer(storage, tokens, false);
+        	storage->new_arg = false;
+		}
+		else
+			flush_buffer(storage, tokens, true);
+
 		storage->state = LEXER_DOUBLE_QUOTE;
 		storage->current_quote = QUOTE_DOUBLE;
 	}
@@ -188,7 +183,7 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 			exit(EXIT_FAILURE);
 		}
 		    // Dès qu'un caractère normal est traité, on signale que l'on a commencé un argument.
-	    storage->new_arg = false;
+	    /*storage->new_arg = false;*/
 	}
 }
 
