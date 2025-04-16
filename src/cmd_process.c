@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:36:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/10 16:49:28 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:59:38 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,15 @@ static int	cmd_launcher_minishell(char ***my_env, char **full_cmd)
 int	cmd_process(t_command *current, char ***my_env)
 {
 	int	cmd_result;
+	int	i;
 
-	cmd_result = cmd_launcher_minishell(my_env, current->argv);
+	i = 0;
+	while (current->args[i])
+	{
+		printf("args[%d]=%s\n", i, current->args[i]);
+		i++;
+	}
+	cmd_result = cmd_launcher_minishell(my_env, current->args);
 	if (cmd_result == 1 && current->next == NULL)
 	{
 		return (1);

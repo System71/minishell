@@ -6,7 +6,7 @@
 #    By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 13:04:53 by prigaudi          #+#    #+#              #
-#    Updated: 2025/04/10 11:28:15 by prigaudi         ###   ########.fr        #
+#    Updated: 2025/04/16 14:51:52 by prigaudi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,27 @@ PIPEX_DIR = ./src/pipex
 PIPEX = $(PIPEX_DIR)/pipex
 
 SRC_DIR = src
-SRC = 		$(SRC_DIR)/main.c			\
-			$(SRC_DIR)/signals.c		\
-			$(SRC_DIR)/builtin.c		\
-			$(SRC_DIR)/change_env.c		\
-			$(SRC_DIR)/non_built.c		\
-			$(SRC_DIR)/cmd_process.c	\
-			$(SRC_DIR)/cd.c				\
-			$(SRC_DIR)/utils.c
+SRC = 		$(SRC_DIR)/main.c					\
+			$(SRC_DIR)/signals.c				\
+			$(SRC_DIR)/builtin.c				\
+			$(SRC_DIR)/change_env.c				\
+			$(SRC_DIR)/non_built.c				\
+			$(SRC_DIR)/cmd_process.c			\
+			$(SRC_DIR)/cd.c						\
+			$(SRC_DIR)/utils.c					\
+			$(SRC_DIR)/buffer_dynamic.c			\
+			$(SRC_DIR)/expand.c					\
+			$(SRC_DIR)/generate_temp_filename.c	\
+			$(SRC_DIR)/group_tokens.c			\
+			$(SRC_DIR)/heredoc_handle.c			\
+			$(SRC_DIR)/lexer_utils.c			\
+			$(SRC_DIR)/lexer.c					\
+			$(SRC_DIR)/parser.c					\
+			$(SRC_DIR)/print_var.c				\
+			$(SRC_DIR)/ft_memcpy.c				\
+			$(SRC_DIR)/ft_realloc.c				\
+			$(SRC_DIR)/ft_strdup.c				\
+			$(SRC_DIR)/ft_strlen.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

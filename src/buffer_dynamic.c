@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   buffer_dynamic.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:25:36 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 07:54:46 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:44:49 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "lexer.h"
-#include "includes/lib_utils.h"
+#include "lib_utils.h"
 
 t_dynamic_buffer	*init_dynamic_buffer(void)
 {
