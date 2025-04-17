@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:35:51 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 08:20:48 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/17 07:34:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 /*}	t_list;*/
 
 /***** is_ft *****/
-/*int			ft_isalpha(int c);*/
-/*int			ft_isdigit(int c);*/
-/*int			ft_isalnum(int c);*/
+int			ft_isalpha(int c);
+int			ft_isdigit(int c);
+int			ft_isalnum(int c);
 /*int			ft_isascii(int c);*/
 /*int			ft_isprint(int c);*/
 /*int			is_integer(char *str);*/

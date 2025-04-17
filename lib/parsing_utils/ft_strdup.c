@@ -9,7 +9,7 @@
 /*   Updated: 2025/02/27 17:44:46 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/lib_utils.h"
+#include "../../includes/lib_utils.h"
 #include <unistd.h>
 /***** strdup *****/
 char	*ft_strdup(const char *s)

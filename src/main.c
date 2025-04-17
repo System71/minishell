@@ -6,11 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/16 15:17:54 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/17 08:06:03 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 // static t_command	*init_test_list(char *line)
 // {
@@ -81,9 +81,9 @@ int	main(int argc, char **argv, char **envp)
 		tokens = lexer(input);
 		tokens = group_tokens(tokens);
 		heredoc_handle(tokens);
-		// expand_handle(tokens);
+		expand_handle(tokens);
 		cmd_list = parse_commands(tokens);
-		print_commands(cmd_list);
+		/*print_commands(cmd_list);*/
 		while (cmd_list)
 		{
 			cmd_list->pid = fork();

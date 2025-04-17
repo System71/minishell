@@ -6,10 +6,10 @@
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 12:04:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/03/01 14:16:30 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/17 04:53:41 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/lib_utils.h"
+#include "../../includes/lib_utils.h"
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {

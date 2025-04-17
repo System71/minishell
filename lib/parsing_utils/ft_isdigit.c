@@ -1,32 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:10:20 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 17:10:38 by okientzl         ###   ########.fr       */
+/*   Created: 2025/02/27 15:47:00 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/16 13:17:27 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/lib_utils.h"
 
-/***** memcpy *****/
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+/***** isdigit *****/
+int	ft_isdigit(int c)
 {
-	size_t				i;
-	const unsigned char	*s;
-	unsigned char		*d;
-
-	if (!dest || !src)
-		return (NULL);
-	s = (const unsigned char *)src;
-	d = (unsigned char *)dest;
-	i = 0;
-	while (i < n)
-	{
-		d[i] = s[i];
-		i++;
-	}
-	return (dest);
+	return (c >= '0' && c <= '9');
 }

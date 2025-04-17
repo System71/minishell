@@ -27,35 +27,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// typedef enum e_token_type
-// {
-// 	T_WORD,
-// 	T_SINGLE_QUOTE,
-// 	T_DOUBLE_QUOTE,
-// 	T_REDIRECT_IN,
-// 	T_REDIRECT_OUT,
-// 	T_APPEND,
-// 	T_HEREDOC,
-// 	T_PIPE,
-// 	T_DOLLAR
-// }						t_token_type;
-
-// typedef struct s_token
-// {
-// 	t_token_type		type;
-// 	char				*content;
-// 	struct s_token		*next;
-// }						t_token;
-
-// typedef struct s_command
-// {
-// 	t_token_type		type;
-// 	char				**argv;
-// 	int					argc;
-// 	pid_t				pid;
-// 	int					*status;
-// 	struct s_command	*next;
-// }						t_command;
 
 // ========== SIGNALS ==========
 void	signals(void);
