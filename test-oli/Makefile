@@ -17,6 +17,9 @@ HEADER      = type.h lexer.h parser.h includes/lib_utils.h
 # Sources de la partie "librairie"
 SRC_LIB     = \
 	lib_utils/ft_realloc.c \
+	lib_utils/ft_isalnum.c \
+	lib_utils/ft_isalpha.c \
+	lib_utils/ft_isdigit.c \
 	lib_utils/ft_strdup.c \
 	lib_utils/ft_strlen.c  \
 	lib_utils/ft_memcpy.c

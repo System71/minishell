@@ -17,7 +17,7 @@ int last_exit_code = 0;
 
 static void append_str(char **dest, const char *src)
 {
-	size_t old_len = *dest ? strlen(*dest) : 0;
+	size_t old_len = *dest ? ft_strlen(*dest) : 0;
 	size_t src_len = ft_strlen(src);
 	char *new_str = ft_realloc(*dest, old_len, old_len + src_len + 1);
 	if (!new_str)
@@ -36,7 +36,7 @@ char *check_expand(const char *input, t_quote_type quote)
 {
 	// Si on est dans des quotes simples, renvoyer une copie de la chaîne.
 	if (quote == QUOTE_SINGLE)
-		return strdup(input);
+		return ft_strdup(input);
 	char *result = NULL;
 	size_t i = 0;
 	while (input[i]) {
@@ -51,17 +51,17 @@ char *check_expand(const char *input, t_quote_type quote)
 				continue;
 			}
 			// Cas d'une variable d'environnement (nom composé de lettres, chiffres ou _).
-			else if ( (isalpha(input[i + 1]) || input[i + 1] == '_') )
+			else if ( (ft_isalpha(input[i + 1]) || input[i + 1] == '_') )
 			{
 				size_t var_start = i + 1;
 				size_t var_len = 0;
 				while (input[var_start + var_len] &&
-					(isalnum(input[var_start + var_len]) || input[var_start + var_len] == '_'))
+					(ft_isalnum(input[var_start + var_len]) || input[var_start + var_len] == '_'))
 				{
 					var_len++;
 				}
-				char *var_name = strndup(input + var_start, var_len);
-				char *var_value = getenv(var_name);
+				char *var_name = strndup(input + var_start, var_len); // FAIRE FT_STRNDUP
+				char *var_value = getenv(var_name); // A REMPLACER PAR NOTRE GETENV
 				free(var_name);
 				// Si la variable n'existe pas, on insère une chaîne vide.
 				if (var_value)
@@ -91,7 +91,7 @@ char *check_expand(const char *input, t_quote_type quote)
 }
 
 
-void expand_handle(t_token *tokens)
+void	expand_handle(t_token *tokens)
 {
 	t_token *curr = tokens;
 	while (curr)
@@ -108,4 +108,3 @@ void expand_handle(t_token *tokens)
 		curr = curr->next;
 	}
 }
-
