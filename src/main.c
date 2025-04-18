@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/16 15:17:54 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:25:36 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		// PROVISOIRE
-		// if (!ft_strncmp(input, "exit", 5))
-		// 	return (0);
-		// cmd_list = init_test_list(input);
-		// head = cmd_list;
-		// current = head;
-		// FIN PROVISOIRE
-		// INITIALISATION DE LA LISTE CHAINEE A FAIRE ICI
-		// Le free(line) avant les return peuvent ils etre fait avant?
-		// Il faudra free la liste chainée
-		// Comment sait on qu'on a un pipe?
 		tokens = lexer(input);
 		tokens = group_tokens(tokens);
 		heredoc_handle(tokens);
