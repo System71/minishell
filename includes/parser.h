@@ -1,10 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/17 04:50:58 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/17 04:50:59 by okientzl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef PARSER_H
 #define PARSER_H
 
 #include "types.h"
 #include <stdbool.h>
-
-
 
 // HERE_DOC
 int heredoc_handle(t_token *tokens);

@@ -9,8 +9,8 @@
 /*   Updated: 2025/04/16 09:03:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "lexer.h"
-
+#include "../../includes/lexer.h"
+#include <stdio.h>
 // Renvoie vrai si le type correspond à une redirection. 
 static int is_redirection(t_token_type type)
 { 

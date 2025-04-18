@@ -9,8 +9,8 @@
 /*   Updated: 2025/04/14 12:59:04 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "lexer.h"
-
+#include "../../includes/lexer.h"
+#include <stdio.h>
     /* Initialisation context */
 void	init_utils_lexer(t_utils_lexer *storage)
 {
