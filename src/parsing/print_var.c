@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-
+#include "../../includes/lexer.h"
+#include <stdio.h>
 const char *token_quote_to_string(t_quote_type quote)
 {
 	switch (quote)

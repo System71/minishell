@@ -1,14 +1,8 @@
 #ifndef TYPE_H
 # define TYPE_H
 
-# include <ctype.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdbool.h>
-# include <stddef.h>
-# include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
+# include <stdbool.h>
 /***********************************/
 /**********     LEXER    **********/
 typedef struct s_dynamic_buffer
@@ -35,25 +29,18 @@ typedef enum e_token_type
 	T_PIPE
 }							t_token_type;
 
-/* Structure représentant un segment de texte dans un token.
-   Un segment est une portion de texte avec un contexte de quote précis. */
 typedef struct s_token_segment
 {
 	char					*content;
 	t_quote_type			quote;
 	struct s_token_segment	*next;
-	// Segment suivant dans le même token (s'il existe)
 }							t_token_segment;
 
-/* Structure représentant un token. Pour les tokens de type T_WORD,
-   on stocke une liste de segments pour pouvoir gérer les cas complexes
-   où différentes portions du token proviennent de contextes différents. */
 typedef struct s_token
 {
-	t_token_type type; // Par exemple : T_WORD, T_PIPE, etc.
+	t_token_type type;
 	t_token_segment			*segments;
-	// Liste chaînée des segments constituant ce token
-	struct s_token *next; // Token suivant dans la liste globale
+	struct s_token *next;
 }							t_token;
 
 typedef enum e_lexer_state
@@ -77,17 +64,17 @@ typedef struct s_utils_lexer
 typedef struct s_redirection
 {
 	int						type;
-	char *target; // Le fichier(avec son chemin pour le heredoc)
+	char *target;
 	struct s_redirection	*next;
 }							t_redirection;
 
 typedef struct s_command
 {
-	char **args;           // Tableau dynamique ou liste chaînée des arguments
-	t_redirection *redirs; // Liste des redirections associées
+	char **args;
+	t_redirection *redirs;
 	pid_t					pid;
 	int						*status;
-	struct s_command *next; // Pour chaîner les commandes d'un pipeline
+	struct s_command *next;
 }							t_command;
 
 #endif

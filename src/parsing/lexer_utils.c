@@ -6,11 +6,14 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:06 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 11:52:43 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/17 07:49:19 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../../includes/lexer.h"
+#include <ctype.h>
+#include <string.h>
+#include <stdio.h>
 
 t_token_type get_token_type(const char *str)
 {
@@ -181,7 +184,7 @@ void process_normal_char(t_utils_lexer *storage, const char *input, t_token **to
 		/* Caractère normal : on l'ajoute au buffer dynamique */
 		if (!append_char(storage->buffer, storage->c))
 		{
-			fprintf(stderr, "Error: Allocation failed in append_char\n");
+			printf("Error: Allocation failed in append_char\n");
 			exit(EXIT_FAILURE);
 		}
 		    // Dès qu'un caractère normal est traité, on signale que l'on a commencé un argument.
@@ -209,7 +212,7 @@ void process_quote_char(t_utils_lexer *storage, t_token **tokens)
     {
         if (!append_char(storage->buffer, storage->c))
         {
-            fprintf(stderr, "Error: Allocation failed in append_char\n");
+            printf("Error: Allocation failed in append_char\n");
             exit(EXIT_FAILURE);
         }
     }

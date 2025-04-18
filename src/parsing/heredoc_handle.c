@@ -6,11 +6,15 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:56:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/15 14:45:52 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/17 07:47:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "types.h"
+#include "../../includes/types.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <readline/readline.h>
 
 // Fonction d'aide pour concaténer une ligne lue (avec ajout d'un '\n') à un buffer existant.
 static char *append_line(char *dest, const char *line)
