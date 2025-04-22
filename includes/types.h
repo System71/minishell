@@ -86,7 +86,7 @@ typedef struct s_tempfile
     char    *filename;
 }							t_tempfile;
 /***********************************/
-/**********     FILENAME    **********/
+/**********     EXPAND    **********/
 typedef struct s_expand_vars
 {
     char    *result;
@@ -99,4 +99,13 @@ typedef struct s_expand_vars
     char    *buf;
 }               t_expand_vars;
 
+/***********************************/
+/**********     HEREDOC    **********/
+typedef struct s_heredoc
+{
+    char    *delimiter;
+    char    *content;
+    size_t  content_len;
+    size_t  line_count;
+}           t_heredoc;
 #endif
