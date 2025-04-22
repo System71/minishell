@@ -76,5 +76,36 @@ typedef struct s_command
 	int						*status;
 	struct s_command *next;
 }							t_command;
+/***********************************/
+/**********     FILENAME    **********/
+typedef struct s_tempfile
+{
+    int     fd;
+    int     counter;
+    int     len;
+    char    *filename;
+}							t_tempfile;
+/***********************************/
+/**********     EXPAND    **********/
+typedef struct s_expand_vars
+{
+    char    *result;
+    char    tmp[2];
+    size_t  i;
+    size_t  start;
+    size_t  len;
+    char    *name;
+    char    *value;
+    char    *buf;
+}               t_expand_vars;
 
+/***********************************/
+/**********     HEREDOC    **********/
+typedef struct s_heredoc
+{
+    char    *delimiter;
+    char    *content;
+    size_t  content_len;
+    size_t  line_count;
+}           t_heredoc;
 #endif

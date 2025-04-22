@@ -16,16 +16,19 @@
 #include <stdbool.h>
 
 // HERE_DOC
-int heredoc_handle(t_token *tokens);
-char    *generate_temp_filename(void);
+int			heredoc_handle(t_token *tokens);
+char		*generate_temp_filename(void);
 
 // EXPAND
-char *check_expand(const char *input, t_quote_type quote);
-void expand_handle(t_token *tokens);
+char		*check_expand(const char *input, t_quote_type quote);
+void		expand_handle(t_token *tokens);
+int			append_str(char **dest, const char *src);
 
 // PARSER
-t_command *parse_commands(t_token *tokens);
-void print_commands(t_command *cmd_list);
+t_command	*parse_commands(t_token *tokens);	
+
+// DEBUG
+void		print_commands(t_command *cmd_list);
 
 
 /*Gestion des erreurs :*/
