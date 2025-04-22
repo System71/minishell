@@ -30,6 +30,10 @@ SRC = \
     $(PARSING_UTILS)ft_memcpy.c \
     $(PARSING_UTILS)ft_realloc.c \
     $(PARSING_UTILS)ft_strdup.c \
+    $(PARSING_UTILS)ft_strndup.c \
+    $(PARSING_UTILS)ft_strcpy.c \
+    $(PARSING_UTILS)ft_itoa.c \
+    $(PARSING_UTILS)get_int_size.c \
     $(PARSING_UTILS)ft_strlen.c
 
 HEADERS = \

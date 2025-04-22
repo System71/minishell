@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:09 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/17 04:50:09 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:49:14 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LEXER_H
@@ -17,6 +17,7 @@
 
 #include "types.h"
 
+// DEBUG
 t_token_type		get_token_type(const char *str);
 void				print_tokens(t_token *tokens);
 
@@ -38,5 +39,6 @@ void				free_dynamic_buffer(t_dynamic_buffer *buf);
 // GROUP_TOKENS
 t_token 			*group_tokens(t_token *tokens);
 t_token_segment		*create_segment(const char *content, t_quote_type quote);
+
 
 #endif
