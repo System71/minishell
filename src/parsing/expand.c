@@ -82,48 +82,6 @@ char	*check_expand(const char *input, t_quote_type quote)
 	}
 	return (v.result);
 }
-/*char *check_expand(const char *input, t_quote_type quote)*/
-/*{*/
-/*    t_expand_vars  v;*/
-/**/
-/*    if (quote == QUOTE_SINGLE)*/
-/*        return (ft_strdup(input));*/
-/*    v.result = NULL;*/
-/*    v.i = 0;*/
-/*    while (input[v.i])*/
-/*    {*/
-/*        if (input[v.i] == '$' && input[v.i + 1] == '?')*/
-/*        {*/
-/*            v.buf = ft_itoa(last_exit_code);*/
-/*            append_str(&v.result, v.buf);*/
-/*            v.i += 2;*/
-/*        }*/
-/*        else if (input[v.i] == '$'*/
-/*            && (ft_isalpha(input[v.i + 1]) || input[v.i + 1] == '_'))*/
-/*        {*/
-/*            v.start = v.i + 1;*/
-/*            v.len = 0;*/
-/*            while (input[v.start + v.len]*/
-/*                && (ft_isalnum(input[v.start + v.len])*/
-/*                    || input[v.start + v.len] == '_'))*/
-/*                v.len++;*/
-/*            v.name = ft_strndup(input + v.start, v.len);*/
-/*            v.value = getenv(v.name); // NOTRE GETENV*/
-/*            free(v.name);*/
-/*            if (v.value)*/
-/*                append_str(&v.result, v.value);*/
-/*            v.i = v.start + v.len;*/
-/*        }*/
-/*        else*/
-/*        {*/
-/*            v.tmp[0] = input[v.i];*/
-/*            v.tmp[1] = '\0';*/
-/*            append_str(&v.result, v.tmp);*/
-/*            v.i++;*/
-/*        }*/
-/*    }*/
-/*    return (v.result);*/
-/*}*/
 
 void	expand_handle(t_token *tokens)
 {

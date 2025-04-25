@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:56:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/22 13:23:23 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:15:04 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
@@ -24,16 +24,16 @@ static int  append_heredoc_line(t_heredoc *hd, const char *line)
 
     old_len    = hd->content_len;
     line_len   = ft_strlen(line);
-    new = realloc(hd->content, old_len + line_len + 2);
+    new = ft_realloc(hd->content, old_len, old_len + line_len + 2);
     if (!new)
     {
         free(hd->content);
         return (-1);
     }
-    hd->content = new;
     ft_memcpy(new + old_len, line, line_len);
     new[old_len + line_len]     = '\n';
     new[old_len + line_len + 1] = '\0';
+    hd->content = new;
     hd->content_len = old_len + line_len + 1;
     return (0);
 }
@@ -41,7 +41,9 @@ static int  append_heredoc_line(t_heredoc *hd, const char *line)
 static void init_hd_struct(t_heredoc *hd, t_token *curr)
 {
     hd->delimiter = curr->segments->content;
+	/*free(curr->segments->content);*/ //double free si actif
     hd->content   = NULL;
+	hd->content_len = 0;
     hd->line_count = 0;
 }
 
@@ -82,7 +84,10 @@ int heredoc_handle(t_token *tokens)
     {
         if (curr->type == T_HEREDOC)
             handle_single_heredoc(curr);
-        curr = curr->next;
+		if (curr->next == NULL)
+			break;
+		else
+			curr = curr->next;
     }
     return (0);
 }

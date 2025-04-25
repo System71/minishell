@@ -13,14 +13,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-static int	is_redirection(t_token_type type)
-{
-	return (type == T_REDIRECT_IN
-		|| type == T_REDIRECT_OUT
-		|| type == T_APPEND
-		|| type == T_HEREDOC);
-}
-
 static t_token_segment	*duplicate_segments(t_token_segment *seg)
 {
 	t_token_segment	*new_seg;
@@ -58,7 +50,7 @@ t_token	*group_tokens(t_token *tokens)
 	curr = tokens;
 	while (curr)
 	{
-		if (is_redirection(curr->type))
+		if (is_redirection_type(curr->type))
 		{
 			if (curr->next && curr->next->type == T_WORD)
 			{

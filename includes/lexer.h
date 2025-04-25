@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:09 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/22 11:49:14 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:48:12 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LEXER_H
@@ -24,12 +24,24 @@ void				print_tokens(t_token *tokens);
 // LEXER
 t_token				*lexer(const char *input);
 
-// LEXER UTILS
+// CREATE TOKEN
+t_token *create_token_with_segment(const char *content, t_quote_type quote);
+
+// TOKEN_LIST
+void add_token_or_segment(t_token **tokens, const char *content, t_quote_type quote, bool mergeable);
+
+// SEGMENT
+void add_segment_to_token(t_token *token, const char *content, t_quote_type quote);
+
+// LEXER_NORMAL
 void				process_normal_char(t_utils_lexer *storage, const char *input, t_token **tokens);
-void				process_quote_char(t_utils_lexer *storage, t_token **tokens);
-int					is_special_char(char c);
-t_token				*add_token(t_token **list, const char *content, t_quote_type quote, bool mergeable);
+
+// LEXER_FLUSH
 void				flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable);
+
+// LEXER_QUOTE
+void enter_quote_state(t_utils_lexer *storage, t_token **tokens, t_lexer_state new_state, t_quote_type new_quote);
+void				process_quote_char(t_utils_lexer *storage, t_token **tokens);
 
 // DYNAMIC_BUFFER
 t_dynamic_buffer	*init_dynamic_buffer(void);
@@ -37,6 +49,7 @@ int					append_char(t_dynamic_buffer *buf, char c);
 void				free_dynamic_buffer(t_dynamic_buffer *buf);
 
 // GROUP_TOKENS
+bool				is_redirection_type(t_token_type type);
 t_token 			*group_tokens(t_token *tokens);
 t_token_segment		*create_segment(const char *content, t_quote_type quote);
 

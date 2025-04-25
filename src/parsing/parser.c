@@ -6,17 +6,15 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 08:55:22 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:44:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "parser.h"
-// // --- Fonctions Helpers --- //
-// Concatène tous les segments d'un token en une seule chaîne.
-// On parcourt la liste chaînée des segments et on les concatène.
+#include "../../includes/parser.h"
+
 static char *concat_segments(t_token *token)
 {
 	size_t total_len = 0;
@@ -76,214 +74,239 @@ static void append_arg_to_command(t_command *cmd, char *arg)
 	cmd->args[count] = arg;
 	cmd->args[count + 1] = NULL;
 }
-// // --- Fonction de Parsing Final --- //
+
 /*t_command *parse_commands(t_token *tokens)*/
 /*{*/
-/*	t_command *cmd_list = NULL;	// Pointeur vers la tête de la liste de commandes*/
-/*	t_command *current_cmd = NULL;*/
-/*	while (tokens)*/
-/*	{*/
-/*		// Si le token est un séparateur de pipe, on passe à la commande suivante.*/
-/*		if (tokens->type == T_PIPE)*/
-/*		{*/
-/*			// On réinitialise la commande courante pour forcer la création d'un nouveau nœud.*/
-/*			current_cmd = NULL;*/
-/*			tokens = tokens->next;*/
-/*			continue;*/
-/*		}*/
+/*    t_command *cmd_list = NULL;   // Pointeur vers la tête de la liste des commandes*/
+/*    t_command *current_cmd = NULL;*/
 /**/
-/*		// Si pas de commande en cours, on en crée une nouvelle et on l'ajoute à la liste.*/
-/*		if (!current_cmd)*/
-/*		{*/
-/*			t_command *new_cmd = create_command();*/
-/*			if (!cmd_list)*/
-/*			{*/
-/*				cmd_list = new_cmd;*/
-/*			}*/
-/*			else*/
-/*		{*/
-/*				t_command *tmp = cmd_list;*/
-/*				while (tmp->next)*/
-/*					tmp = tmp->next;*/
-/*				tmp->next = new_cmd;*/
-/*			}*/
-/*			current_cmd = new_cmd;*/
-/*		}*/
+/*    while (tokens)*/
+/*    {*/
+/*        // Si le token est un séparateur de pipe, on passe à la commande suivante.*/
+/*        if (tokens->type == T_PIPE)*/
+/*        {*/
+/*            current_cmd = NULL;*/
+/*            tokens = tokens->next;*/
+/*            continue;*/
+/*        }*/
 /**/
-/*		// Traitement des tokens de type T_WORD :*/
-/*        // On fusionne tous les tokens T_WORD consécutifs dans un seul argument.*/
+/*        // S'il n'y a pas de commande en cours, on en crée une nouvelle.*/
+/*        if (!current_cmd)*/
+/*        {*/
+/*            t_command *new_cmd = create_command();*/
+/*            if (!cmd_list)*/
+/*                cmd_list = new_cmd;*/
+/*            else*/
+/*            {*/
+/*                t_command *tmp = cmd_list;*/
+/*                while (tmp->next)*/
+/*                    tmp = tmp->next;*/
+/*                tmp->next = new_cmd;*/
+/*            }*/
+/*            current_cmd = new_cmd;*/
+/*        }*/
+/**/
+/*        // Pour un token de type T_WORD, on crée un argument distinct sans fusionner*/
 /*        if (tokens->type == T_WORD)*/
 /*        {*/
-/*            // Commence par récupérer le contenu du premier token.*/
-/*            char *merged_arg = concat_segments(tokens);*/
-/*            t_token *tmp = tokens->next;*/
-/*            // Tant que les tokens suivants sont de type T_WORD, on les fusionne.*/
-/*            while (tmp && tmp->type == T_WORD)*/
+/*            char *arg = concat_segments(tokens);*/
+/*            append_arg_to_command(current_cmd, arg);*/
+/*        }*/
+/*        // Traitement des redirections*/
+/*        else if (tokens->type == T_REDIRECT_IN || tokens->type == T_REDIRECT_OUT ||*/
+/*                 tokens->type == T_APPEND    || tokens->type == T_HEREDOC)*/
+/*        {*/
+/*            t_redirection *redir = malloc(sizeof(t_redirection));*/
+/*            if (!redir)*/
 /*            {*/
-/*                char *temp_seg = concat_segments(tmp);*/
-/*                char *old = merged_arg;*/
-/*                // Ici, on insère un espace entre les parties. Vous pouvez enlever " " si vous préférez une concaténation directe.*/
-/*                merged_arg = malloc(strlen(old) + strlen(temp_seg) + 2);*/
-/*                if (!merged_arg)*/
+/*                perror("malloc");*/
+/*                exit(EXIT_FAILURE);*/
+/*            }*/
+/*            // Pour un heredoc, on force le type à REDIRECT_IN*/
+/*            if (tokens->type == T_HEREDOC)*/
+/*                redir->type = T_REDIRECT_IN;*/
+/*            else*/
+/*                redir->type = tokens->type;*/
+/*            redir->next = NULL;*/
+/**/
+/*            if (tokens->type == T_HEREDOC)*/
+/*            {*/
+/*                // Génère le nom du fichier temporaire, écrit le contenu dans le fichier,*/
+/*                // et stocke le nom dans redir->target.*/
+/*                char *temp_filename = generate_temp_filename();*/
+/*                FILE *fp = fopen(temp_filename, "w");*/
+/*                if (!fp)*/
 /*                {*/
-/*                    perror("malloc");*/
+/*                    perror("fopen");*/
 /*                    exit(EXIT_FAILURE);*/
 /*                }*/
-/*                sprintf(merged_arg, "%s %s", old, temp_seg);*/
-/*                free(old);*/
-/*                free(temp_seg);*/
-/*                tokens = tmp;*/
-/*                tmp = tokens->next;*/
+/*                // Le contenu du heredoc se trouve dans le premier segment du token.*/
+/*                fputs(tokens->segments->content, fp);*/
+/*                fclose(fp);*/
+/*                redir->target = strdup(temp_filename);*/
+/*                free(temp_filename);*/
 /*            }*/
-/*            append_arg_to_command(current_cmd, merged_arg);*/
-/*        }		else if (tokens->type == T_REDIRECT_IN || tokens->type == T_REDIRECT_OUT ||*/
-/*			tokens->type == T_APPEND    || tokens->type == T_HEREDOC)*/
-/*		{*/
-/*			// Crée un nœud redirection.*/
-/*			t_redirection *redir = malloc(sizeof(t_redirection));*/
-/*			if (!redir)*/
-/*			{*/
-/*				perror("malloc");*/
-/*				exit(EXIT_FAILURE);*/
-/*			}*/
-/*			if (tokens->type == T_HEREDOC)*/
-/*				redir->type = T_REDIRECT_IN;*/
-/*			else*/
-/*				redir->type = tokens->type;*/
-/*			redir->next = NULL;*/
+/*            else*/
+/*            {*/
+/*                // Pour les autres redirections, la cible est obtenue en concaténant les segments.*/
+/*                redir->target = concat_segments(tokens);*/
+/*            }*/
+/*            // Ajoute la redirection à la commande courante.*/
+/*            if (!current_cmd->redirs)*/
+/*                current_cmd->redirs = redir;*/
+/*            else*/
+/*            {*/
+/*                t_redirection *r = current_cmd->redirs;*/
+/*                while (r->next)*/
+/*                    r = r->next;*/
+/*                r->next = redir;*/
+/*            }*/
+/*        }*/
 /**/
-/*			if (tokens->type == T_HEREDOC)*/
-/*			{*/
-/*				// Pour le heredoc : générer le nom du fichier temporaire, l'ouvrir, y écrire le contenu,*/
-/*				// et stocker le nom dans target.*/
-/*				char *temp_filename = generate_temp_filename();*/
-/*				FILE *fp = fopen(temp_filename, "w");*/
-/*				if (!fp)*/
-/*				{*/
-/*					perror("fopen");*/
-/*					exit(EXIT_FAILURE);*/
-/*				}*/
-/*				// Le contenu du heredoc est dans le premier segment du token.*/
-/*				fputs(tokens->segments->content, fp);*/
-/*				fclose(fp);*/
-/*				redir->target = strdup(temp_filename);*/
-/*				free(temp_filename);*/
-/*			}*/
-/*			else*/
-/*			{*/
-/*				// Pour les redirections classiques, la cible est la concaténation des segments.*/
-/*				redir->target = concat_segments(tokens);*/
-/*			}*/
+/*        tokens = tokens->next;*/
+/*    }*/
 /**/
-/*			// Ajoute la redirection à la liste des redirections de la commande courante.*/
-/*			if (!current_cmd->redirs)*/
-/*				current_cmd->redirs = redir;*/
-/*			else*/
-/*			{*/
-/*				t_redirection *r = current_cmd->redirs;*/
-/*				while (r->next)*/
-/*					r = r->next;*/
-/*				r->next = redir;*/
-/*			}*/
-/*		}*/
-/*		// Passe au token suivant.*/
-/*		tokens = tokens->next;*/
-/*	}*/
-/**/
-/*	return cmd_list;*/
+/*    return cmd_list;*/
 /*}*/
-
-t_command *parse_commands(t_token *tokens)
+// Récupère le dernier élément d’une liste de commandes
+static t_command  *get_last_command(t_command *cmd_list)
 {
-    t_command *cmd_list = NULL;   // Pointeur vers la tête de la liste des commandes
-    t_command *current_cmd = NULL;
+    t_command  *tmp;
 
-    while (tokens)
+    tmp = cmd_list;
+    while (tmp != NULL && tmp->next != NULL)
     {
-        // Si le token est un séparateur de pipe, on passe à la commande suivante.
+        tmp = tmp->next;
+    }
+    return (tmp);
+}
+
+// Ajoute une commande à la fin de la liste
+static void  append_command(t_command **cmd_list, t_command *new_cmd)
+{
+    if (*cmd_list == NULL)
+    {
+        *cmd_list = new_cmd;
+    }
+    else
+    {
+        get_last_command(*cmd_list)->next = new_cmd;
+    }
+}
+
+// Initialise ou renvoie la commande courante
+static t_command  *init_or_get_current_command(t_command **cmd_list,
+                                               t_command  *current_cmd)
+{
+    if (current_cmd == NULL)
+    {
+        t_command  *new_cmd;
+
+        new_cmd = create_command();
+        append_command(cmd_list, new_cmd);
+        return (new_cmd);
+    }
+    return (current_cmd);
+}
+
+// Traite un token WORD : concatène ses segments et l’ajoute aux args
+static void  process_word_token(t_token *tok, t_command *current_cmd)
+{
+    char  *arg;
+
+    arg = concat_segments(tok);
+    append_arg_to_command(current_cmd, arg);
+}
+
+// Construit une structure t_redirection à partir du token
+static t_redirection  *build_redirection(t_token *tok)
+{
+    t_redirection  *redir;
+    char           *temp_filename;
+    FILE           *fp;
+
+    redir = malloc(sizeof(*redir));
+    if (redir == NULL)
+    {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+    if (tok->type == T_HEREDOC)
+    {
+        temp_filename = generate_temp_filename();
+        fp            = fopen(temp_filename, "w");
+        if (fp == NULL)
+        {
+            perror("fopen");
+            exit(EXIT_FAILURE);
+        }
+        fputs(tok->segments->content, fp);
+        fclose(fp);
+        redir->target = strdup(temp_filename);
+        free(temp_filename);
+        redir->type   = T_REDIRECT_IN;
+    }
+    else
+    {
+        redir->target = concat_segments(tok);
+        redir->type   = tok->type;
+    }
+    redir->next = NULL;
+    return (redir);
+}
+
+// Ajoute la redirection à la commande courante
+static void  process_redirection_token(t_token *tok,
+                                       t_command *current_cmd)
+{
+    t_redirection  *redir;
+    t_redirection  *last;
+
+    redir = build_redirection(tok);
+    if (current_cmd->redirs == NULL)
+    {
+        current_cmd->redirs = redir;
+    }
+    else
+    {
+        last = current_cmd->redirs;
+        while (last->next != NULL)
+        {
+            last = last->next;
+        }
+        last->next = redir;
+    }
+}
+
+// Fonction principale qui boucle sur les tokens et construit la liste
+t_command  *parse_commands(t_token *tokens)
+{
+    t_command  *cmd_list;
+    t_command  *current_cmd;
+
+    cmd_list     = NULL;
+    current_cmd  = NULL;
+    while (tokens != NULL)
+    {
         if (tokens->type == T_PIPE)
         {
             current_cmd = NULL;
-            tokens = tokens->next;
-            continue;
         }
-
-        // S'il n'y a pas de commande en cours, on en crée une nouvelle.
-        if (!current_cmd)
+        else
         {
-            t_command *new_cmd = create_command();
-            if (!cmd_list)
-                cmd_list = new_cmd;
-            else
+            current_cmd = init_or_get_current_command(&cmd_list,
+                                                      current_cmd);
+            if (tokens->type == T_WORD)
             {
-                t_command *tmp = cmd_list;
-                while (tmp->next)
-                    tmp = tmp->next;
-                tmp->next = new_cmd;
+                process_word_token(tokens, current_cmd);
             }
-            current_cmd = new_cmd;
-        }
-
-        // Pour un token de type T_WORD, on crée un argument distinct sans fusionner
-        if (tokens->type == T_WORD)
-        {
-            char *arg = concat_segments(tokens);
-            append_arg_to_command(current_cmd, arg);
-        }
-        // Traitement des redirections
-        else if (tokens->type == T_REDIRECT_IN || tokens->type == T_REDIRECT_OUT ||
-                 tokens->type == T_APPEND    || tokens->type == T_HEREDOC)
-        {
-            t_redirection *redir = malloc(sizeof(t_redirection));
-            if (!redir)
+            else if (is_redirection_type(tokens->type))
             {
-                perror("malloc");
-                exit(EXIT_FAILURE);
-            }
-            // Pour un heredoc, on force le type à REDIRECT_IN
-            if (tokens->type == T_HEREDOC)
-                redir->type = T_REDIRECT_IN;
-            else
-                redir->type = tokens->type;
-            redir->next = NULL;
-
-            if (tokens->type == T_HEREDOC)
-            {
-                // Génère le nom du fichier temporaire, écrit le contenu dans le fichier,
-                // et stocke le nom dans redir->target.
-                char *temp_filename = generate_temp_filename();
-                FILE *fp = fopen(temp_filename, "w");
-                if (!fp)
-                {
-                    perror("fopen");
-                    exit(EXIT_FAILURE);
-                }
-                // Le contenu du heredoc se trouve dans le premier segment du token.
-                fputs(tokens->segments->content, fp);
-                fclose(fp);
-                redir->target = strdup(temp_filename);
-                free(temp_filename);
-            }
-            else
-            {
-                // Pour les autres redirections, la cible est obtenue en concaténant les segments.
-                redir->target = concat_segments(tokens);
-            }
-            // Ajoute la redirection à la commande courante.
-            if (!current_cmd->redirs)
-                current_cmd->redirs = redir;
-            else
-            {
-                t_redirection *r = current_cmd->redirs;
-                while (r->next)
-                    r = r->next;
-                r->next = redir;
+                process_redirection_token(tokens, current_cmd);
             }
         }
-
         tokens = tokens->next;
     }
-
-    return cmd_list;
+    return (cmd_list);
 }
 
