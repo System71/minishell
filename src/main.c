@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/23 13:35:26 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:47:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,7 @@ int	main(int argc, char **argv, char **envp)
 		heredoc_handle(tokens);
 		expand_handle(tokens);
 		print_tokens(tokens);
-		printf("oui \n");
 		cmd_list = parse_commands(tokens);
-		printf("non \n");
 		print_commands(cmd_list);
 		// FIN DEBUG
 

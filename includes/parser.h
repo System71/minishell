@@ -26,6 +26,7 @@ int			append_str(char **dest, const char *src);
 
 // PARSER
 t_command	*parse_commands(t_token *tokens);	
+bool		is_redirection_type(t_token_type type);
 
 // DEBUG
 void		print_commands(t_command *cmd_list);

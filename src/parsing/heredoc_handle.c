@@ -41,7 +41,7 @@ static int  append_heredoc_line(t_heredoc *hd, const char *line)
 static void init_hd_struct(t_heredoc *hd, t_token *curr)
 {
     hd->delimiter = curr->segments->content;
-	/*free(curr->segments->content);*/
+	/*free(curr->segments->content);*/ //double free si actif
     hd->content   = NULL;
 	hd->content_len = 0;
     hd->line_count = 0;

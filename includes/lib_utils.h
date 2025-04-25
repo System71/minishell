@@ -6,12 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:35:51 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/22 11:46:25 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:41:08 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ULT_LIB_H
-# define ULT_LIB_H
+#ifndef LIB_UTILS_H
+# define LIB_UTILS_H
 
 /*# ifndef BUFFER_SIZE*/
 /*#  define BUFFER_SIZE 1 */
@@ -35,6 +35,7 @@ int				ft_isalnum(int c);
 /*int			ft_isascii(int c);*/
 /*int			ft_isprint(int c);*/
 /*int			is_integer(char *str);*/
+int					is_special_char(char c);
 
 /***** conversion *****/
 char			*ft_itoa(int n);
