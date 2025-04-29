@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
+#include "../../src/memory/mem.h"
 #include <unistd.h>
 /***** strdup *****/
 char	*ft_strdup(const char *s)
@@ -23,7 +24,7 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	}
 	len = ft_strlen(s);
-	copy = (char *)malloc((len + 1) * sizeof(char));
+	copy = ft_xmalloc((len + 1) * sizeof(char));
 	if (!copy)
 	{
 		write(2, "Error : Fail malloc in ft_strdup\n", 33);

@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:46:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/23 14:34:01 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:06:54 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
@@ -33,7 +33,7 @@ static void clean_last_buffer(t_token **tokens, t_utils_lexer *storage)
 	{
 		printf("Error: unclosed quote!\n");
 	}
-	free_dynamic_buffer(storage->buffer);
+	/*free_dynamic_buffer(storage->buffer);*/
 }
 
 t_token *lexer(const char *input)

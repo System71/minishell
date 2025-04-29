@@ -6,26 +6,27 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:25:36 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/22 07:59:05 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:56:18 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
+#include "../memory/mem.h"
 
 t_dynamic_buffer	*init_dynamic_buffer(void)
 {
 	t_dynamic_buffer	*buf;
 
-	buf = malloc(sizeof(t_dynamic_buffer));
+	buf = ft_xmalloc(sizeof(t_dynamic_buffer));
 	if (!buf)
 		return (NULL);
 	buf->capacity = INITIAL_BUFFER_SIZE;
 	buf->len = 0;
-	buf->data = malloc(buf->capacity);
-	if (!buf->data)
-	{
-		free(buf);
-		return (NULL);
-	}
+	buf->data = ft_xmalloc(buf->capacity);
+	/*if (!buf->data)*/
+	/*{*/
+	/*	free(buf);*/
+	/*	return (NULL);*/
+	/*}*/
 	buf->data[0] = '\0';
 	return (buf);
 }
