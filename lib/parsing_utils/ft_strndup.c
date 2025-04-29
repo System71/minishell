@@ -9,7 +9,7 @@
 /*   Updated: 2025/04/22 11:06:18 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+#include "../../src/memory/mem.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {
@@ -20,9 +20,7 @@ char	*ft_strndup(const char *s, size_t n)
 	len = 0;
 	while (s[len] && len < n)
 		len++;
-	dup = (char *)malloc(len + 1);
-	if (!dup)
-		return (NULL);
+	dup = ft_xmalloc(len + 1);
 	i = 0;
 	while (i < len)
 	{
@@ -32,4 +30,3 @@ char	*ft_strndup(const char *s, size_t n)
 	dup[i] = '\0';
 	return (dup);
 }
-

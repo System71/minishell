@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/25 11:44:26 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:12:11 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdbool.h>
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../../includes/parser.h"
+#include "../memory/mem.h"
 
 static char *concat_segments(t_token *token)
 {
@@ -42,7 +43,7 @@ static char *concat_segments(t_token *token)
 // Crée un nouveau nœud de commande et l'initialise.
 static t_command *create_command(void)
 {
-	t_command *cmd = malloc(sizeof(t_command));
+	t_command *cmd = ft_xmalloc(sizeof(t_command));
 	if (!cmd)
 	{
 		perror("malloc");
@@ -284,7 +285,7 @@ t_command  *parse_commands(t_token *tokens)
     t_command  *cmd_list;
     t_command  *current_cmd;
 
-    cmd_list     = NULL;
+    cmd_list     = NULL; 
     current_cmd  = NULL;
     while (tokens != NULL)
     {

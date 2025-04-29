@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:58 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/17 04:50:59 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:00:14 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSER_H
@@ -20,7 +20,7 @@ int			heredoc_handle(t_token *tokens);
 char		*generate_temp_filename(void);
 
 // EXPAND
-char		*check_expand(const char *input, t_quote_type quote);
+char		*check_expand(const char *input, t_quote_type quote, t_token *current);
 void		expand_handle(t_token *tokens);
 int			append_str(char **dest, const char *src);
 

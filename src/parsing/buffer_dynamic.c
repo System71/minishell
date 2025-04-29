@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:25:36 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 12:56:18 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:26:55 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
@@ -22,11 +22,6 @@ t_dynamic_buffer	*init_dynamic_buffer(void)
 	buf->capacity = INITIAL_BUFFER_SIZE;
 	buf->len = 0;
 	buf->data = ft_xmalloc(buf->capacity);
-	/*if (!buf->data)*/
-	/*{*/
-	/*	free(buf);*/
-	/*	return (NULL);*/
-	/*}*/
 	buf->data[0] = '\0';
 	return (buf);
 }

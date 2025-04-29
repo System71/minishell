@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 13:25:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/16 09:03:58 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:27:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
@@ -26,22 +26,6 @@ static t_token_segment	*duplicate_segments(t_token_segment *seg)
 	return (new_seg);
 }
 
-static void	free_token_segments(t_token *token)
-{
-	t_token_segment	*seg;
-	t_token_segment	*tmp;
-
-	seg = token->segments;
-	while (seg)
-	{
-		tmp = seg;
-		seg = seg->next;
-		free(tmp->content);
-		free(tmp);
-	}
-	token->segments = NULL;
-}
-
 t_token	*group_tokens(t_token *tokens)
 {
 	t_token	*curr;
@@ -54,11 +38,9 @@ t_token	*group_tokens(t_token *tokens)
 		{
 			if (curr->next && curr->next->type == T_WORD)
 			{
-				free_token_segments(curr);
 				curr->segments = duplicate_segments(curr->next->segments);
 				to_remove = curr->next;
 				curr->next = to_remove->next;
-				free(to_remove);
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/22 12:01:51 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:28:39 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static void	expand_env(const char *in, t_expand_vars *v)
 	while (ft_isalnum(in[s + l]) || in[s + l] == '_')
 		l++;
 	v->name = ft_strndup(in + s, l);
-	// A REMPLACER GETENV
-	v->value = getenv(v->name);
+	v->value = getenv(v->name);// A REMPLACER GETENV
 	if (v->value)
 		append_str(&v->result, v->value);
 	free(v->name);
@@ -65,11 +64,13 @@ static void	expand_char(const char *in, t_expand_vars *v)
 	v->i++;
 }
 
-char	*check_expand(const char *input, t_quote_type quote)
+char	*check_expand(const char *input, t_quote_type quote, t_token *current)
 {
 	t_expand_vars	v;
 
 	if (quote == QUOTE_SINGLE)
+		return (ft_strdup(input));
+	if (current->type == T_HEREDOC && quote != QUOTE_NONE)
 		return (ft_strdup(input));
 	v.result = NULL;
 	v.i = 0;
@@ -95,8 +96,7 @@ void	expand_handle(t_token *tokens)
 		seg = current->segments;
 		while (seg)
 		{
-			expanded = check_expand(seg->content, seg->quote);
-			free(seg->content);
+			expanded = check_expand(seg->content, seg->quote, current);
 			seg->content = expanded;
 			seg = seg->next;
 		}
