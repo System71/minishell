@@ -78,6 +78,7 @@ void			*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 /*size_t		ft_strlcpy(char *dst, const char *src, size_t size);*/
 int				ft_strcpy(char *dst, const char *src);
 /*size_t		ft_strlcat(char *dst, const char *src, size_t size);*/
+void			ft_strcat(char *dest, const char *src);
 /*char			*ft_strchr(const char *s, int c);*/
 /*char			*ft_strrchr(const char *s, int c);*/
 /*char			*ft_strnstr(const char *haystack, const char *needle, size_t len);*/

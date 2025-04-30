@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_flush.c                                      :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 12:25:01 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/25 12:34:35 by okientzl         ###   ########.fr       */
+/*   Created: 2025/04/30 07:47:36 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/30 07:47:36 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
+#include <stddef.h>
 
-void	flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
+void	ft_strcat(char *dest, const char *src)
 {
-	if (storage->buffer->len > 0)
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (dest[i] != '\0')
+		i++;
+	j = 0;
+	while (src[j] != '\0')
 	{
-		storage->buffer->data[storage->buffer->len] = '\0';
-		add_token_or_segment(tokens, storage->buffer->data,
-			storage->current_quote, mergeable);
-		storage->buffer->len = 0;
-		storage->buffer->data[0] = '\0';
-		storage->current_quote = QUOTE_NONE;
+		dest[i + j] = src[j];
+		j++;
 	}
+	dest[i + j] = '\0';
 }

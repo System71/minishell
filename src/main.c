@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/29 19:28:37 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/30 07:17:32 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 /*int	main(int argc, char **argv, char **envp)*/
 int	main(void)
 {
-	/*t_command	*cmd_list;*/
+	t_command	*cmd_list;
 	t_token		*tokens;
 	/*char		**my_env;*/
 	char		*input;
@@ -91,9 +91,9 @@ int	main(void)
 		print_tokens(tokens);
 		heredoc_handle(tokens);
 		expand_handle(tokens);
-		/*print_tokens(tokens);*/
-		/*cmd_list = parse_commands(tokens);*/
-		/*print_commands(cmd_list);*/
+		print_tokens(tokens);
+		cmd_list = parse_commands(tokens);
+		print_commands(cmd_list);
 		// FIN DEBUG
 
 		/*tokens = lexer(input);*/

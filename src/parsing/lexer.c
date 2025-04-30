@@ -11,41 +11,39 @@
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
 #include <stdio.h>
-    /* Initialisation context */
+
 void	init_utils_lexer(t_utils_lexer *storage)
 {
-    storage->state = LEXER_NORMAL;
-    storage->i = 0;
-    storage->c = '\0';
-    storage->buffer = init_dynamic_buffer();
-    storage->current_quote = QUOTE_NONE;
-    storage->new_arg = false;
+	storage->state = LEXER_NORMAL;
+	storage->i = 0;
+	storage->c = '\0';
+	storage->buffer = init_dynamic_buffer();
+	storage->current_quote = QUOTE_NONE;
+	storage->new_arg = false;
 }
 
-static void clean_last_buffer(t_token **tokens, t_utils_lexer *storage)
+static void	clean_last_buffer(t_token **tokens, t_utils_lexer *storage)
 {
 	if (storage->new_arg == true)
 		flush_buffer(storage, tokens, false);
 	else
 		flush_buffer(storage, tokens, true);
-
 	if (storage->state != LEXER_NORMAL)
 	{
 		printf("Error: unclosed quote!\n");
 	}
-	/*free_dynamic_buffer(storage->buffer);*/
 }
 
-t_token *lexer(const char *input)
+t_token	*lexer(const char *input)
 {
-	t_token *tokens = NULL;
-	t_utils_lexer storage;
+	t_token			*tokens;
+	t_utils_lexer	storage;
 
+	tokens = NULL;
 	init_utils_lexer(&storage);
 	while (input[storage.i] != '\0')
 	{
 		storage.c = input[storage.i];
-
 		if (storage.state == LEXER_NORMAL)
 		{
 			process_normal_char(&storage, input, &tokens);
@@ -57,5 +55,5 @@ t_token *lexer(const char *input)
 		storage.i++;
 	}
 	clean_last_buffer(&tokens, &storage);
-	return tokens;
+	return (tokens);
 }

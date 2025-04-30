@@ -17,6 +17,7 @@ SRC = \
     \
     $(PARSING_DIR)lexer.c \
     $(PARSING_DIR)parser.c \
+    $(PARSING_DIR)cmd_list.c \
     $(PARSING_DIR)buffer_dynamic.c \
     $(PARSING_DIR)expand.c \
     $(PARSING_DIR)generate_temp_filename.c \
@@ -38,6 +39,7 @@ SRC = \
     $(PARSING_UTILS)ft_memcpy.c \
     $(PARSING_UTILS)ft_realloc.c \
     $(PARSING_UTILS)ft_strdup.c \
+    $(PARSING_UTILS)ft_strcat.c \
     $(PARSING_UTILS)ft_strndup.c \
     $(PARSING_UTILS)ft_strcpy.c \
     $(PARSING_UTILS)ft_strcmp.c \
