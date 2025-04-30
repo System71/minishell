@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/16 14:43:32 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:33:03 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "lib_utils.h"
 # include "libft.h"
 # include "parser.h"
-# include "pipex.h"
+// # include "pipex.h"
 # include "signals.h"
 # include "types.h"
 # include <limits.h>
@@ -25,11 +25,14 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <unistd.h>
-
 
 // ========== SIGNALS ==========
 void	signals(void);
+
+// ========== NEW_PIPEX ==========
+void	new_pipex(t_command *current, char ***my_env);
 
 // ========== CMD PROCESS ==========
 int		cmd_process(t_command *cmd, char ***my_env);

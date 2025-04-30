@@ -8,6 +8,7 @@ PIPEX_DIR      = lib/pipex/
 SRC = \
     $(SRC_DIR)main.c \
     $(SRC_DIR)signals.c \
+    $(SRC_DIR)new_pipex.c \
     $(SRC_DIR)builtin.c \
     $(SRC_DIR)change_env.c \
     $(SRC_DIR)non_built.c \
