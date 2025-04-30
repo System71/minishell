@@ -6,10 +6,11 @@
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 12:04:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/17 04:53:41 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:22:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
+#include "../../src/memory/mem.h"
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
@@ -17,13 +18,13 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	size_t	copy_size;
 
 	if (!ptr)
-		return (malloc(new_size));
+		return (ft_xmalloc(new_size));
 	if (new_size == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
-	new_ptr = malloc(new_size);
+	new_ptr = ft_xmalloc(new_size);
 	if (!new_ptr)
 		return (NULL);
 	if (old_size < new_size)
@@ -31,6 +32,5 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	else
 		copy_size = new_size;
 	ft_memcpy(new_ptr, ptr, copy_size);
-	free(ptr);
 	return (new_ptr);
 }

@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:44:46 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 17:38:42 by okientzl         ###   ########.fr       */
+/*   Created: 2025/02/27 15:50:40 by okientzl          #+#    #+#             */
+/*   Updated: 2025/02/27 15:50:40 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
 #include "../../src/memory/mem.h"
 #include <unistd.h>
-/***** strdup *****/
-char	*ft_strdup(const char *s)
-{
-	size_t	len;
-	char	*copy;
 
-	if (!s)
+/***** itoa *****/
+char	*ft_itoa(int n)
+{
+	char		*result;
+	long int	ln;
+	int			len;
+
+	ln = n;
+	len = get_int_size(n);
+	result = ft_xmalloc((len + 1) * sizeof(char));
+	if (!result)
 	{
-		write(2, "Error : pointer NULL in ft_strdup\n", 34);
+		write(2, "Error : Fail malloc ft_itoa\n", 28);
 		return (NULL);
 	}
-	len = ft_strlen(s);
-	copy = ft_xmalloc((len + 1) * sizeof(char));
-	ft_memcpy(copy, s, len);
-	copy[len] = '\0';
-	return (copy);
+	result[len] = '\0';
+	if (ln < 0)
+		ln = -ln;
+	while (len--)
+	{
+		result[len] = ln % 10 + '0';
+		ln = ln / 10;
+	}
+	if (n < 0)
+		result[0] = '-';
+	return (result);
 }

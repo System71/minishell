@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:44:46 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 17:38:42 by okientzl         ###   ########.fr       */
+/*   Created: 2025/02/27 17:28:57 by okientzl          #+#    #+#             */
+/*   Updated: 2025/04/22 09:22:33 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
-#include "../../src/memory/mem.h"
 #include <unistd.h>
-/***** strdup *****/
-char	*ft_strdup(const char *s)
-{
-	size_t	len;
-	char	*copy;
 
-	if (!s)
+/***** ft_strcpy *****/
+int	ft_strcpy(char *dst, const char *src)
+{
+	size_t	i;
+
+	if (!dst || !src)
 	{
-		write(2, "Error : pointer NULL in ft_strdup\n", 34);
-		return (NULL);
+		write(2, "Error : pointer NULL in ft_strlcpy\n", 35);
+		return (0);
 	}
-	len = ft_strlen(s);
-	copy = ft_xmalloc((len + 1) * sizeof(char));
-	ft_memcpy(copy, s, len);
-	copy[len] = '\0';
-	return (copy);
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (i);
 }

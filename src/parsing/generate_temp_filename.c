@@ -6,44 +6,72 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:42:34 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/15 11:42:34 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:16:50 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <string.h>
+#include "../../includes/lib_utils.h"
+#include "../../includes/types.h"
+#include "../../src/memory/mem.h"
 
-#define TMP_DIR "/tmp"
-#define PREFIX "heredoc_"
-#define MAX_TRY 10000
+#define MAX_TRY		10000
+#define BUF_SIZE	256
+#define BASE		"/tmp/heredoc_"
 
-char    *generate_temp_filename(void)
+int	ft_itoa_rev(int n, char *buf)
 {
-    char    *filename;
-    int     counter;
-    int     fd;
+	char			tmp[12];
+	size_t			i;
+	size_t			len;
+	unsigned int	un;
 
-    filename = malloc(256);
-    if (!filename)
-        return NULL;
-    counter = 0;
-    while (counter < MAX_TRY)
-    {
-        /* Construit le chemin du fichier temporaire */
-        snprintf(filename, 256, "%s/%s%d", TMP_DIR, PREFIX, counter);
-        /* Tente de créer le fichier de manière atomique */
-        fd = open(filename, O_RDWR | O_CREAT | O_EXCL, 0600);
-        if (fd != -1)
-        {
-            /* Le fichier a été créé avec succès.
-               On ferme le descripteur et on retourne le nom */
-            close(fd);
-            return filename;
-        }
-        counter++;
-    }
-    free(filename);
-    return NULL;
+	un = (unsigned int)n;
+	i = 0;
+	if (un == 0)
+		tmp[i++] = '0';
+	while (un > 0)
+	{
+		tmp[i] = '0' + (un % 10);
+		i++;
+		un /= 10;
+	}
+	len = i;
+	while (len > 0)
+	{
+		len--;
+		*buf = tmp[len];
+		buf++;
+	}
+	*buf = '\0';
+	return ((int)i);
+}
+
+char	*generate_temp_filename(void)
+{
+	t_tempfile	tmp;
+
+	tmp.filename = ft_xmalloc(BUF_SIZE);
+	if (!tmp.filename)
+		return (NULL);
+	tmp.counter = 0;
+	while (tmp.counter++ < MAX_TRY)
+	{
+		ft_strcpy(tmp.filename, BASE);
+		tmp.len = ft_itoa_rev(tmp.counter, tmp.filename + ft_strlen(BASE));
+		if (tmp.len < 0)
+		{
+			free(tmp.filename);
+			return (NULL);
+		}
+		tmp.fd = open(tmp.filename, O_RDWR | O_CREAT | O_EXCL, 0600);
+		if (tmp.fd != -1)
+		{
+			close(tmp.fd);
+			return (tmp.filename);
+		}
+	}
+	return (NULL);
 }

@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:44:46 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 17:38:42 by okientzl         ###   ########.fr       */
+/*   Created: 2025/02/27 17:36:16 by okientzl          #+#    #+#             */
+/*   Updated: 2025/02/27 17:37:00 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
-#include "../../src/memory/mem.h"
 #include <unistd.h>
-/***** strdup *****/
-char	*ft_strdup(const char *s)
+/***** strcmp *****/
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	len;
-	char	*copy;
+	size_t				i;
 
-	if (!s)
+	if (!s1 || !s2)
 	{
-		write(2, "Error : pointer NULL in ft_strdup\n", 34);
-		return (NULL);
+		write(2, "Error : pointer NULL in ft_strncmp\n", 35);
+		return (0);
 	}
-	len = ft_strlen(s);
-	copy = ft_xmalloc((len + 1) * sizeof(char));
-	ft_memcpy(copy, s, len);
-	copy[len] = '\0';
-	return (copy);
+	i = 0;
+	if (!s1)
+		return (1);
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
 }

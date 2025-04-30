@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   get_int_size.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:44:46 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 17:38:42 by okientzl         ###   ########.fr       */
+/*   Created: 2025/02/27 16:06:22 by okientzl          #+#    #+#             */
+/*   Updated: 2025/02/27 16:06:22 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
-#include "../../src/memory/mem.h"
-#include <unistd.h>
-/***** strdup *****/
-char	*ft_strdup(const char *s)
-{
-	size_t	len;
-	char	*copy;
 
-	if (!s)
+/***** get_int_size *****/
+int	get_int_size(int n)
+{
+	int	i;
+
+	i = 0;
+	if (n <= 0)
+		i++;
+	while (n != 0)
 	{
-		write(2, "Error : pointer NULL in ft_strdup\n", 34);
-		return (NULL);
+		n /= 10;
+		i++;
 	}
-	len = ft_strlen(s);
-	copy = ft_xmalloc((len + 1) * sizeof(char));
-	ft_memcpy(copy, s, len);
-	copy[len] = '\0';
-	return (copy);
+	return (i);
 }
