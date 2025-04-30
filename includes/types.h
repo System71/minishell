@@ -108,4 +108,14 @@ typedef struct s_heredoc
     size_t  content_len;
     size_t  line_count;
 }           t_heredoc;
+
+/***********************************/
+/**********    ENV    **********/
+typedef struct s_env
+{
+    char    *key;    /* Nom de la variable, sans le '$' */
+    char    *value;  /* Valeur associée à la variable */
+    struct s_env *next; /* Élément suivant dans la liste */
+}               t_env;
+
 #endif

@@ -29,6 +29,7 @@ SRC = \
     $(PARSING_DIR)segment.c \
     $(PARSING_DIR)token_list.c \
     $(PARSING_DIR)create_token.c \
+    $(PARSING_DIR)split_handle.c \
     $(PARSING_DIR)print_var.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
@@ -47,6 +48,8 @@ SRC = \
     $(PARSING_UTILS)get_int_size.c \
     $(PARSING_UTILS)append_all.c \
     $(PARSING_UTILS)is_fonction.c \
+    $(PARSING_UTILS)ft_strchr.c \
+    $(PARSING_UTILS)ft_split.c \
     $(PARSING_UTILS)ft_strlen.c
 
 HEADERS = \

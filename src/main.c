@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/30 07:17:32 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:07:13 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,27 @@ int	main(void)
 		tokens = lexer(input);
 		printf("LEXER \n");
 		print_tokens(tokens);
+		/*if (!tokens) */
+		/*{ */
+		/*	free(input);*/
+		/*	continue;*/
+		/*}      // erreur lexicale*/
+		/*    if (!check_syntax(tokens))                  // erreur syntaxique*/
+		/*{*/
+		/*	mem_free_all();*/
+		/*      	free(input);*/
+		/*      	continue;                               // on revient au prompt*/
+		/*  	}*/
 		tokens = group_tokens(tokens);
 		printf("GROUP \n");
 		print_tokens(tokens);
 		heredoc_handle(tokens);
 		expand_handle(tokens);
+		printf("HEREDOC and EXPAND \n");
 		print_tokens(tokens);
+		split_handle(tokens);
 		cmd_list = parse_commands(tokens);
+		printf("COMMANDE \n");
 		print_commands(cmd_list);
 		// FIN DEBUG
 
