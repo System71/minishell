@@ -1,5 +1,6 @@
 SRC_DIR        = src/
 PARSING_DIR    = $(SRC_DIR)parsing/
+MEMORY_DIR    = $(SRC_DIR)memory/
 PARSING_UTILS  = lib/parsing_utils/
 LIBFT_DIR      = lib/libft/
 PIPEX_DIR      = lib/pipex/
@@ -16,6 +17,7 @@ SRC = \
     \
     $(PARSING_DIR)lexer.c \
     $(PARSING_DIR)parser.c \
+    $(PARSING_DIR)cmd_list.c \
     $(PARSING_DIR)buffer_dynamic.c \
     $(PARSING_DIR)expand.c \
     $(PARSING_DIR)generate_temp_filename.c \
@@ -29,12 +31,15 @@ SRC = \
     $(PARSING_DIR)create_token.c \
     $(PARSING_DIR)print_var.c \
     \
+    $(MEMORY_DIR)ft_xmalloc.c \
+    \
     $(PARSING_UTILS)ft_isalnum.c \
     $(PARSING_UTILS)ft_isalpha.c \
     $(PARSING_UTILS)ft_isdigit.c \
     $(PARSING_UTILS)ft_memcpy.c \
     $(PARSING_UTILS)ft_realloc.c \
     $(PARSING_UTILS)ft_strdup.c \
+    $(PARSING_UTILS)ft_strcat.c \
     $(PARSING_UTILS)ft_strndup.c \
     $(PARSING_UTILS)ft_strcpy.c \
     $(PARSING_UTILS)ft_strcmp.c \
@@ -50,6 +55,7 @@ HEADERS = \
 			includes/parser.h \
 			includes/lib_utils.h \
 			includes/types.h \
+			src/memory/mem.h\
 			includes/ft_printf.h \
 			includes/get_next_line.h \
 			includes/libft.h \

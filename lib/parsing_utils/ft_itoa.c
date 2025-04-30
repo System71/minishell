@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
+#include "../../src/memory/mem.h"
 #include <unistd.h>
 
 /***** itoa *****/
@@ -21,7 +22,7 @@ char	*ft_itoa(int n)
 
 	ln = n;
 	len = get_int_size(n);
-	result = (char *)malloc((len + 1) * sizeof(char));
+	result = ft_xmalloc((len + 1) * sizeof(char));
 	if (!result)
 	{
 		write(2, "Error : Fail malloc ft_itoa\n", 28);

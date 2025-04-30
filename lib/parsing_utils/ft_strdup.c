@@ -6,10 +6,11 @@
 /*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:44:46 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 17:44:46 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:38:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lib_utils.h"
+#include "../../src/memory/mem.h"
 #include <unistd.h>
 /***** strdup *****/
 char	*ft_strdup(const char *s)
@@ -23,12 +24,7 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	}
 	len = ft_strlen(s);
-	copy = (char *)malloc((len + 1) * sizeof(char));
-	if (!copy)
-	{
-		write(2, "Error : Fail malloc in ft_strdup\n", 33);
-		return (NULL);
-	}
+	copy = ft_xmalloc((len + 1) * sizeof(char));
 	ft_memcpy(copy, s, len);
 	copy[len] = '\0';
 	return (copy);

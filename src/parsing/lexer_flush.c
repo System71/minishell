@@ -11,14 +11,15 @@
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
 
-void flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
+void	flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
 {
-    if (storage->buffer->len > 0)
-    {
-        storage->buffer->data[storage->buffer->len] = '\0';
-        add_token_or_segment(tokens, storage->buffer->data, storage->current_quote, mergeable);
-        storage->buffer->len = 0;
-        storage->buffer->data[0] = '\0';
-        storage->current_quote = QUOTE_NONE;
-    }
+	if (storage->buffer->len > 0)
+	{
+		storage->buffer->data[storage->buffer->len] = '\0';
+		add_token_or_segment(tokens, storage->buffer->data,
+			storage->current_quote, mergeable);
+		storage->buffer->len = 0;
+		storage->buffer->data[0] = '\0';
+		storage->current_quote = QUOTE_NONE;
+	}
 }

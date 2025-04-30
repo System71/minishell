@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include "../../includes/lib_utils.h"
 #include "../../includes/types.h"
+#include "../../src/memory/mem.h"
 
 #define MAX_TRY		10000
 #define BUF_SIZE	256
@@ -52,7 +53,7 @@ char	*generate_temp_filename(void)
 {
 	t_tempfile	tmp;
 
-	tmp.filename = malloc(BUF_SIZE);
+	tmp.filename = ft_xmalloc(BUF_SIZE);
 	if (!tmp.filename)
 		return (NULL);
 	tmp.counter = 0;
@@ -72,6 +73,5 @@ char	*generate_temp_filename(void)
 			return (tmp.filename);
 		}
 	}
-	free(tmp.filename);
 	return (NULL);
 }

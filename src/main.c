@@ -6,11 +6,12 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/25 11:47:59 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/30 07:17:32 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "./memory/mem.h"
 
 // static t_command	*init_test_list(char *line)
 // {
@@ -44,19 +45,20 @@
 // cmd_result = -1 si on recoit exit
 // CTRL+D : Lors du CTRL+D readline renvoie NULL,
 // on doit donc le traiter dans la boucle principale
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)*/
+int	main(void)
 {
 	t_command	*cmd_list;
 	t_token		*tokens;
-	char		**my_env;
+	/*char		**my_env;*/
 	char		*input;
 
-	(void)argc;
-	(void)argv;
-	signals();
-	my_env = env_cpy(envp);
-	if (!my_env)
-		exit_failure("env copy crashed");
+	/*(void)argc;*/
+	/*(void)argv;*/
+	/*signals();*/
+	/*my_env = env_cpy(envp);*/
+	/*if (!my_env)*/
+	/*	exit_failure("env copy crashed");*/
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -110,4 +112,6 @@ int	main(int argc, char **argv, char **envp)
 		/*}*/
 		free(input);
 	}
+	mem_free_all();
+
 }
