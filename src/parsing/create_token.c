@@ -12,6 +12,12 @@
 #include "../../includes/lexer.h"
 #include "../memory/mem.h"
 
+void	rebuild_segments(t_token *tok, const char *word)
+{
+	tok->segments = NULL;
+	add_segment_to_token(tok, word, QUOTE_NONE);
+}
+
 t_token	*create_token_with_segment(const char *content, t_quote_type quote)
 {
 	t_token	*token;

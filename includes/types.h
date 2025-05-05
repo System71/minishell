@@ -26,13 +26,20 @@ typedef enum e_token_type
 	T_REDIRECT_OUT,
 	T_APPEND,
 	T_HEREDOC,
-	T_PIPE
+	T_PIPE,
+	T_OR,
+	T_AND,
+	T_LPAREN,
+	T_RPAREN,
+	T_SEMI,
+	T_BG
 }							t_token_type;
 
 typedef struct s_token_segment
 {
 	char					*content;
 	t_quote_type			quote;
+	bool					is_expand;
 	struct s_token_segment	*next;
 }							t_token_segment;
 
@@ -50,6 +57,19 @@ typedef enum e_lexer_state
 	LEXER_DOUBLE_QUOTE
 }							t_lexer_state;
 
+/***********************************/
+/**********    ERROR    **********/
+typedef enum e_syntax_err {
+    ERR_NONE,
+    ERR_BONUS,
+	ERR_PIPE_AT_EDGE,
+    ERR_CONSECUTIVE_PIPES,
+    ERR_ISOLATED_OP,
+    ERR_MISSING_FILENAME,
+	ERR_UNCLOSED_QUOTE,
+    ERR_INVALID_SEQUENCE
+} t_syntax_err;
+
 typedef struct s_utils_lexer
 {
 	t_lexer_state			state;
@@ -58,6 +78,7 @@ typedef struct s_utils_lexer
 	t_dynamic_buffer		*buffer;
 	t_quote_type			current_quote;
 	bool					new_arg;
+	t_syntax_err			error;
 }							t_utils_lexer;
 /***********************************/
 /**********     PARSER    **********/

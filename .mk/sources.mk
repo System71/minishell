@@ -1,6 +1,7 @@
 SRC_DIR        = src/
 PARSING_DIR    = $(SRC_DIR)parsing/
 MEMORY_DIR    = $(SRC_DIR)memory/
+ERROR_DIR    = $(SRC_DIR)error/
 PARSING_UTILS  = lib/parsing_utils/
 LIBFT_DIR      = lib/libft/
 PIPEX_DIR      = lib/pipex/
@@ -33,6 +34,7 @@ SRC = \
     $(PARSING_DIR)print_var.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
+	$(ERROR_DIR)error_quote_line.c\
     \
     $(PARSING_UTILS)ft_isalnum.c \
     $(PARSING_UTILS)ft_isalpha.c \

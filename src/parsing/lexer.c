@@ -20,6 +20,7 @@ void	init_utils_lexer(t_utils_lexer *storage)
 	storage->buffer = init_dynamic_buffer();
 	storage->current_quote = QUOTE_NONE;
 	storage->new_arg = false;
+	storage->error = ERR_NONE;
 }
 
 static void	clean_last_buffer(t_token **tokens, t_utils_lexer *storage)
@@ -28,10 +29,10 @@ static void	clean_last_buffer(t_token **tokens, t_utils_lexer *storage)
 		flush_buffer(storage, tokens, false);
 	else
 		flush_buffer(storage, tokens, true);
-	if (storage->state != LEXER_NORMAL)
+    if (storage->state != LEXER_NORMAL && storage->error == ERR_NONE)
 	{
-		printf("Error: unclosed quote!\n");
-	}
+        storage->error = ERR_UNCLOSED_QUOTE;
+    }
 }
 
 t_token	*lexer(const char *input)
@@ -55,5 +56,10 @@ t_token	*lexer(const char *input)
 		storage.i++;
 	}
 	clean_last_buffer(&tokens, &storage);
+	    if (storage.error != ERR_NONE) 
+	{
+        report_syntax_error(storage.error, input);
+        return NULL;
+    }
 	return (tokens);
 }

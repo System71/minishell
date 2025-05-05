@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/14 19:00:05 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/05 07:39:18 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ const char	*token_type_to_string(t_token_type type)
 	}
 }
 
+const char	*is_expand_to_string(bool expand)
+{
+	if (expand == true)
+		return ("True");
+	else
+		return ("False");
+}
 void	print_tokens(t_token *tokens)
 {
 	int	token_num;
@@ -50,8 +57,8 @@ void	print_tokens(t_token *tokens)
 		int seg_num = 1;
 		while (seg)
 		{
-			printf("  Segment %d| Quote: %s, Content: \"%s\"\n",
-		  seg_num, token_quote_to_string(seg->quote), seg->content);
+			printf("  Segment %d| Quote: %s, Is_expand:%s Content: \"%s\"\n",
+		  seg_num, token_quote_to_string(seg->quote), is_expand_to_string(seg->is_expand), seg->content);
 			seg = seg->next;
 			seg_num++;
 		}
