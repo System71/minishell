@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/10 16:31:43 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:24:25 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ static int	cmd_is_valid(char **paths, char *end_path)
 	}
 	return (0);
 }
-// ATTENTION ON A BESOIN DE CREER UN PROCESSUS ENFANT POUR NE PAS QUITTER LE PROGRAMME APRES EXECUTION DE EXECVE !!!!
-static void	exec_cmd(char **envp, char **paths, char **full_cmd, char *end_path)
+static void	exec_cmd(char **envp, char **paths, char **args, char *end_path)
 {
 	char	*full_path;
 	int		i;
@@ -72,11 +71,11 @@ static void	exec_cmd(char **envp, char **paths, char **full_cmd, char *end_path)
 		full_path = ft_strjoin(paths[i], end_path);
 		if (!full_path)
 			exit_failure("full_path malloc ft_strjoin");
-		execve(full_path, full_cmd, envp);
+		execve(full_path, args, envp);
 		free(full_path);
 	}
 }
-int	cmd_not_built(char ***my_env, char **full_cmd)
+int	cmd_not_built(char ***my_env, char **args)
 {
 	char	**paths;
 	char	*end_path;
@@ -84,14 +83,11 @@ int	cmd_not_built(char ***my_env, char **full_cmd)
 	paths = get_paths(*my_env);
 	if (!paths)
 		return (exit_failure("get_paths"));
-	full_cmd = ft_split(full_cmd[0], ' ');
-	if (!full_cmd)
-		return (exit_failure("full_cmd malloc ft_split"));
-	end_path = ft_strjoin("/", full_cmd[0]);
+	end_path = ft_strjoin("/", args[0]);
 	if (!end_path)
-		return (exit_failure("full_cmd malloc ft_strjoin"));
+		return (exit_failure("args malloc ft_strjoin"));
 	if (cmd_is_valid(paths, end_path))
-		exec_cmd(*my_env, paths, full_cmd, end_path);
-	free_all(paths, full_cmd, end_path);
+		exec_cmd(*my_env, paths, args, end_path);
+	free_all(paths, args, end_path);
 	return (127);
 }

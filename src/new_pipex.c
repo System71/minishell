@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/30 17:09:55 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:29:46 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	first_children(t_command *current, int pipefd[2], int prev_fd,
 		char ***my_env)
 {
+	// char	*error;
 	// A GERER POUR LES INFILES
 	// if (prev_fd == -1)
 	// {
@@ -32,13 +33,18 @@ static void	first_children(t_command *current, int pipefd[2], int prev_fd,
 	(void)prev_fd;
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		exit_failure("dup2 failed\n");
+	close(pipefd[0]);
+	close(pipefd[1]);
+	close(prev_fd);
 	// if (close(pipefd[0]) == -1 || close(pipefd[1]) == -1 || close(prev_fd) ==
 	// 	-1)
 	// 	exit_failure("close failed\n");
-	if (!cmd_process(current, my_env))
-	{
-		exit_failure("command not found\n");
-	}
+	// if (!cmd_process(current, my_env))
+	// {
+	// 	error = ft_strjoin(current->args[0], " commande not found\n");
+	// 	exit_failure(error);
+	// }
+	cmd_process(current, my_env);
 	exit(EXIT_FAILURE);
 }
 
@@ -66,11 +72,12 @@ static void	last_child(t_command *current, int pipefd[2], int prev_fd,
 	{
 		exit_failure("close failed\n");
 	}
-	if (!cmd_process(current, my_env))
-	{
-		exit_failure("command not found\n");
-		exit(127);
-	}
+	// if (!cmd_process(current, my_env))
+	// {
+	// 	exit_failure("last command not found\n");
+	// 	exit(127);
+	// }
+	cmd_process(current, my_env);
 	exit(EXIT_FAILURE);
 }
 
@@ -82,22 +89,18 @@ void	new_pipex(t_command *current, char ***my_env)
 	prev_fd = -1;
 	// CAS AVEC UNE SEULE COMMANDE
 	if (!current->next && current->pid == 0)
-	{
-		// current->pid = fork();
-		// if (current->pid == -1)
-		// 	exit_failure("fork : creation failed");
 		cmd_process(current, my_env);
-	}
 	// CAS AVEC PLUSIEURS COMMANDES
 	else
 	{
 		while (current)
 		{
+			if (pipe(pipefd) == -1)
+				exit_failure("pipe : creation failed\n");
+			printf("1 args[0]=%s\n", current->args[0]);
 			current->pid = fork();
 			if (current->pid == -1)
 				exit_failure("fork : creation failed\n");
-			if (pipe(pipefd) == -1)
-				exit_failure("pipe : creation failed\n");
 			if (current->next && current->pid == 0)
 				first_children(current, pipefd, prev_fd, my_env);
 			else if (!current->next && current->pid == 0)
