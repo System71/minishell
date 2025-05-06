@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/30 16:51:06 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:10:54 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		heredoc_handle(tokens);
 		expand_handle(tokens);
 		cmd_list = parse_commands(tokens);
-		// print_commands(cmd_list);
+		print_commands(cmd_list);
 		current = cmd_list;
 		new_pipex(current, &my_env);
 		free(input);
