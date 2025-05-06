@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:46:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 14:06:54 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:04:05 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
@@ -56,10 +56,10 @@ t_token	*lexer(const char *input)
 		storage.i++;
 	}
 	clean_last_buffer(&tokens, &storage);
-	    if (storage.error != ERR_NONE) 
+	if (storage.error != ERR_NONE) 
 	{
-        report_syntax_error(storage.error, input);
-        return NULL;
-    }
+	    report_syntax_error(storage.error, input);
+	    return NULL;
+	}
 	return (tokens);
 }

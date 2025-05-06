@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:09 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/30 14:12:34 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:30:56 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LEXER_H
@@ -18,14 +18,16 @@
 #include "types.h"
 
 // ERROR
-void report_syntax_error(t_syntax_err err, const char *input);
+void				report_syntax_error(t_syntax_err err, const char *input);
+bool				check_syntax(t_token *tokens);
 
-// DEBUG
+// DEBUG du
 t_token_type		get_token_type(const char *str);
 void				print_tokens(t_token *tokens);
 
 // LEXER
 t_token				*lexer(const char *input);
+t_command			*parse_input(const char *input);
 
 // CREATE TOKEN
 t_token				*create_token_with_segment(const char *content, t_quote_type quote);
@@ -39,6 +41,7 @@ void				add_segment_to_token(t_token *token, const char *content, t_quote_type q
 
 // LEXER_NORMAL
 void				process_normal_char(t_utils_lexer *storage, const char *input, t_token **tokens);
+void				add_op_token(t_token **tokens, t_token_type type, const char *lexeme);
 
 // LEXER_FLUSH
 void				flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable);

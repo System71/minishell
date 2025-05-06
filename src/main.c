@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/30 14:07:13 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:59:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 int	main(void)
 {
 	t_command	*cmd_list;
-	t_token		*tokens;
 	/*char		**my_env;*/
 	char		*input;
 
@@ -58,7 +57,7 @@ int	main(void)
 	/*signals();*/
 	/*my_env = env_cpy(envp);*/
 	/*if (!my_env)*/
-	/*	exit_failure("env copy crashed");*/
+/*	exit_failure("env copy crashed");*/
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -81,40 +80,8 @@ int	main(void)
 		// Il faudra free la liste chainée
 		// Comment sait on qu'on a un pipe?
 		//
-
-		//Groupe de fonction pour debug parsing
-		tokens = lexer(input);
-		printf("LEXER \n");
-		print_tokens(tokens);
-		/*if (!tokens) */
-		/*{ */
-		/*	free(input);*/
-		/*	continue;*/
-		/*}      // erreur lexicale*/
-		/*    if (!check_syntax(tokens))                  // erreur syntaxique*/
-		/*{*/
-		/*	mem_free_all();*/
-		/*      	free(input);*/
-		/*      	continue;                               // on revient au prompt*/
-		/*  	}*/
-		tokens = group_tokens(tokens);
-		printf("GROUP \n");
-		print_tokens(tokens);
-		heredoc_handle(tokens);
-		expand_handle(tokens);
-		printf("HEREDOC and EXPAND \n");
-		print_tokens(tokens);
-		split_handle(tokens);
-		cmd_list = parse_commands(tokens);
-		printf("COMMANDE \n");
-		print_commands(cmd_list);
-		// FIN DEBUG
-
-		/*tokens = lexer(input);*/
-		/*tokens = group_tokens(tokens);*/
-		/*heredoc_handle(tokens);*/
-		/*expand_handle(tokens);*/
-		/*cmd_list = parse_commands(tokens);*/
+        cmd_list = parse_input(input);
+        free(input);
 		
 		/*while (cmd_list)*/
 		/*{*/
@@ -124,7 +91,6 @@ int	main(void)
 		/*	waitpid(cmd_list->pid, cmd_list->status, 0);*/
 		/*	cmd_list = cmd_list->next;*/
 		/*}*/
-		free(input);
 	}
 	mem_free_all();
 

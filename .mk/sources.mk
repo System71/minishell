@@ -17,6 +17,7 @@ SRC = \
     $(SRC_DIR)utils.c \
     \
     $(PARSING_DIR)lexer.c \
+    $(PARSING_DIR)parsing.c \
     $(PARSING_DIR)parser.c \
     $(PARSING_DIR)cmd_list.c \
     $(PARSING_DIR)buffer_dynamic.c \
@@ -35,6 +36,7 @@ SRC = \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
 	$(ERROR_DIR)error_quote_line.c\
+	$(ERROR_DIR)error_synthaxe.c\
     \
     $(PARSING_UTILS)ft_isalnum.c \
     $(PARSING_UTILS)ft_isalpha.c \

@@ -67,6 +67,7 @@ typedef enum e_syntax_err {
     ERR_ISOLATED_OP,
     ERR_MISSING_FILENAME,
 	ERR_UNCLOSED_QUOTE,
+	ERR_LINE_CONTINUATION,
     ERR_INVALID_SEQUENCE
 } t_syntax_err;
 
