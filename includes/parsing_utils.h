@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_utils.h                                        :+:      :+:    :+:   */
+/*   parsing_utils.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_UTILS_H
-# define LIB_UTILS_H
+#ifndef PARSING_UTILS_H
+# define PARSING_UTILS_H
 
 # include "./types.h"
 

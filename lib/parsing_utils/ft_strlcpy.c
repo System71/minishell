@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:28:57 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 17:28:57 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:29:20 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:29:20 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include <unistd.h>
 /***** ft_strlcpy *****/
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)

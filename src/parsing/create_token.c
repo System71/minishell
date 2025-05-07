@@ -6,11 +6,11 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:22:45 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 11:34:30 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:04:00 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include "../memory/mem.h"
 
 char	*concat_segments(t_token *token)

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   get_int_size.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 16:06:22 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 16:06:22 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:29:56 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:29:56 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 /***** get_int_size *****/
 int	get_int_size(int n)
 {

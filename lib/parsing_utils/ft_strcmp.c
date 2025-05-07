@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:36:16 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 17:37:00 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:28:48 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:28:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include <unistd.h>
 /***** strcmp *****/
 int	ft_strcmp(const char *s1, const char *s2)

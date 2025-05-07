@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:25:43 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/30 14:40:22 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:23:40 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:23:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include <unistd.h>
 /***** ft_strchr *****/
 char	*ft_strchr(const char *s, int c)

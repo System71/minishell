@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/types.h"
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include "../../includes/lexer.h"
 
 bool	is_invalid_sequence(t_token *prev, t_token *cur)
