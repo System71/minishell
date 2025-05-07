@@ -6,10 +6,10 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:09:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/17 11:09:04 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:21:33 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 
 /***** isalnum *****/
 int	ft_isalnum(int c)

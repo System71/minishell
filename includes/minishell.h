@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/07 08:59:51 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:02:17 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 # define _XOPEN_SOURCE 700
 # include "lexer.h"
-# include "lib_utils.h"
+# include "parsing_utils.h"
 # include "libft.h"
 # include "parser.h"
 // # include "pipex.h"

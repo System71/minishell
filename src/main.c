@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/07 14:28:33 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:56:10 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_command	*cmd_list;
 	t_command	*current;
-	t_token		*tokens;
 	char		**my_env;
 	char		*input;
 
@@ -70,24 +69,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		// tokens = lexer(input);
-		// printf("LEXER \n");
-		// print_tokens(tokens);
-		// tokens = group_tokens(tokens);
-		// printf("GROUP \n");
-		// print_tokens(tokens);
-		// heredoc_handle(tokens);
-		// expand_handle(tokens);
-		// print_tokens(tokens);
-		// cmd_list = parse_commands(tokens);
-		// print_commands(cmd_list);
-		// FIN DEBUG
-		tokens = lexer(input);
-		tokens = group_tokens(tokens);
-		heredoc_handle(tokens);
-		expand_handle(tokens);
+
 		cmd_list = parse_input(input);
 		print_commands(cmd_list);
+		// Pourquoi redefinir cmd_list a current ? 
+		// Il faudra une protection
+		// if (cmd_list != NULL)
+		// new_pipex(...);
 		current = cmd_list;
 		new_pipex(current, &my_env);
 		free(input);

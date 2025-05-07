@@ -62,7 +62,7 @@ HEADERS = \
 		   includes/minishell.h \
 			includes/lexer.h \
 			includes/parser.h \
-			includes/lib_utils.h \
+			includes/parsing_utils.h \
 			includes/types.h \
 			includes/parse_tempfile.h \
 			src/memory/mem.h\

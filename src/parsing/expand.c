@@ -6,11 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/30 10:37:41 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:19:27 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include "../../includes/parser.h"
 #include "../../includes/types.h"
 
@@ -104,30 +104,27 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current)
 
 void	expand_handle(t_token *tokens)
 {
-	t_token			*current;
-	t_token_segment	*seg;
-	char			*old;
+	t_expand_handle	*use_handle= {0};
 
-	current = tokens;
-	while (current)
+	use_handle->current = tokens;
+	while (use_handle->current)
 	{
-		seg = current->segments;
-		while (seg)
-        {
-            bool can_expand = (seg->quote != QUOTE_SINGLE
-                              && !(current->type == T_HEREDOC
-                                   && seg->quote != QUOTE_NONE));
-            bool had_dollar = (can_expand && ft_strchr(seg->content, '$'));
-            old = seg->content;
-            if (can_expand)
-                seg->content = check_expand(old, seg->quote, current);
-            else
-                seg->content = ft_strdup(old);
-            seg->is_expand = had_dollar;
-            /* 6) on « oublie » l’ancien (mem_free_all s’en chargera) */
-            (void)old;
-            seg = seg->next;
-        }
-		current = current->next;
+		use_handle->seg = use_handle->current->segments;
+		while (use_handle->seg)
+		{
+			use_handle->can_expand = (use_handle->seg->quote != QUOTE_SINGLE
+				&& !(use_handle->current->type == T_HEREDOC
+				&& use_handle->seg->quote != QUOTE_NONE));
+			use_handle->had_dollar = (use_handle->can_expand && ft_strchr(use_handle->seg->content, '$'));
+			use_handle->old = use_handle->seg->content;
+			if (use_handle->can_expand)
+				use_handle->seg->content = check_expand(use_handle->old, use_handle->seg->quote, use_handle->current);
+			else
+				use_handle->seg->content = ft_strdup(use_handle->old);
+			use_handle->seg->is_expand = use_handle->had_dollar;
+			(void)use_handle->old;
+			use_handle->seg = use_handle->seg->next;
+		}
+		use_handle->current = use_handle->current->next;
 	}
 }

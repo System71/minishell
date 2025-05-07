@@ -103,4 +103,3 @@ char *generate_temp_filename(void)
     }
     return NULL;
 }
-

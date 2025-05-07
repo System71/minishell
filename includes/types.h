@@ -121,6 +121,15 @@ typedef struct s_expand_vars
     char    *buf;
 }               t_expand_vars;
 
+typedef struct s_expand_handle
+{
+	t_token			*current;
+	t_token_segment	*seg;
+	char			*old;
+	bool			can_expand;
+	bool			had_dollar;
+}				t_expand_handle;
+
 /***********************************/
 /**********     HEREDOC    **********/
 typedef struct s_heredoc

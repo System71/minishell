@@ -6,12 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 13:12:04 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:02:43 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include "../../includes/parser.h"
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include "../memory/mem.h"
 #include <unistd.h>
 #include <fcntl.h>
