@@ -113,7 +113,7 @@ void	process_normal_char(t_utils_lexer *storage,
 							const char *input,
 							t_token **tokens)
 {
-	if (isspace(storage->c))
+	if (ft_iswhitespace(storage->c))
 		handle_space(storage, tokens);
 	else if (storage->c == '\'')
 	{
