@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/14 19:00:05 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:42:38 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,34 @@ const char	*token_quote_to_string(t_quote_type quote)
 	}
 }
 
-const char	*token_type_to_string(t_token_type type)
+const char *token_type_to_string(t_token_type type)
 {
-	switch (type)
-	{
-		case T_WORD:          return "Word";
-		case T_REDIRECT_IN:   return "Redirect_In";
-		case T_REDIRECT_OUT:  return "Redirect_Out";
-		case T_APPEND:        return "Append";
-		case T_HEREDOC:       return "Heredoc";
-		case T_PIPE:          return "Pipe";
-
-		default:              return "UNKNOWN";
-	}
+    switch (type)
+    {
+        case T_WORD:          return "Word";
+        case T_REDIRECT_IN:   return "Redirect_In";
+        case T_REDIRECT_OUT:  return "Redirect_Out";
+        case T_APPEND:        return "Append";
+        case T_HEREDOC:       return "Heredoc";
+        case T_PIPE:          return "Pipe";
+        case T_OR:            return "Or";         // ||
+        case T_AND:           return "And";        // &&
+        case T_LPAREN:        return "LParen";     // (
+        case T_RPAREN:        return "RParen";     // )
+        case T_SEMI:          return "Semicolon";  // ;
+        case T_BG:            return "Background"; // &
+        default:              return "UNKNOWN";
+    }
 }
 
+
+const char	*is_expand_to_string(bool expand)
+{
+	if (expand == true)
+		return ("True");
+	else
+		return ("False");
+}
 void	print_tokens(t_token *tokens)
 {
 	int	token_num;
@@ -50,8 +63,8 @@ void	print_tokens(t_token *tokens)
 		int seg_num = 1;
 		while (seg)
 		{
-			printf("  Segment %d| Quote: %s, Content: \"%s\"\n",
-		  seg_num, token_quote_to_string(seg->quote), seg->content);
+			printf("  Segment %d| Quote: %s, Is_expand:%s Content: \"%s\"\n",
+		  seg_num, token_quote_to_string(seg->quote), is_expand_to_string(seg->is_expand), seg->content);
 			seg = seg->next;
 			seg_num++;
 		}

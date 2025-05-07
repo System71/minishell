@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 20:28:39 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:37:41 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,22 @@
 // On suppose que last_exit_code 
 // est une variable mise à jour après chaque commande.
 int	last_exit_code = 420;
+/////////////////////////
+// A SUPP PAR LA SUITE
 
+/*char *ft_getenv(const char *name)*/
+/*{*/
+/*    t_env *e = g_env_list;*/
+/*    while (e)*/
+/*    {*/
+/*        if (ft_strcmp(e->key, name) == 0)*/
+/*            return (e->value);*/
+/*        e = e->next;*/
+/*    }*/
+/*    return ("");*/
+/*}*/
+/**/
+/////////////////////////////////////////
 static void	expand_env(const char *in, t_expand_vars *v)
 {
 	size_t	s;
@@ -29,8 +44,11 @@ static void	expand_env(const char *in, t_expand_vars *v)
 		l++;
 	v->name = ft_strndup(in + s, l);
 	v->value = getenv(v->name);// A REMPLACER GETENV
-	if (v->value)
+	if (!v->value)
+		append_str(&v->result, "");
+	else
 		append_str(&v->result, v->value);
+	///// VOIR REMPLACER CE BLOC
 	free(v->name);
 	v->i = s + l;
 }
@@ -88,18 +106,28 @@ void	expand_handle(t_token *tokens)
 {
 	t_token			*current;
 	t_token_segment	*seg;
-	char			*expanded;
+	char			*old;
 
 	current = tokens;
 	while (current)
 	{
 		seg = current->segments;
 		while (seg)
-		{
-			expanded = check_expand(seg->content, seg->quote, current);
-			seg->content = expanded;
-			seg = seg->next;
-		}
+        {
+            bool can_expand = (seg->quote != QUOTE_SINGLE
+                              && !(current->type == T_HEREDOC
+                                   && seg->quote != QUOTE_NONE));
+            bool had_dollar = (can_expand && ft_strchr(seg->content, '$'));
+            old = seg->content;
+            if (can_expand)
+                seg->content = check_expand(old, seg->quote, current);
+            else
+                seg->content = ft_strdup(old);
+            seg->is_expand = had_dollar;
+            /* 6) on « oublie » l’ancien (mem_free_all s’en chargera) */
+            (void)old;
+            seg = seg->next;
+        }
 		current = current->next;
 	}
 }
