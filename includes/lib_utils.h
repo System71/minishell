@@ -6,16 +6,14 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:35:51 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/06 10:14:59 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:10:32 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_UTILS_H
 # define LIB_UTILS_H
 
-# include <ctype.h>
-# include <stdbool.h>
-# include <stdlib.h>
+# include "./types.h"
 
 /***** is_ft *****/
 int				ft_isalpha(int c);
@@ -24,7 +22,13 @@ int				ft_isalnum(int c);
 /*int			ft_isascii(int c);*/
 /*int			ft_isprint(int c);*/
 /*int			is_integer(char *str);*/
-bool			is_special_char(char c);
+bool			is_special_char(char c);;
+bool			is_redirect_without_word(t_token *cur);
+bool			is_isolated_op(t_token *prev, t_token *cur);
+bool			is_consecutive_pipes(t_token *prev, t_token *cur);
+bool			is_pipe_at_edge(t_token *prev, t_token *cur);
+bool			is_bonus_token(t_token *cur);
+
 /***** conversion *****/
 char			*ft_itoa(int n);
 /*int			ft_tolower(int c);*/

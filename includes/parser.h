@@ -23,6 +23,7 @@ char		*generate_temp_filename(void);
 char		*check_expand(const char *input, t_quote_type quote, t_token *current);
 void		expand_handle(t_token *tokens);
 int			append_str(char **dest, const char *src);
+char		*concat_segments(t_token *token);
 
 // SPLIT_TOKEN
 void		split_handle(t_token *tok_list);

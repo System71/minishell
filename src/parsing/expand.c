@@ -112,28 +112,17 @@ void	expand_handle(t_token *tokens)
 	while (current)
 	{
 		seg = current->segments;
-		/*while (seg)*/
-		/*{*/
-		/*	expanded = check_expand(seg->content, seg->quote, current);*/
-		/*	seg->content = expanded;*/
-		/*	seg = seg->next;*/
-		/*}*/
 		while (seg)
         {
-            /* 1) est-ce qu’on peut expanser ce segment ? */
             bool can_expand = (seg->quote != QUOTE_SINGLE
                               && !(current->type == T_HEREDOC
                                    && seg->quote != QUOTE_NONE));
-            /* 2) y avait-il un ‘$’ dedans ? */
             bool had_dollar = (can_expand && ft_strchr(seg->content, '$'));
-            /* 3) on garde l’ancien pointeur pour la free éventuelle */
             old = seg->content;
-            /* 4) on appelle ta check_expand (retourne toujours du malloc/strdup) */
             if (can_expand)
                 seg->content = check_expand(old, seg->quote, current);
             else
                 seg->content = ft_strdup(old);
-            /* 5) on marque le flag si besoin */
             seg->is_expand = had_dollar;
             /* 6) on « oublie » l’ancien (mem_free_all s’en chargera) */
             (void)old;

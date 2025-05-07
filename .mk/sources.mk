@@ -28,15 +28,15 @@ SRC = \
     $(PARSING_DIR)lexer_flush.c \
     $(PARSING_DIR)lexer_normal.c \
     $(PARSING_DIR)lexer_quote.c \
-    $(PARSING_DIR)segment.c \
     $(PARSING_DIR)token_list.c \
     $(PARSING_DIR)create_token.c \
     $(PARSING_DIR)split_handle.c \
     $(PARSING_DIR)print_var.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
-	$(ERROR_DIR)error_quote_line.c\
+	$(ERROR_DIR)error_parsing_return.c\
 	$(ERROR_DIR)error_synthaxe.c\
+	$(ERROR_DIR)is_error.c\
     \
     $(PARSING_UTILS)ft_isalnum.c \
     $(PARSING_UTILS)ft_isalpha.c \
@@ -62,6 +62,7 @@ HEADERS = \
 			includes/parser.h \
 			includes/lib_utils.h \
 			includes/types.h \
+			includes/parse_tempfile.h \
 			src/memory/mem.h\
 			includes/ft_printf.h \
 			includes/get_next_line.h \

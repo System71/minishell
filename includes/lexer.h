@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:09 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/06 12:30:56 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:01:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LEXER_H
@@ -21,7 +21,7 @@
 void				report_syntax_error(t_syntax_err err, const char *input);
 bool				check_syntax(t_token *tokens);
 
-// DEBUG du
+// DEBUG
 t_token_type		get_token_type(const char *str);
 void				print_tokens(t_token *tokens);
 
