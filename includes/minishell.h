@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/30 16:33:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:59:51 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	new_pipex(t_command *current, char ***my_env);
 
 // ========== CMD PROCESS ==========
 int		cmd_process(t_command *cmd, char ***my_env);
-void	child(t_command *cmds, int pipefd[2], char **envp);
 
 // ========== BUILTIN ==========
 int		pwd(void);
