@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:19:27 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:39:17 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 // On suppose que last_exit_code 
 // est une variable mise à jour après chaque commande.
-int	last_exit_code = 420;
 /////////////////////////
 // A SUPP PAR LA SUITE
 
@@ -55,6 +54,8 @@ static void	expand_env(const char *in, t_expand_vars *v)
 
 static void	expand_dollar(const char *in, t_expand_vars *v)
 {
+	int	last_exit_code = 420;
+
 	if (in[v->i + 1] == '?')
 	{
 		v->buf = ft_itoa(last_exit_code);
@@ -102,29 +103,39 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current)
 	return (v.result);
 }
 
+void	init_expand_handle(t_expand_handle *handle, t_token *tokens)
+{
+	handle->current = tokens;
+	handle->seg = NULL;
+	handle->old = NULL;
+	handle->can_expand = false;
+	handle->had_dollar = false;
+}
+
 void	expand_handle(t_token *tokens)
 {
-	t_expand_handle	*use_handle= {0};
+	t_expand_handle	handle;
 
-	use_handle->current = tokens;
-	while (use_handle->current)
+	init_expand_handle(&handle, tokens);
+	while (handle.current)
 	{
-		use_handle->seg = use_handle->current->segments;
-		while (use_handle->seg)
+		handle.seg = handle.current->segments;
+		while (handle.seg)
 		{
-			use_handle->can_expand = (use_handle->seg->quote != QUOTE_SINGLE
-				&& !(use_handle->current->type == T_HEREDOC
-				&& use_handle->seg->quote != QUOTE_NONE));
-			use_handle->had_dollar = (use_handle->can_expand && ft_strchr(use_handle->seg->content, '$'));
-			use_handle->old = use_handle->seg->content;
-			if (use_handle->can_expand)
-				use_handle->seg->content = check_expand(use_handle->old, use_handle->seg->quote, use_handle->current);
+			handle.can_expand = (handle.seg->quote != QUOTE_SINGLE
+					&& !(handle.current->type == T_HEREDOC
+						&& handle.seg->quote != QUOTE_NONE));
+			handle.had_dollar = (handle.can_expand
+					&& ft_strchr(handle.seg->content, '$'));
+			handle.old = handle.seg->content;
+			if (handle.can_expand)
+				handle.seg->content = check_expand(handle.old,
+						handle.seg->quote, handle.current);
 			else
-				use_handle->seg->content = ft_strdup(use_handle->old);
-			use_handle->seg->is_expand = use_handle->had_dollar;
-			(void)use_handle->old;
-			use_handle->seg = use_handle->seg->next;
+				handle.seg->content = ft_strdup(handle.old);
+			handle.seg->is_expand = handle.had_dollar;
+			handle.seg = handle.seg->next;
 		}
-		use_handle->current = use_handle->current->next;
+		handle.current = handle.current->next;
 	}
 }
