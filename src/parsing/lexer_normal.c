@@ -32,80 +32,54 @@ static void	handle_default_char(t_utils_lexer *storage)
 	}
 }
 
-static size_t get_operator(const char *input, size_t i, char *op)
+static size_t	get_operator(const char *input, size_t i, char *op)
 {
-    if (input[i] == '|' && input[i + 1] == '|')
-    {
-        op[0] = '|'; op[1] = '|'; op[2] = '\0';
-        return (2);
-    }
-    if (input[i] == '&' && input[i + 1] == '&')
-    {
-        op[0] = '&'; op[1] = '&'; op[2] = '\0';
-        return (2);
-    }
-    if (input[i] == '<' && input[i + 1] == '<')
-    {
-        op[0] = '<'; op[1] = '<'; op[2] = '\0';
-        return (2);
-    }
-    if (input[i] == '>' && input[i + 1] == '>')
-    {
-        op[0] = '>'; op[1] = '>'; op[2] = '\0';
-        return (2);
-    }
-    op[0] = input[i];
-    op[1] = '\0';
-    return (1);
+	size_t	len;
+	char	c;
+
+	c = input[i];
+	if ((c == '|' || c == '&' || c == '<' || c == '>')
+		&& input[i + 1] == c)
+	{
+		op[0] = c;
+		op[1] = c;
+		op[2] = '\0';
+		len = 2;
+	}
+	else
+	{
+		op[0] = c;
+		op[1] = '\0';
+		len = 1;
+	}
+	return (len);
 }
 
-static void handle_special_char(t_utils_lexer *storage,
-                                const char *input,
-                                t_token **tokens)
+static void	handle_special_char(t_utils_lexer *storage,
+								const char *input,
+								t_token **tokens)
 {
-    char   op[3];
-    size_t len;
+	char	op[3];
+	size_t	len;
 
-    /* 1) terminer le mot en cours */
-    flush_buffer(storage, tokens, false);
-
-    /* 2) récupérer l’opérateur et sa longueur */
-    len = get_operator(input, storage->i, op);
-
-    /* 3) créer le token */
-    add_token_or_segment(tokens, op, QUOTE_NONE, false);
-
-    /* 4) avancer l’index de 1 ou 2 */
-    storage->i += (len - 1);
-
-    /* 5) on vient de sortir d’un opérateur */
-    storage->new_arg = false;
+	flush_buffer(storage, tokens, false);
+	len = get_operator(input, storage->i, op);
+	add_token_or_segment(tokens, op, QUOTE_NONE, false);
+	storage->i += (len - 1);
+	storage->new_arg = false;
 }
 
 void	process_normal_char(t_utils_lexer *storage,
-							const char *input,
-							t_token **tokens)
+					const char *input, t_token **tokens)
 {
 	if (ft_iswhitespace(storage->c))
 		handle_space(storage, tokens);
 	else if (storage->c == '\'')
-	{
-		enter_quote_state(storage,
-			tokens,
-			LEXER_SINGLE_QUOTE,
-			QUOTE_SINGLE);
-	}
+		enter_quote_state(storage, tokens, LEXER_SINGLE_QUOTE, QUOTE_SINGLE);
 	else if (storage->c == '\"')
-	{
-		enter_quote_state(storage,
-			tokens,
-			LEXER_DOUBLE_QUOTE,
-			QUOTE_DOUBLE);
-	}
+		enter_quote_state(storage, tokens, LEXER_DOUBLE_QUOTE, QUOTE_DOUBLE);
 	else if (is_special_char(storage->c))
-	{
 		handle_special_char(storage, input, tokens);
-	}
 	else
 		handle_default_char(storage);
 }

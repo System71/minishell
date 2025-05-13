@@ -1,29 +1,28 @@
-#ifndef MEMORY_MEM_H
-# define MEMORY_MEM_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mem.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 19:28:20 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/13 19:28:23 by okientzl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MEM_H
+# define MEM_H
 
 # include <stddef.h>
 
 typedef struct s_mem_node
 {
-    void               *ptr;
-    struct s_mem_node  *next;
-}   t_mem_node;
-/**
- * Allocation sécurisée : quitte le programme en cas d'échec.
- * Enregistre chaque pointeur pour un libération ultérieure.
- */
-void *ft_xmalloc(int size);
+	void				*ptr;
+	struct s_mem_node	*next;
+}		t_mem_node;
 
-/**
- * Enregistre un pointeur alloué pour libération ultérieure.
- * Appelé automatiquement par xmalloc.
- */
-void  mem_register(void *ptr);
+void	*ft_xmalloc(int size);
+void	mem_register(void *ptr);
+void	mem_free_all(void);
 
-/**
- * Libère tous les pointeurs enregistrés via mem_register.
- * Remet l'état du registre à zéro.
- */
-void  mem_free_all(void);
-
-#endif /* MEMORY_MEM_H */
+#endif /* MEM_H */

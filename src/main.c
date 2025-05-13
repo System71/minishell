@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/07 16:56:10 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:10:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 // int	main(void)
 {
 	t_command	*cmd_list;
-	t_command	*current;
+	/*t_command	*current;*/
 	char		**my_env;
 	char		*input;
 
@@ -71,13 +71,13 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 
 		cmd_list = parse_input(input);
-		print_commands(cmd_list);
+		/*print_commands(cmd_list);*/
 		// Pourquoi redefinir cmd_list a current ? 
 		// Il faudra une protection
 		// if (cmd_list != NULL)
 		// new_pipex(...);
-		current = cmd_list;
-		new_pipex(current, &my_env);
+		/*current = cmd_list;*/
+		/*new_pipex(current, &my_env);*/
 		free(input);
 	}
 	mem_free_all();

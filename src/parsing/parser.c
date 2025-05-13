@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:02:43 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:51:03 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -16,28 +16,28 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-static void write_heredoc_to_file(const char *filename, const char *content)
+static void	write_heredoc_to_file(const char *filename, const char *content)
 {
-    int     fd;
-    size_t  len;
-    ssize_t ret;
+	int		fd;
+	size_t	len;
+	ssize_t	ret;
 
-    fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-    if (fd < 0)
-    {
-        perror("minishell: open heredoc temp");
-        exit(EXIT_FAILURE);
-    }
-    len = ft_strlen(content);
-    ret = write(fd, content, len);
-    if (ret < 0 || (size_t)ret != len)
-    {
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd < 0)
+	{
+		perror("minishell: open heredoc temp");
+		exit(EXIT_FAILURE);
+	}
+	len = ft_strlen(content);
+	ret = write(fd, content, len);
+	if (ret < 0 || (size_t)ret != len)
+	{
 		mem_free_all();
-        perror("minishell: write heredoc temp");
-        close(fd);
-        exit(EXIT_FAILURE);
-    }
-    close(fd);
+		perror("minishell: write heredoc temp");
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
 }
 
 static void	process_word_token(t_token *tok, t_command *current_cmd)
@@ -48,31 +48,28 @@ static void	process_word_token(t_token *tok, t_command *current_cmd)
 	append_arg_to_command(current_cmd, arg);
 }
 
-static t_redirection *build_redirection(t_token *tok)
+static t_redirection	*build_redirection(t_token *tok)
 {
-    t_redirection *redir;
-    char          *tmp;
+	t_redirection	*redir;
+	char			*tmp;
 
-    redir = ft_xmalloc(sizeof *redir);
-    if (!redir)
-        exit(EXIT_FAILURE);
-
-    if (tok->type == T_HEREDOC)
-    {
-        tmp = generate_temp_filename();
-        if (!tmp)
-            exit(EXIT_FAILURE);
-        write_heredoc_to_file(tmp, tok->segments->content);
-        redir->target = tmp;
-        redir->type   = T_REDIRECT_IN;
-    }
-    else
-    {
-        redir->target = concat_segments(tok);
-        redir->type   = tok->type;
-    }
-    redir->next = NULL;
-    return (redir);
+	redir = ft_xmalloc(sizeof * redir);
+	if (tok->type == T_HEREDOC)
+	{
+		tmp = generate_temp_filename();
+		if (!tmp)
+			exit(EXIT_FAILURE);
+		write_heredoc_to_file(tmp, tok->segments->content);
+		redir->target = tmp;
+		redir->type = T_REDIRECT_IN;
+	}
+	else
+	{
+		redir->target = concat_segments(tok);
+		redir->type = tok->type;
+	}
+	redir->next = NULL;
+	return (redir);
 }
 
 static void	process_redirection_token(t_token *tok, t_command *current_cmd)
@@ -111,8 +108,7 @@ t_command	*parse_commands(t_token *tokens)
 		}
 		else
 		{
-			current_cmd = init_or_get_current_command(&cmd_list,
-					current_cmd);
+			current_cmd = init_or_get_current_command(&cmd_list, current_cmd);
 			if (tokens->type == T_WORD)
 				process_word_token(tokens, current_cmd);
 			else if (is_redirection_type(tokens->type))

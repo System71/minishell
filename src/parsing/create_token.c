@@ -44,6 +44,7 @@ t_token_segment	*create_segment(const char *content, t_quote_type quote)
 	seg = ft_xmalloc(sizeof(t_token_segment));
 	seg->content = ft_strdup(content);
 	seg->quote = quote;
+	seg->is_expand = false;
 	seg->next = NULL;
 	return (seg);
 }
@@ -68,6 +69,7 @@ void	add_segment_to_token(t_token *token,
 		tmp->next = new_seg;
 	}
 }
+
 void	rebuild_segments(t_token *tok, const char *word)
 {
 	tok->segments = NULL;

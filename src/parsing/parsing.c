@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 16:59:53 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:40:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/types.h"
@@ -15,31 +15,29 @@
 #include "../memory/mem.h"
 #include <stdio.h>
 
-t_command *parse_input(const char *input)
+t_command	*parse_input(const char *input)
 {
-    t_token     *tokens;
-    t_command   *cmd_list;
+	t_token		*tokens;
+	t_command	*cmd_list;
 
-    tokens = lexer(input);
-    if (!tokens)
-    {
-        mem_free_all();
-        return (NULL);
-    }
-    if (!check_syntax(tokens))
-    {
-        mem_free_all();
-        return (NULL);
-    }
-    tokens = group_tokens(tokens);
-    heredoc_handle(tokens);
-    expand_handle(tokens);
-    split_handle(tokens);
-
-    cmd_list = parse_commands(tokens);
-    return (cmd_list);
+	tokens = lexer(input);
+	if (!tokens)
+	{
+		mem_free_all();
+		return (NULL);
+	}
+	if (!check_syntax(tokens))
+	{
+		mem_free_all();
+		return (NULL);
+	}
+	tokens = group_tokens(tokens);
+	heredoc_handle(tokens);
+	expand_handle(tokens);
+	split_handle(tokens);
+	cmd_list = parse_commands(tokens);
+	return (cmd_list);
 }
-
 // DEBUG FONCTION WITH PRINTF
 /*t_command *parse_input(const char *input)*/
 /*{*/
