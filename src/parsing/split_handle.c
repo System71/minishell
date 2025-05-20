@@ -6,13 +6,13 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:44:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/05 13:19:32 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:20:35 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/types.h" 
-#include "../../includes/lib_utils.h" 
+#include "../../includes/parsing_utils.h" 
 #include "../memory/mem.h" 
 
 static char	*segments_to_str(t_token_segment *seg)

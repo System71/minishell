@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:46:39 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 17:46:39 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:23:29 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:23:29 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h> 
 #include <unistd.h> 
-#include "../../includes/lib_utils.h" 
+#include "../../includes/parsing_utils.h" 
 
 /***** split helper functions *****/
 static int	count_words(char const *s, char c)

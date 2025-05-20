@@ -42,6 +42,7 @@ SRC = \
     $(PARSING_UTILS)ft_isalnum.c \
     $(PARSING_UTILS)ft_isalpha.c \
     $(PARSING_UTILS)ft_isdigit.c \
+    $(PARSING_UTILS)ft_iswhitespace.c \
     $(PARSING_UTILS)ft_memcpy.c \
     $(PARSING_UTILS)ft_realloc.c \
     $(PARSING_UTILS)ft_strdup.c \
@@ -61,7 +62,7 @@ HEADERS = \
 		   includes/minishell.h \
 			includes/lexer.h \
 			includes/parser.h \
-			includes/lib_utils.h \
+			includes/parsing_utils.h \
 			includes/types.h \
 			includes/parse_tempfile.h \
 			src/memory/mem.h\

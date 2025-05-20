@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:14:59 by okientzl          #+#    #+#             */
-/*   Updated: 2025/02/27 17:14:59 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:29:38 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:29:38 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 #include <unistd.h>
 /***** ft_strlen *****/
 size_t	ft_strlen(const char *s)

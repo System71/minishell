@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:22:45 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/20 13:45:19 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:56:20 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,14 @@ t_token	*create_token_with_segment(const char *content, t_quote_type quote)
 {
 	t_token	*token;
 
-	token = ft_xmalloc(sizeof(t_token));
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	if (quote == QUOTE_NONE)
 		token->type = get_token_type(content);
 	else
 		token->type = T_WORD;
-	token->segments = create_segment(content, quote);
-	token->next = NULL;
-	return (token);
+    token->segments = create_segment(content, quote);
+    token->next = NULL;
+    return (token);
 }

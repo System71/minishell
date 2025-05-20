@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_utils.h                                        :+:      :+:    :+:   */
+/*   parsing_utils.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_UTILS_H
-# define LIB_UTILS_H
+#ifndef PARSING_UTILS_H
+# define PARSING_UTILS_H
 
 # include "./types.h"
 
@@ -19,6 +19,7 @@
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
+int				ft_iswhitespace(int c);
 /*int			ft_isascii(int c);*/
 /*int			ft_isprint(int c);*/
 /*int			is_integer(char *str);*/

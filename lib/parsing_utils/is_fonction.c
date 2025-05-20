@@ -9,9 +9,8 @@
 /*   Updated: 2025/05/20 13:45:10 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/types.h"
-#include "../../includes/lib_utils.h"
+#include "../../includes/parsing_utils.h"
 
 bool	is_redirection_type(t_token_type type)
 {
@@ -21,9 +20,8 @@ bool	is_redirection_type(t_token_type type)
 		|| type == T_HEREDOC);
 }
 
-t_token_type get_token_type(const char *str)
+t_token_type	get_token_type(const char *str)
 {
-    // 1) Multi-caractères d’abord
     if (ft_strcmp(str, "||") == 0)
         return (T_OR);
     else if (ft_strcmp(str, "&&") == 0)
@@ -32,8 +30,6 @@ t_token_type get_token_type(const char *str)
         return (T_HEREDOC);
     else if (ft_strcmp(str, ">>") == 0)
         return (T_APPEND);
-
-    // 2) Simples
     else if (ft_strcmp(str, "|") == 0)
         return (T_PIPE);
     else if (ft_strcmp(str, "<") == 0)
@@ -48,13 +44,10 @@ t_token_type get_token_type(const char *str)
         return (T_SEMI);
     else if (ft_strcmp(str, "&") == 0)
         return (T_BG);
-
-    // 3) Tout le reste
     return (T_WORD);
 }
 
-
-bool is_special_char(char c)
+bool	is_special_char(char c)
 {
     return c == '>' || c == '<'
         || c == '|' || c == '&'

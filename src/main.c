@@ -6,12 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/20 13:42:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:58:51 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "./memory/mem.h"
 
 // static t_command	*init_test_list(char *line)
 // {
@@ -46,10 +45,8 @@
 // CTRL+D : Lors du CTRL+D readline renvoie NULL,
 // on doit donc le traiter dans la boucle principale
 int	main(int argc, char **argv, char **envp)
-// int	main(void)
 {
 	t_command	*cmd_list;
-	t_command	*current;
 	t_token		*tokens;
 	char		**my_env;
 	char		*input;
@@ -85,13 +82,15 @@ int	main(int argc, char **argv, char **envp)
 
 		//Groupe de fonction pour debug parsing
 		tokens = lexer(input);
+		printf("LEXER \n");
+		print_tokens(tokens);
 		tokens = group_tokens(tokens);
+		printf("GROUP \n");
+		print_tokens(tokens);
 		heredoc_handle(tokens);
 		expand_handle(tokens);
 		print_tokens(tokens);
-		printf("oui \n");
 		cmd_list = parse_commands(tokens);
-		printf("non \n");
 		print_commands(cmd_list);
 		// FIN DEBUG
 
@@ -111,5 +110,4 @@ int	main(int argc, char **argv, char **envp)
 		/*}*/
 		free(input);
 	}
-	mem_free_all();
 }

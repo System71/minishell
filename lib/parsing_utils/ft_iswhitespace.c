@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 17:23:40 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:23:48 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 14:59:37 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 14:59:55 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include <unistd.h>
-/***** ft_strchr *****/
-char	*ft_strchr(const char *s, int c)
+
+int	ft_iswhitespace(int c)
 {
-	if (!s)
-	{
-		write(2, "Error : pointer NULL in ft_strchr\n", 34);
-		return (NULL);
-	}
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (c == '\0')
-		return ((char *)s);
-	return (NULL);
+    if (c == ' ')
+        return (1);
+    if (c == '\t')
+        return (1);
+    if (c == '\n')
+        return (1);
+    if (c == '\v')
+        return (1);
+    if (c == '\f')
+        return (1);
+    if (c == '\r')
+        return (1);
+    return (0);
 }
