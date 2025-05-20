@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:56:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 20:36:54 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:47:43 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lib_utils.h"
+
 #include "../../includes/types.h"
 #include <stdio.h>
 #include <stdlib.h>

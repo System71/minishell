@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_flush.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:25:01 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/25 12:34:35 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:44:04 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
+
 
 void	flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
 {

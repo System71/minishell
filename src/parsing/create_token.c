@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:22:45 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 11:34:30 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:45:19 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
+
 #include "../../includes/lib_utils.h"
 #include "../memory/mem.h"
 

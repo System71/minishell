@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:26:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/30 08:15:29 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:44:32 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
+
 
 static t_token	*get_last_token(t_token *tokens)
 {

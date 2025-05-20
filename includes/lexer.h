@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:09 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/06 14:01:48 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:46:16 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef LEXER_H
+
 #define LEXER_H
 
 #define INITIAL_BUFFER_SIZE 64

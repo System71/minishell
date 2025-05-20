@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/07 14:28:33 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:42:03 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,45 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		// tokens = lexer(input);
-		// printf("LEXER \n");
-		// print_tokens(tokens);
-		// tokens = group_tokens(tokens);
-		// printf("GROUP \n");
-		// print_tokens(tokens);
-		// heredoc_handle(tokens);
-		// expand_handle(tokens);
-		// print_tokens(tokens);
-		// cmd_list = parse_commands(tokens);
-		// print_commands(cmd_list);
-		// FIN DEBUG
+		// PROVISOIRE
+		// if (!ft_strncmp(input, "exit", 5))
+		// 	return (0);
+		// cmd_list = init_test_list(input);
+		// head = cmd_list;
+		// current = head;
+		// FIN PROVISOIRE
+		// INITIALISATION DE LA LISTE CHAINEE A FAIRE ICI
+		// Le free(line) avant les return peuvent ils etre fait avant?
+		// Il faudra free la liste chainée
+		// Comment sait on qu'on a un pipe?
+		//
+
+		//Groupe de fonction pour debug parsing
 		tokens = lexer(input);
 		tokens = group_tokens(tokens);
 		heredoc_handle(tokens);
 		expand_handle(tokens);
-		cmd_list = parse_input(input);
+		print_tokens(tokens);
+		printf("oui \n");
+		cmd_list = parse_commands(tokens);
+		printf("non \n");
 		print_commands(cmd_list);
-		current = cmd_list;
-		new_pipex(current, &my_env);
+		// FIN DEBUG
+
+		/*tokens = lexer(input);*/
+		/*tokens = group_tokens(tokens);*/
+		/*heredoc_handle(tokens);*/
+		/*expand_handle(tokens);*/
+		/*cmd_list = parse_commands(tokens);*/
+		
+		/*while (cmd_list)*/
+		/*{*/
+		/*	cmd_list->pid = fork();*/
+		/*	if (!cmd_list->next && cmd_list->pid == 0)*/
+		/*		cmd_process(cmd_list, &my_env);*/
+		/*	waitpid(cmd_list->pid, cmd_list->status, 0);*/
+		/*	cmd_list = cmd_list->next;*/
+		/*}*/
 		free(input);
 	}
 	mem_free_all();
