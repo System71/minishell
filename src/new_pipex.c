@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/07 13:53:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:19:40 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,20 @@ static void	one_command(t_command *current, char ***my_env)
 	int	infile;
 	int	outfile;
 
-	current->pid = fork();
-	if (current->pid == -1)
-		exit_failure("fork : creation failed\n");
-	if (current->pid == 0)
+	if (is_builtin(my_env, current->args) == -1)
 	{
-		infile = 0;
-		outfile = 0;
-		get_redirection(current, &infile, &outfile);
-		cmd_process(current, my_env);
+		current->pid = fork();
+		if (current->pid == -1)
+			exit_failure("fork : creation failed\n");
+		if (current->pid == 0)
+		{
+			infile = 0;
+			outfile = 0;
+			get_redirection(current, &infile, &outfile);
+			cmd_process(current, my_env);
+		}
+		waitpid(current->pid, current->status, 0);
 	}
-	waitpid(current->pid, current->status, 0);
 }
 
 static void	multi_command(t_command *current, char ***my_env)
@@ -118,7 +121,9 @@ void	new_pipex(t_command *current, char ***my_env)
 {
 	// CAS AVEC UNE SEULE COMMANDE
 	if (!current->next)
+	{
 		one_command(current, my_env);
+	}
 	// CAS AVEC PLUSIEURS COMMANDES
 	else
 		multi_command(current, my_env);

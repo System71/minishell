@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/07 17:02:17 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:17:06 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINISHELL_H
 # define _XOPEN_SOURCE 700
 # include "lexer.h"
-# include "parsing_utils.h"
 # include "libft.h"
 # include "parser.h"
+# include "parsing_utils.h"
 // # include "pipex.h"
 # include "signals.h"
 # include "types.h"
@@ -36,12 +36,12 @@ void	new_pipex(t_command *current, char ***my_env);
 
 // ========== CMD PROCESS ==========
 int		cmd_process(t_command *cmd, char ***my_env);
+int		is_builtin(char ***my_env, char **args);
 
 // ========== BUILTIN ==========
 int		pwd(void);
 int		echo(char **argv);
 int		env(char ***my_env);
-int		exit_minishell(void);
 
 // ========== EXPORT ==========
 int		export(char ***my_env, char **full_cmd);

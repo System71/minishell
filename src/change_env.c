@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/10 14:07:13 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:15:38 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,6 @@ static int	get_len_env(char **my_env)
 	while (my_env[len])
 		len++;
 	return (len);
-}
-// On passe l'adresse de **my_env pour pouvoir le modifier
-// ATTENTION IL FAUT TRAITER LE CAS OU LA VARIABLE EXISTE DEJA ET CHANGE JUSTE DE VALEUR
-int	export(char ***my_env, char **full_cmd)
-{
-	char	**temp;
-	int		len;
-	int		i;
-
-	temp = *my_env;
-	len = get_len_env(*my_env);
-	*my_env = malloc(sizeof(char *) * (len + 2));
-	if (!*my_env)
-	{
-		perror("malloc envp");
-		exit(EXIT_FAILURE);
-	}
-	i = 0;
-	while (i < len)
-	{
-		(*my_env)[i] = strdup(temp[i]);
-		i++;
-	}
-	(*my_env)[i++] = strdup(full_cmd[1]);
-	(*my_env)[i] = NULL;
-	return (0);
 }
 
 static char	*extract_variable(char *str)
@@ -80,15 +54,14 @@ static int	remove_variable(char ***my_env, int position)
 		exit(EXIT_FAILURE);
 	}
 	i = 0;
-	j = 0;
-	while (j < len)
+	j = -1;
+	while (++j < len)
 	{
 		if (j != position)
 		{
 			(*my_env)[i] = strdup(temp[j]);
 			i++;
 		}
-		j++;
 	}
 	(*my_env)[i] = NULL;
 	return (0);
@@ -111,4 +84,59 @@ int	unset(char ***my_env, char **full_cmd)
 		i++;
 	}
 	return (1);
+}
+// remove variable if it exists
+static int	check_variable(char ***my_env, char **full_cmd)
+{
+	char	*variable_to_add;
+	char	*variable_to_compare;
+	int		i;
+
+	if (!ft_isalpha(*full_cmd[1]))
+	{
+		ft_putstr_fd("export : not a valid identifier\n", 2);
+		return (1);
+	}
+	variable_to_add = extract_variable(full_cmd[1]);
+	i = 0;
+	while ((*my_env)[i])
+	{
+		variable_to_compare = extract_variable((*my_env)[i]);
+		if (!ft_strncmp(variable_to_add, variable_to_compare,
+				ft_strlen(variable_to_compare)))
+		{
+			remove_variable(my_env, i);
+			return (0);
+		}
+		i++;
+	}
+	return (0);
+}
+
+// On passe l'adresse de **my_env pour pouvoir le modifier
+int	export(char ***my_env, char **full_cmd)
+{
+	char	**temp;
+	int		len;
+	int		i;
+
+	if (check_variable(my_env, full_cmd))
+		return (1);
+	temp = *my_env;
+	len = get_len_env(*my_env);
+	*my_env = malloc(sizeof(char *) * (len + 2));
+	if (!*my_env)
+	{
+		perror("malloc envp");
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (i < len)
+	{
+		(*my_env)[i] = strdup(temp[i]);
+		i++;
+	}
+	(*my_env)[i++] = strdup(full_cmd[1]);
+	(*my_env)[i] = NULL;
+	return (0);
 }
