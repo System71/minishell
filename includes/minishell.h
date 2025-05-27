@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/22 11:17:06 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:17:24 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@
 void	signals(void);
 
 // ========== NEW_PIPEX ==========
-void	new_pipex(t_command *current, char ***my_env);
-
-// ========== CMD PROCESS ==========
-int		cmd_process(t_command *cmd, char ***my_env);
-int		is_builtin(char ***my_env, char **args);
+void	new_pipex(t_command *current, t_env *my_env);
 
 // ========== BUILTIN ==========
 int		pwd(void);
@@ -50,7 +46,8 @@ int		unset(char ***my_env, char **full_cmd);
 // ========== CD ==========
 int		cd(char ***my_env, char **full_cmd);
 
-// ========== CMD NOT BUILT ==========
+// ========== CMD PROCESS ==========
+int		is_builtin(t_env *my_env, char **args);
 int		cmd_not_built(char ***envp, char **full_cmd);
 
 // ========== UTILS ==========

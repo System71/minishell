@@ -12,7 +12,6 @@ SRC = \
     $(SRC_DIR)new_pipex.c \
     $(SRC_DIR)builtin.c \
     $(SRC_DIR)change_env.c \
-    $(SRC_DIR)non_built.c \
     $(SRC_DIR)cmd_process.c \
     $(SRC_DIR)cd.c \
     $(SRC_DIR)utils.c \

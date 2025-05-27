@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/22 10:19:40 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:09:28 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static void	get_redirection(t_command *current, int *infile, int *outfile)
 	}
 }
 
-static void	child(t_command *current, int pipefd[2], int prev_fd,
-		char ***my_env)
+static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
 	int	infile;
 	int	outfile;
@@ -59,7 +58,7 @@ static void	child(t_command *current, int pipefd[2], int prev_fd,
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			exit_failure("dup2 failed\n");
 	}
-	cmd_process(current, my_env);
+	cmd_not_built(&my_env->env, current->args);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	if (prev_fd)
@@ -68,10 +67,11 @@ static void	child(t_command *current, int pipefd[2], int prev_fd,
 		close(infile);
 	if (outfile)
 		close(outfile);
-	exit(EXIT_FAILURE);
 }
 
-static void	one_command(t_command *current, char ***my_env)
+// if builtin => no fork needed
+// if no builtin => fork needed
+static void	one_command(t_command *current, t_env *my_env)
 {
 	int	infile;
 	int	outfile;
@@ -81,18 +81,21 @@ static void	one_command(t_command *current, char ***my_env)
 		current->pid = fork();
 		if (current->pid == -1)
 			exit_failure("fork : creation failed\n");
+		current->status = malloc(sizeof(int));
 		if (current->pid == 0)
 		{
 			infile = 0;
 			outfile = 0;
 			get_redirection(current, &infile, &outfile);
-			cmd_process(current, my_env);
+			cmd_not_built(&my_env->env, current->args);
 		}
 		waitpid(current->pid, current->status, 0);
+		if (WIFEXITED(*(current->status)))
+			my_env->error_code = WEXITSTATUS(*(current->status));
 	}
 }
 
-static void	multi_command(t_command *current, char ***my_env)
+static void	multi_command(t_command *current, t_env *my_env)
 {
 	int	pipefd[2];
 	int	prev_fd;
@@ -105,6 +108,7 @@ static void	multi_command(t_command *current, char ***my_env)
 		current->pid = fork();
 		if (current->pid == -1)
 			exit_failure("fork : creation failed\n");
+		current->status = malloc(sizeof(int));
 		if (current->pid == 0)
 			child(current, pipefd, prev_fd, my_env);
 		close(pipefd[1]);
@@ -112,12 +116,14 @@ static void	multi_command(t_command *current, char ***my_env)
 			close(prev_fd);
 		prev_fd = pipefd[0];
 		waitpid(current->pid, current->status, 0);
+		if (WIFEXITED(*(current->status)))
+			my_env->error_code = WEXITSTATUS(*(current->status));
 		current = current->next;
 	}
 	close(pipefd[0]);
 }
 
-void	new_pipex(t_command *current, char ***my_env)
+void	new_pipex(t_command *current, t_env *my_env)
 {
 	// CAS AVEC UNE SEULE COMMANDE
 	if (!current->next)

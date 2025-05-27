@@ -1,8 +1,8 @@
 #ifndef TYPE_H
 # define TYPE_H
 
-# include <stdlib.h>
 # include <stdbool.h>
+# include <stdlib.h>
 /***********************************/
 /**********     LEXER    **********/
 typedef struct s_dynamic_buffer
@@ -45,9 +45,9 @@ typedef struct s_token_segment
 
 typedef struct s_token
 {
-	t_token_type type;
+	t_token_type			type;
 	t_token_segment			*segments;
-	struct s_token *next;
+	struct s_token			*next;
 }							t_token;
 
 typedef enum e_lexer_state
@@ -59,17 +59,18 @@ typedef enum e_lexer_state
 
 /***********************************/
 /**********    ERROR    **********/
-typedef enum e_syntax_err {
-    ERR_NONE,
-    ERR_BONUS,
+typedef enum e_syntax_err
+{
+	ERR_NONE,
+	ERR_BONUS,
 	ERR_PIPE_AT_EDGE,
-    ERR_CONSECUTIVE_PIPES,
-    ERR_ISOLATED_OP,
-    ERR_MISSING_FILENAME,
+	ERR_CONSECUTIVE_PIPES,
+	ERR_ISOLATED_OP,
+	ERR_MISSING_FILENAME,
 	ERR_UNCLOSED_QUOTE,
 	ERR_LINE_CONTINUATION,
-    ERR_INVALID_SEQUENCE
-} t_syntax_err;
+	ERR_INVALID_SEQUENCE
+}							t_syntax_err;
 
 typedef struct s_utils_lexer
 {
@@ -86,67 +87,66 @@ typedef struct s_utils_lexer
 typedef struct s_redirection
 {
 	int						type;
-	char *target;
+	char					*target;
 	struct s_redirection	*next;
 }							t_redirection;
 
 typedef struct s_command
 {
-	char **args;
-	t_redirection *redirs;
+	char					**args;
+	t_redirection			*redirs;
 	pid_t					pid;
 	int						*status;
-	struct s_command *next;
+	struct s_command		*next;
 }							t_command;
 /***********************************/
 /**********     FILENAME    **********/
 typedef struct s_tempfile
 {
-    int     fd;
-    int     counter;
-    int     len;
-    char    *filename;
+	int						fd;
+	int						counter;
+	int						len;
+	char					*filename;
 }							t_tempfile;
 /***********************************/
 /**********     EXPAND    **********/
 typedef struct s_expand_vars
 {
-    char    *result;
-    char    tmp[2];
-    size_t  i;
-    size_t  start;
-    size_t  len;
-    char    *name;
-    char    *value;
-    char    *buf;
-}               t_expand_vars;
+	char					*result;
+	char					tmp[2];
+	size_t					i;
+	size_t					start;
+	size_t					len;
+	char					*name;
+	char					*value;
+	char					*buf;
+}							t_expand_vars;
 
 typedef struct s_expand_handle
 {
-	t_token			*current;
-	t_token_segment	*seg;
-	char			*old;
-	bool			can_expand;
-	bool			had_dollar;
-}				t_expand_handle;
+	t_token					*current;
+	t_token_segment			*seg;
+	char					*old;
+	bool					can_expand;
+	bool					had_dollar;
+}							t_expand_handle;
 
 /***********************************/
 /**********     HEREDOC    **********/
 typedef struct s_heredoc
 {
-    char    *delimiter;
-    char    *content;
-    size_t  content_len;
-    size_t  line_count;
-}           t_heredoc;
+	char					*delimiter;
+	char					*content;
+	size_t					content_len;
+	size_t					line_count;
+}							t_heredoc;
 
 /***********************************/
 /**********    ENV    **********/
 typedef struct s_env
 {
-    char    *key;    /* Nom de la variable, sans le '$' */
-    char    *value;  /* Valeur associée à la variable */
-    struct s_env *next; /* Élément suivant dans la liste */
-}               t_env;
+	char					**env;
+	int						error_code;
+}							t_env;
 
 #endif

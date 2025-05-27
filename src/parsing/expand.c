@@ -6,15 +6,15 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/13 19:39:17 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:03:06 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing_utils.h"
 #include "../../includes/parser.h"
+#include "../../includes/parsing_utils.h"
 #include "../../includes/types.h"
 
-// On suppose que last_exit_code 
+// On suppose que last_exit_code
 // est une variable mise à jour après chaque commande.
 /////////////////////////
 // A SUPP PAR LA SUITE
@@ -42,7 +42,7 @@ static void	expand_env(const char *in, t_expand_vars *v)
 	while (ft_isalnum(in[s + l]) || in[s + l] == '_')
 		l++;
 	v->name = ft_strndup(in + s, l);
-	v->value = getenv(v->name);// A REMPLACER GETENV
+	v->value = getenv(v->name); // A REMPLACER GETENV
 	if (!v->value)
 		append_str(&v->result, "");
 	else
@@ -52,13 +52,11 @@ static void	expand_env(const char *in, t_expand_vars *v)
 	v->i = s + l;
 }
 
-static void	expand_dollar(const char *in, t_expand_vars *v)
+static void	expand_dollar(const char *in, t_expand_vars *v, int error_code)
 {
-	int	last_exit_code = 420;
-
 	if (in[v->i + 1] == '?')
 	{
-		v->buf = ft_itoa(last_exit_code);
+		v->buf = ft_itoa(error_code);
 		append_str(&v->result, v->buf);
 		v->i += 2;
 	}
@@ -83,7 +81,8 @@ static void	expand_char(const char *in, t_expand_vars *v)
 	v->i++;
 }
 
-char	*check_expand(const char *input, t_quote_type quote, t_token *current)
+char	*check_expand(const char *input, t_quote_type quote, t_token *current,
+		int error_code)
 {
 	t_expand_vars	v;
 
@@ -96,7 +95,7 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current)
 	while (input[v.i])
 	{
 		if (input[v.i] == '$')
-			expand_dollar(input, &v);
+			expand_dollar(input, &v, error_code);
 		else
 			expand_char(input, &v);
 	}
@@ -112,7 +111,7 @@ void	init_expand_handle(t_expand_handle *handle, t_token *tokens)
 	handle->had_dollar = false;
 }
 
-void	expand_handle(t_token *tokens)
+void	expand_handle(t_token *tokens, int error_code)
 {
 	t_expand_handle	handle;
 
@@ -130,7 +129,7 @@ void	expand_handle(t_token *tokens)
 			handle.old = handle.seg->content;
 			if (handle.can_expand)
 				handle.seg->content = check_expand(handle.old,
-						handle.seg->quote, handle.current);
+						handle.seg->quote, handle.current, error_code);
 			else
 				handle.seg->content = ft_strdup(handle.old);
 			handle.seg->is_expand = handle.had_dollar;
