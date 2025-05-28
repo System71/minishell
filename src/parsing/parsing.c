@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/27 11:02:15 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:32:52 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../memory/mem.h"
 #include <stdio.h>
 
-t_command	*parse_input(const char *input, int error_code)
+t_command	*parse_input(const char *input, t_env *my_env)
 {
 	t_token		*tokens;
 	t_command	*cmd_list;
@@ -33,7 +33,7 @@ t_command	*parse_input(const char *input, int error_code)
 	}
 	tokens = group_tokens(tokens);
 	heredoc_handle(tokens);
-	expand_handle(tokens, error_code);
+	expand_handle(tokens, my_env);
 	split_handle(tokens);
 	cmd_list = parse_commands(tokens);
 	return (cmd_list);

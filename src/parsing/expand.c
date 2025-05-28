@@ -14,25 +14,28 @@
 #include "../../includes/parsing_utils.h"
 #include "../../includes/types.h"
 
-// On suppose que last_exit_code
-// est une variable mise à jour après chaque commande.
-/////////////////////////
-// A SUPP PAR LA SUITE
+char *ft_getenv(char *name, t_env *my_env)
+{
+	int		i;
+	size_t	name_len;
 
-/*char *ft_getenv(const char *name)*/
-/*{*/
-/*    t_env *e = g_env_list;*/
-/*    while (e)*/
-/*    {*/
-/*        if (ft_strcmp(e->key, name) == 0)*/
-/*            return (e->value);*/
-/*        e = e->next;*/
-/*    }*/
-/*    return ("");*/
-/*}*/
-/**/
-/////////////////////////////////////////
-static void	expand_env(const char *in, t_expand_vars *v)
+	i = 0;
+	name_len = ft_strlen(name);
+
+    while (my_env->env[i])
+    {
+		if (ft_strncmp(my_env->env[i], name, name_len) == 0
+			&& my_env->env[i][name_len] == '=')
+		{
+			// Retourne juste la valeur, pas le nom
+			return (my_env->env[i] + name_len + 1);
+		}
+		i++;
+	}
+    return ("");
+}
+
+static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 {
 	size_t	s;
 	size_t	l;
@@ -42,7 +45,7 @@ static void	expand_env(const char *in, t_expand_vars *v)
 	while (ft_isalnum(in[s + l]) || in[s + l] == '_')
 		l++;
 	v->name = ft_strndup(in + s, l);
-	v->value = getenv(v->name); // A REMPLACER GETENV
+	v->value = ft_getenv(v->name, my_env);
 	if (!v->value)
 		append_str(&v->result, "");
 	else
@@ -52,17 +55,17 @@ static void	expand_env(const char *in, t_expand_vars *v)
 	v->i = s + l;
 }
 
-static void	expand_dollar(const char *in, t_expand_vars *v, int error_code)
+static void	expand_dollar(const char *in, t_expand_vars *v, t_env *my_env)
 {
 	if (in[v->i + 1] == '?')
 	{
-		v->buf = ft_itoa(error_code);
+		v->buf = ft_itoa(my_env->error_code);
 		append_str(&v->result, v->buf);
 		v->i += 2;
 	}
 	else if (ft_isalpha(in[v->i + 1]) || in[v->i + 1] == '_')
 	{
-		expand_env(in, v);
+		expand_env(in, v, my_env);
 	}
 	else
 	{
@@ -82,7 +85,7 @@ static void	expand_char(const char *in, t_expand_vars *v)
 }
 
 char	*check_expand(const char *input, t_quote_type quote, t_token *current,
-		int error_code)
+		t_env *my_env)
 {
 	t_expand_vars	v;
 
@@ -95,7 +98,7 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current,
 	while (input[v.i])
 	{
 		if (input[v.i] == '$')
-			expand_dollar(input, &v, error_code);
+			expand_dollar(input, &v, my_env);
 		else
 			expand_char(input, &v);
 	}
@@ -111,7 +114,7 @@ void	init_expand_handle(t_expand_handle *handle, t_token *tokens)
 	handle->had_dollar = false;
 }
 
-void	expand_handle(t_token *tokens, int error_code)
+void	expand_handle(t_token *tokens, t_env *my_env)
 {
 	t_expand_handle	handle;
 
@@ -129,7 +132,7 @@ void	expand_handle(t_token *tokens, int error_code)
 			handle.old = handle.seg->content;
 			if (handle.can_expand)
 				handle.seg->content = check_expand(handle.old,
-						handle.seg->quote, handle.current, error_code);
+						handle.seg->quote, handle.current, my_env);
 			else
 				handle.seg->content = ft_strdup(handle.old);
 			handle.seg->is_expand = handle.had_dollar;

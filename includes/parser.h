@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:58 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/27 11:02:38 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:01:28 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char		*generate_temp_filename(void);
 
 // EXPAND
 char		*check_expand(const char *input, t_quote_type quote,
-				t_token *current, int error_code);
-void		expand_handle(t_token *tokens, int error_code);
+				t_token *current, t_env *my_env);
+void		expand_handle(t_token *tokens, t_env *my_env);
 int			append_str(char **dest, const char *src);
 char		*concat_segments(t_token *token);
 

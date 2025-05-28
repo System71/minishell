@@ -28,7 +28,7 @@ void				print_tokens(t_token *tokens);
 
 // LEXER
 t_token				*lexer(const char *input);
-t_command			*parse_input(const char *input, int error_code);
+t_command			*parse_input(const char *input, t_env *my_env);
 
 // CREATE TOKEN
 t_token				*create_token_with_segment(const char *content,

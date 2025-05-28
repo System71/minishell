@@ -6,28 +6,53 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/27 15:31:22 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/05/28 21:16:33 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "./memory/mem.h"
 
-int	main(int argc, char **argv, char **envp)
+static t_env	*init_env(int argc, char **argv, char **envp)
 {
-	t_command	*cmd_list;
-	t_command	*current;
-	t_env		*my_env;
-	char		*input;
+	t_env		*cpy_env;
 
 	(void)argc;
 	(void)argv;
 	signals();
-	my_env = malloc(sizeof(t_env));
-	my_env->env = env_cpy(envp);
-	if (!my_env->env)
+	cpy_env = malloc(sizeof(t_env));
+	cpy_env->env = env_cpy(envp);
+	if (!cpy_env->env)
 		exit_failure("env copy crashed");
-	my_env->error_code = 0;
+	cpy_env->error_code = 0;
+	return(cpy_env);
+}
+
+static void destroy_file_heredoc(t_command *cmd_list)
+{
+	while (cmd_list)
+	{
+		while(cmd_list->redirs)
+		{
+			if (cmd_list->redirs->type == T_HEREDOC)
+			{
+				if (unlink(cmd_list->redirs->target) == -1	)
+    				perror("unlink failed");	
+			}
+			cmd_list->redirs = cmd_list->redirs->next;
+		}
+	  	cmd_list = cmd_list->next;
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_command	*cmd_list;
+	t_env		*my_env;
+	char		*input;
+
+
+	my_env = init_env(argc, argv, envp);
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -38,16 +63,14 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		cmd_list = parse_input(input, my_env->error_code);
+		cmd_list = parse_input(input, my_env);
 		print_commands(cmd_list);
-		// Pourquoi redefinir cmd_list a current ?
-		// Il faudra une protection
-		// if (cmd_list != NULL)
-		// new_pipex(...);
-		current = cmd_list;
-		new_pipex(current, my_env);
+		if (cmd_list != NULL)
+		{
+			new_pipex(cmd_list, my_env);
+			destroy_file_heredoc(cmd_list);
+		}
 		free(input);
-		// AJOUTER SUPPRESSION FICHIER TEMPORAIRE HEREDOC
 	}
 	mem_free_all();
 }
