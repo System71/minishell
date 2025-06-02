@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 14:28:25 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:45:38 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	cmd_not_built(char ***my_env, char **args)
 	char	**paths;
 	char	*end_path;
 
+	execve(args[0], args, *my_env);
 	paths = get_paths(*my_env);
 	if (!paths)
 		return (exit_failure("get_paths"));
