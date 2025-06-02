@@ -6,17 +6,26 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/27 11:35:34 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:07:09 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // getcwd(NULL,0) allows memory to be allocated dynamically
-int	pwd(void)
+int	pwd(char **args)
 {
 	char	*buffer;
 
+	if (!ft_strncmp(args[1], "-", 1))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(ft_substr(args[1], 0, 2), 2);
+		ft_putstr_fd(": invalid option\n", 2);
+		return (2);
+	}
 	buffer = getcwd(NULL, 0);
 	if (!buffer)
 		perror("pwd");

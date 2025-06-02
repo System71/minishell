@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/27 15:17:24 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:00:57 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	signals(void);
 void	new_pipex(t_command *current, t_env *my_env);
 
 // ========== BUILTIN ==========
-int		pwd(void);
+int		pwd(char **args);
 int		echo(char **argv);
 int		env(char ***my_env);
 
