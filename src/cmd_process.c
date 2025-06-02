@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_built.c                                        :+:      :+:    :+:   */
+/*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/27 15:16:17 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:28:25 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ int	cmd_not_built(char ***my_env, char **args)
 		return (exit_failure("args malloc ft_strjoin"));
 	if (cmd_is_valid(paths, end_path))
 		exec_cmd(*my_env, paths, args, end_path);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(args[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
 	free_all(paths, args, end_path);
 	exit(127);
 }
