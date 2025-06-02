@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 17:14:52 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:56:11 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,12 @@ int	env(char ***my_env)
 		i++;
 	}
 	return (0);
+}
+
+int	my_exit(char **args)
+{
+	if (!args[1])
+		exit(EXIT_SUCCESS);
+	else
+		exit(ft_atoi(args[1]));
 }

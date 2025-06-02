@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 16:01:17 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:53:53 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	is_builtin(t_env *my_env, char **args)
 	else if (!ft_strncmp(args[0], "env", ft_strlen("env") + 1))
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(args[0], "exit", ft_strlen("exit") + 1))
-		exit(EXIT_SUCCESS);
+		my_env->error_code = my_exit(args);
 	else
 		return (-1);
 	return (my_env->error_code);
