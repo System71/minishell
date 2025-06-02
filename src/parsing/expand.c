@@ -50,7 +50,6 @@ static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 		append_str(&v->result, "");
 	else
 		append_str(&v->result, v->value);
-	///// VOIR REMPLACER CE BLOC
 	free(v->name);
 	v->i = s + l;
 }
