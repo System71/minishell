@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/27 15:09:28 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:45:19 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	get_redirection(t_command *current, int *infile, int *outfile)
 {
 	while (current->redirs)
 	{
-		if (current->redirs->type == T_REDIRECT_IN)
+		if (current->redirs->type == T_REDIRECT_IN
+			|| current->redirs->type == T_HEREDOC)
 		{
 			*infile = open(current->redirs->target, O_RDONLY);
 			if (dup2(*infile, STDIN_FILENO) == -1)
