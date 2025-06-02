@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 16:07:09 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:30:42 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	pwd(char **args)
 {
 	char	*buffer;
 
-	if (!ft_strncmp(args[1], "-", 1))
+	if (args[1] && !ft_strncmp(args[1], "-", 1))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(args[0], 2);
