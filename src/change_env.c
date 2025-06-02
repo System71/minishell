@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/22 15:15:38 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:37:20 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ int	unset(char ***my_env, char **full_cmd)
 	char	*variable_to_compare;
 	int		i;
 
+	if (full_cmd[1] && !ft_strncmp(full_cmd[1], "-", 1))
+	{
+		ft_putstr_fd("minishell: unset : ", 2);
+		ft_putstr_fd(ft_substr(full_cmd[1], 0, 2), 2);
+		ft_putstr_fd(": invalid option\n", 2);
+		return (2);
+	}
 	i = 0;
 	while ((*my_env)[i])
 	{
