@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:27:48 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 17:06:26 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:15:36 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,14 @@ static int	go_somewhere(char ***my_env, char **full_cmd)
 	}
 	if (!ft_strcmp(full_cmd[1], "-"))
 		return (go_last_pwd(my_env));
+	if (!ft_strncmp(ft_substr(full_cmd[1], 0, 1), "-", 1)
+		&& ft_strlen(full_cmd[1]) > 1)
+	{
+		ft_putstr_fd("minishell: cd :", 2);
+		ft_putstr_fd(ft_substr(full_cmd[1], 0, 2), 2);
+		ft_putstr_fd(": invalid option\n", 2);
+		return (2);
+	}
 	if (chdir(destination))
 	{
 		error_destination = ft_strjoin("minishell: cd: ", destination);
