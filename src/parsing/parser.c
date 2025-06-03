@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/28 16:16:19 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:06:47 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -61,7 +61,7 @@ static t_redirection	*build_redirection(t_token *tok)
 			exit(EXIT_FAILURE);
 		write_heredoc_to_file(tmp, tok->segments->content);
 		redir->target = tmp;
-		/*redir->type = T_REDIRECT_IN;*/
+		redir->type = T_HEREDOC;
 	}
 	else
 	{

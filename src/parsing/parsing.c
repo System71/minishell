@@ -6,12 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/28 16:32:52 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:39:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 #include "../../includes/parser.h"
+#include "../../includes/signals.h"
 #include "../memory/mem.h"
 #include <stdio.h>
 
@@ -21,18 +22,19 @@ t_command	*parse_input(const char *input, t_env *my_env)
 	t_command	*cmd_list;
 
 	tokens = lexer(input);
-	if (!tokens)
-	{
-		mem_free_all();
-		return (NULL);
-	}
-	if (!check_syntax(tokens))
+	if (!tokens || !check_syntax(tokens))
 	{
 		mem_free_all();
 		return (NULL);
 	}
 	tokens = group_tokens(tokens);
-	heredoc_handle(tokens);
+	heredoc_handle(tokens, my_env);
+	if (g_signal == SIGINT)
+	{
+		g_signal = 0;
+		mem_free_all();
+		return (NULL);
+	}
 	expand_handle(tokens, my_env);
 	split_handle(tokens);
 	cmd_list = parse_commands(tokens);

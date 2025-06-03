@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/05/27 15:17:24 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:32:34 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-// ========== SIGNALS ==========
-void	signals(void);
 
 // ========== NEW_PIPEX ==========
 void	new_pipex(t_command *current, t_env *my_env);

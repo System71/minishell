@@ -52,6 +52,8 @@ SRC = \
     $(PARSING_UTILS)ft_itoa.c \
     $(PARSING_UTILS)get_int_size.c \
     $(PARSING_UTILS)append_all.c \
+    $(PARSING_UTILS)heredoc_utils.c \
+    $(PARSING_UTILS)heredoc_utils.c \
     $(PARSING_UTILS)is_fonction.c \
     $(PARSING_UTILS)ft_strchr.c \
     $(PARSING_UTILS)ft_split.c \

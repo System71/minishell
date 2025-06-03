@@ -38,7 +38,7 @@ void	process_quote_char(t_utils_lexer *storage, t_token **tokens)
 	if ((storage->state == LEXER_SINGLE_QUOTE && storage->c == '\'')
 		|| (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"'))
 	{
-		if (storage->new_arg == true)
+		if (storage->new_arg == true && storage->buffer->len > 0)
 		{
 			storage->new_arg = false;
 			flush_buffer(storage, tokens, false);

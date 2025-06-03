@@ -17,7 +17,7 @@
 # include <stdbool.h>
 
 // HERE_DOC
-int			heredoc_handle(t_token *tokens);
+int			heredoc_handle(t_token *tokens, t_env *my_env);
 char		*generate_temp_filename(void);
 
 // EXPAND
@@ -26,6 +26,8 @@ char		*check_expand(const char *input, t_quote_type quote,
 void		expand_handle(t_token *tokens, t_env *my_env);
 int			append_str(char **dest, const char *src);
 char		*concat_segments(t_token *token);
+void	init_expand_handle(t_expand_handle *handle, t_token *tokens);
+char *ft_getenv(char *name, t_env *my_env);
 
 // SPLIT_TOKEN
 void		split_handle(t_token *tok_list);

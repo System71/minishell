@@ -6,34 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/27 11:03:06 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:19:26 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
 #include "../../includes/parsing_utils.h"
 #include "../../includes/types.h"
-
-char *ft_getenv(char *name, t_env *my_env)
-{
-	int		i;
-	size_t	name_len;
-
-	i = 0;
-	name_len = ft_strlen(name);
-
-    while (my_env->env[i])
-    {
-		if (ft_strncmp(my_env->env[i], name, name_len) == 0
-			&& my_env->env[i][name_len] == '=')
-		{
-			// Retourne juste la valeur, pas le nom
-			return (my_env->env[i] + name_len + 1);
-		}
-		i++;
-	}
-    return ("");
-}
 
 static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 {
@@ -102,15 +81,6 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current,
 			expand_char(input, &v);
 	}
 	return (v.result);
-}
-
-void	init_expand_handle(t_expand_handle *handle, t_token *tokens)
-{
-	handle->current = tokens;
-	handle->seg = NULL;
-	handle->old = NULL;
-	handle->can_expand = false;
-	handle->had_dollar = false;
 }
 
 void	expand_handle(t_token *tokens, t_env *my_env)

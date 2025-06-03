@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:26:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/30 08:15:29 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:16:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/lexer.h"
