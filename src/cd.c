@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:27:48 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 18:07:20 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:34:30 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	cd(char ***my_env, char **full_cmd)
 {
 	if (full_cmd[2])
 	{
-		ft_putstr_fd("minishell: cd : too many arguments\n", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
 	if (!full_cmd[1] || !ft_strcmp(full_cmd[1], "~"))

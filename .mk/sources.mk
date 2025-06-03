@@ -15,6 +15,7 @@ SRC = \
     $(SRC_DIR)cmd_process.c \
     $(SRC_DIR)cd.c \
     $(SRC_DIR)utils.c \
+    $(SRC_DIR)exit.c \
     \
     $(PARSING_DIR)lexer.c \
     $(PARSING_DIR)parsing.c \
