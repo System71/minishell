@@ -19,7 +19,9 @@ static t_env	*init_env(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	cpy_env = ft_xmalloc(sizeof(t_env));
+	cpy_env = malloc(sizeof(t_env));
+	if (!cpy_env)
+		return (NULL);
 	cpy_env->env = env_cpy(envp);
 	if (!cpy_env->env)
 		exit_failure("env copy crashed");
@@ -50,6 +52,12 @@ char	*get_prompt(t_env *my_env)
 
 	snprintf(prompt, sizeof(prompt), "[%d] minishell> ", my_env->error_code);
 	return (prompt);
+}
+
+void ft_free_loop(char *input)
+{
+	free(input);
+	mem_free_all(8);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -84,7 +92,7 @@ int	main(int argc, char **argv, char **envp)
 			new_pipex(cmd_list, my_env);
 			destroy_file_heredoc(cmd_list);
 		}
-		free(input);
+		ft_free_loop(input);
 	}
-	mem_free_all();
+	mem_free_all(60);
 }

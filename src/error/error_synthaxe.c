@@ -12,6 +12,7 @@
 #include "../../includes/types.h"
 #include "../../includes/parsing_utils.h"
 #include "../../includes/lexer.h"
+#include "../../includes/signals.h"
 
 bool	is_invalid_sequence(t_token *prev, t_token *cur)
 {
@@ -54,7 +55,7 @@ t_syntax_err	verify_token_sequence(t_token *tokens, t_check_synt *err_data)
 	return (ERR_NONE);
 }
 
-bool	check_syntax(t_token *tokens)
+bool	check_syntax(t_token *tokens, t_env *my_env)
 {
 	t_check_synt	err_data;
 
@@ -64,6 +65,7 @@ bool	check_syntax(t_token *tokens)
 	{
 		report_syntax_error(err_data.code_err
 					  , err_data.token_err->segments->content);
+		my_env->error_code = 2;
 		return (false);
 	}
 	return (true);

@@ -20,7 +20,7 @@
 
 // ERROR
 void				report_syntax_error(t_syntax_err err, const char *input);
-bool				check_syntax(t_token *tokens);
+bool				check_syntax(t_token *tokens, t_env *my_env);
 
 // DEBUG
 t_token_type		get_token_type(const char *str);

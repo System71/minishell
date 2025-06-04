@@ -22,7 +22,7 @@ char	**env_cpy(char **envp)
 	envp_len = 0;
 	while (envp[envp_len])
 		envp_len++;
-	cpy = ft_xmalloc(sizeof(char *) * (envp_len + 1));
+	cpy = malloc(sizeof(char *) * (envp_len + 1));
 	if (!cpy)
 		return (NULL);
 	i = 0;
