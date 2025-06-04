@@ -21,8 +21,8 @@ typedef struct s_mem_node
 	struct s_mem_node	*next;
 }		t_mem_node;
 
-void	*ft_xmalloc(int size);
-void	mem_register(void *ptr);
-void	mem_free_all(void);
+void	*ft_xmalloc(int size, int which_list);
+void	mem_register(void *ptr, int which_list);
+void	mem_free_all(int which_list);
 
 #endif /* MEM_H */

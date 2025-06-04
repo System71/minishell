@@ -13,24 +13,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static t_mem_node	**get_mem_list(void)
+static t_mem_node	**get_mem_list(int which_list)
 {
-	static t_mem_node	*head = NULL;
+	static t_mem_node	*heart = NULL;
+	static t_mem_node	*loop = NULL;
 
-	return (&head);
+	if (which_list == 60)
+		return (&heart);
+	if (which_list == 8)
+		return (&loop);
+	return (NULL);
 }
 
-void	mem_register(void *ptr)
+void	mem_register(void *ptr, int which_list)
 {
 	t_mem_node	*node;
 	t_mem_node	**head;
 
-	head = get_mem_list();
+	head = get_mem_list(which_list);
 	node = malloc(sizeof * node);
 	if (node == NULL)
 	{
 		perror("minishell: malloc");
-		mem_free_all();
+		mem_free_all(60);
+		mem_free_all(8);
 		exit(EXIT_FAILURE);
 	}
 	node->ptr = ptr;
@@ -38,13 +44,13 @@ void	mem_register(void *ptr)
 	*head = node;
 }
 
-void	mem_free_all(void)
+void	mem_free_all(int which_list)
 {
 	t_mem_node	*cur;
 	t_mem_node	*tmp;
 	t_mem_node	**head;
 
-	head = get_mem_list();
+	head = get_mem_list(which_list);
 	cur = *head;
 	while (cur)
 	{
@@ -56,7 +62,7 @@ void	mem_free_all(void)
 	*head = NULL;
 }
 
-void	*ft_xmalloc(int size)
+void	*ft_xmalloc(int size, int which_list)
 {
 	void	*p;
 
@@ -64,9 +70,10 @@ void	*ft_xmalloc(int size)
 	if (p == NULL)
 	{
 		perror("minishell: malloc");
-		mem_free_all();
+		mem_free_all(60);
+		mem_free_all(8);
 		exit(EXIT_FAILURE);
 	}
-	mem_register(p);
+	mem_register(p, which_list);
 	return (p);
 }

@@ -13,7 +13,7 @@
 #include "../../src/memory/mem.h"
 #include <unistd.h>
 /***** strdup *****/
-char	*ft_strdup(const char *s)
+char	*ft_strdup_oli(const char *s)
 {
 	size_t	len;
 	char	*copy;
