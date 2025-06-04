@@ -26,7 +26,7 @@ bool	is_invalid_sequence(t_token *prev, t_token *cur)
 	return (false);
 }
 
-t_syntax_err	verify_token_sequence(t_token *tokens)
+t_syntax_err	verify_token_sequence(t_token *tokens, t_check_synt *err_data)
 {
 	t_token	*prev;
 	t_token	*cur;
@@ -35,6 +35,7 @@ t_syntax_err	verify_token_sequence(t_token *tokens)
 	cur = tokens;
 	while (cur)
 	{
+		err_data->token_err = cur;
 		if (is_bonus_token(cur))
 			return (ERR_BONUS);
 		if (is_pipe_at_edge(prev, cur))
@@ -55,12 +56,14 @@ t_syntax_err	verify_token_sequence(t_token *tokens)
 
 bool	check_syntax(t_token *tokens)
 {
-	t_syntax_err	err;
+	t_check_synt	err_data;
 
-	err = verify_token_sequence(tokens);
-	if (err != ERR_NONE)
+	
+	err_data.code_err = verify_token_sequence(tokens, &err_data);
+	if (err_data.code_err != ERR_NONE)
 	{
-		report_syntax_error(err, tokens->segments->content);
+		report_syntax_error(err_data.code_err
+					  , err_data.token_err->segments->content);
 		return (false);
 	}
 	return (true);

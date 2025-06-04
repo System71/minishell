@@ -72,6 +72,12 @@ typedef enum e_syntax_err
 	ERR_INVALID_SEQUENCE
 }							t_syntax_err;
 
+typedef struct s_check_synt
+{
+	t_syntax_err	code_err;
+	t_token			*token_err;
+}							t_check_synt;
+
 typedef struct s_utils_lexer
 {
 	t_lexer_state			state;
