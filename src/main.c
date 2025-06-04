@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/03 14:22:51 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:03:24 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static t_env	*init_env(int argc, char **argv, char **envp)
 {
-	t_env		*cpy_env;
+	t_env	*cpy_env;
 
 	(void)argc;
 	(void)argv;
@@ -54,10 +54,10 @@ char	*get_prompt(t_env *my_env)
 	return (prompt);
 }
 
-void ft_free_loop(char *input)
+void	ft_free_loop(char *input)
 {
 	free(input);
-	mem_free_all(8);
+	mem_free_all();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -94,5 +94,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_free_loop(input);
 	}
-	mem_free_all(60);
+	mem_free_all();
 }
