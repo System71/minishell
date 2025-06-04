@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/03 16:00:33 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:12:27 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	code_is_digit(char *code)
 	return (1);
 }
 
-static int	get_error_code(int code, char **args)
+static int	get_error_code(int code)
 {
 	if (code > 255)
 	{
@@ -63,7 +63,7 @@ int	my_exit(char **args)
 	}
 	else
 	{
-		error_code = get_error_code(ft_atoi(args[1]), args);
+		error_code = get_error_code(ft_atoi(args[1]));
 		exit(error_code);
 	}
 }
