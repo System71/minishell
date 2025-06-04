@@ -15,19 +15,19 @@
 void	report_syntax_error(t_syntax_err err, const char *input)
 {
 	if (err == ERR_UNCLOSED_QUOTE)
-		printf("syntax error: unclosed quote in `%s`\n", input);
+		printf("syntax error: unclosed quote \n");
 	else if (err == ERR_LINE_CONTINUATION)
 		printf("syntax error: unexpected end of line (\\) in `%s`\n", input);
 	else if (err == ERR_BONUS)
 		printf("We don't make a Bonus\n");
 	else if (err == ERR_PIPE_AT_EDGE)
-		printf("syntax error pipe are at edge\n");
+		printf("syntax error near unexpected token `|`\n");
 	else if (err == ERR_CONSECUTIVE_PIPES)
 		printf("syntax error near unexpected token `|`\n");
 	else if (err == ERR_ISOLATED_OP)
-		printf("syntax error: isolated control operator\n");
+		printf("syntax error near unexpected token `%s`\n", input);
 	else if (err == ERR_MISSING_FILENAME)
-		printf("syntax error: missing name for redirect\n");
+		printf("syntax error near unexpected token `%s`\n", input);
 	else if (err == ERR_INVALID_SEQUENCE)
 		printf("syntax error near invalid token sequence\n");
 }
