@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/03 13:45:34 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:53:39 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,55 @@ int	pwd(char **args)
 	free(buffer);
 	return (0);
 }
+
 int	echo(char **full_cmd)
 {
 	int	i;
+	int	j;
+	int	no_flag;
+	int	bad_flag;
 
+	no_flag = 1;
+	bad_flag = 0;
 	i = 1;
-	if (!ft_strncmp(full_cmd[1], "-n", 3))
+	while (full_cmd[i])
 	{
-		while (full_cmd[++i])
+		if (!ft_strncmp(full_cmd[i], "-n", 2) && !bad_flag)
 		{
+			j = 2;
+			while (full_cmd[i][j])
+			{
+				if (full_cmd[i][j] == 'n')
+					j++;
+				else
+				{
+					bad_flag = 1;
+					ft_putstr_fd(full_cmd[i], 1);
+					if (full_cmd[i + 1])
+						ft_putstr_fd(" ", 1);
+					break ;
+				}
+			}
+			if (i == 1 && !bad_flag)
+				no_flag = 0;
+		}
+		else
+		{
+			bad_flag = 1;
 			ft_putstr_fd(full_cmd[i], 1);
 			if (full_cmd[i + 1])
 				ft_putstr_fd(" ", 1);
 		}
+		i++;
 	}
-	else
-	{
-		while (full_cmd[i])
-		{
-			ft_putstr_fd(full_cmd[i], 1);
-			if (full_cmd[i + 1])
-				ft_putstr_fd(" ", 1);
-			i++;
-		}
+	if (no_flag && bad_flag)
 		ft_putstr_fd("\n", 1);
-	}
 	return (0);
 }
 
 int	env(char ***my_env)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while ((*my_env)[i])
@@ -76,4 +94,3 @@ int	env(char ***my_env)
 	}
 	return (0);
 }
-
