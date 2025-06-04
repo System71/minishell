@@ -6,11 +6,12 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/04/10 14:41:47 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:30:37 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "./memory/mem.h"
 
 char	**env_cpy(char **envp)
 {
@@ -21,7 +22,7 @@ char	**env_cpy(char **envp)
 	envp_len = 0;
 	while (envp[envp_len])
 		envp_len++;
-	cpy = malloc(sizeof(char *) * (envp_len + 1));
+	cpy = ft_xmalloc(sizeof(char *) * (envp_len + 1));
 	if (!cpy)
 		return (NULL);
 	i = 0;

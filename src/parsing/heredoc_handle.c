@@ -6,11 +6,12 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:56:33 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/29 20:36:54 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:38:39 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/parsing_utils.h"
 #include "../../includes/types.h"
+#include "../../includes/signals.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,21 +47,33 @@ static void	init_hd_struct(t_heredoc *hd, t_token *curr)
 	hd->line_count = 0;
 }
 
-static void	handle_single_heredoc(t_token *curr)
+void	heredoc_storage(t_token *curr, t_heredoc hd)
+{
+	if (hd.content)
+		curr->segments->content = hd.content;
+	else
+		curr->segments->content = ft_strdup("");
+}
+
+static void	handle_single_heredoc(t_token *curr, t_env *my_env)
 {
 	t_heredoc	hd;
 	char		*line;
 
+	rl_event_hook = read_line_hook;
 	init_hd_struct(&hd, curr);
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, hd.delimiter) == 0)
+		if (g_signal == SIGINT)
 		{
+			printf("LOLOL\n");
+			my_env->error_code = 130;
 			free(line);
-			break ;
+			return ;
 		}
-		if (append_heredoc_line(&hd, line) < 0)
+		if (ft_strcmp(line, hd.delimiter) == 0
+			|| append_heredoc_line(&hd, line) < 0)
 		{
 			free(line);
 			break ;
@@ -68,13 +81,10 @@ static void	handle_single_heredoc(t_token *curr)
 		hd.line_count++;
 		free(line);
 	}
-	if (hd.content)
-		curr->segments->content = hd.content;
-	else
-		curr->segments->content = ft_strdup("");
+	heredoc_storage(curr, hd);
 }
 
-int	heredoc_handle(t_token *tokens)
+void	heredoc_handle(t_token *tokens, t_env *my_env)
 {
 	t_token	*curr;
 
@@ -82,11 +92,14 @@ int	heredoc_handle(t_token *tokens)
 	while (curr)
 	{
 		if (curr->type == T_HEREDOC)
-			handle_single_heredoc(curr);
+		{
+			set_signals_heredoc();
+			handle_single_heredoc(curr, my_env);
+			set_signals_interactive();
+		}
 		if (curr->next == NULL)
 			break ;
 		else
 			curr = curr->next;
 	}
-	return (0);
 }
