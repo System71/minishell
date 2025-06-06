@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 18:53:53 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/06 08:52:57 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	cmd_not_built(char ***my_env, char **args)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(args[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
-	free_all(paths, args, end_path);
+	/*free_all(paths, args, end_path);*/
 	exit(127);
 }
 int	is_builtin(t_env *my_env, char **args)

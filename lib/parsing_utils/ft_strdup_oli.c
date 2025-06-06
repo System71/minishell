@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 17:22:41 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:22:41 by okientzl         ###   ########.fr       */
+/*   Created: 2025/05/07 17:29:06 by okientzl          #+#    #+#             */
+/*   Updated: 2025/05/07 17:29:06 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/parsing_utils.h"
 #include "../../src/memory/mem.h"
 #include <unistd.h>
-
-/***** itoa *****/
-char	*ft_itoa(int n)
+/***** strdup *****/
+char	*ft_strdup_oli(const char *s, int which_list)
 {
-	char		*result;
-	long int	ln;
-	int			len;
+	size_t	len;
+	char	*copy;
 
-	ln = n;
-	len = get_int_size(n);
-	result = ft_xmalloc((len + 1) * sizeof(char), 8);
-	if (!result)
+	if (!s)
 	{
-		write(2, "Error : Fail malloc ft_itoa\n", 28);
+		write(2, "Error : pointer NULL in ft_strdup\n", 34);
 		return (NULL);
 	}
-	result[len] = '\0';
-	if (ln < 0)
-		ln = -ln;
-	while (len--)
-	{
-		result[len] = ln % 10 + '0';
-		ln = ln / 10;
-	}
-	if (n < 0)
-		result[0] = '-';
-	return (result);
+	len = ft_strlen(s);
+	copy = ft_xmalloc((len + 1) * sizeof(char), which_list);
+	ft_memcpy(copy, s, len);
+	copy[len] = '\0';
+	return (copy);
 }

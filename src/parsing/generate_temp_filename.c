@@ -78,7 +78,7 @@ char	*generate_temp_filename(void)
 	t_tempfile	tf;
 	int			status;
 
-	tf.filename = ft_xmalloc(BUF_SIZE);
+	tf.filename = ft_xmalloc(BUF_SIZE, 8);
 	tf.tries = 0;
 	while (tf.tries < MAX_TRY)
 	{

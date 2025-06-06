@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 04:50:58 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/28 17:01:28 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/06 07:05:14 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 // HERE_DOC
 int			heredoc_handle(t_token *tokens, t_env *my_env);
 char		*generate_temp_filename(void);
+void	destroy_file_heredoc(t_command *cmd_list);
 
 // EXPAND
 char		*check_expand(const char *input, t_quote_type quote,

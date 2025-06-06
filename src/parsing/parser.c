@@ -32,7 +32,7 @@ static void	write_heredoc_to_file(const char *filename, const char *content)
 	ret = write(fd, content, len);
 	if (ret < 0 || (size_t)ret != len)
 	{
-		mem_free_all();
+		mem_free_all(8);
 		perror("minishell: write heredoc temp");
 		close(fd);
 		exit(EXIT_FAILURE);
@@ -53,7 +53,7 @@ static t_redirection	*build_redirection(t_token *tok)
 	t_redirection	*redir;
 	char			*tmp;
 
-	redir = ft_xmalloc(sizeof * redir);
+	redir = ft_xmalloc(sizeof * redir, 8);
 	if (tok->type == T_HEREDOC)
 	{
 		tmp = generate_temp_filename();

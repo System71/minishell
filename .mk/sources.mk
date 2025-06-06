@@ -1,20 +1,20 @@
 SRC_DIR        = src/
 PARSING_DIR    = $(SRC_DIR)parsing/
+EXECUTION_DIR    = $(SRC_DIR)execution/
 MEMORY_DIR    = $(SRC_DIR)memory/
 ERROR_DIR    = $(SRC_DIR)error/
 PARSING_UTILS  = lib/parsing_utils/
 LIBFT_DIR      = lib/libft/
 PIPEX_DIR      = lib/pipex/
-
 SRC = \
     $(SRC_DIR)main.c \
+    $(SRC_DIR)init_minishell.c \
     $(SRC_DIR)signals.c \
     $(SRC_DIR)new_pipex.c \
     $(SRC_DIR)builtin.c \
     $(SRC_DIR)change_env.c \
     $(SRC_DIR)cmd_process.c \
     $(SRC_DIR)cd.c \
-    $(SRC_DIR)utils.c \
     $(SRC_DIR)exit.c \
     \
     $(PARSING_DIR)lexer.c \
@@ -34,6 +34,8 @@ SRC = \
     $(PARSING_DIR)split_handle.c \
     $(PARSING_DIR)print_var.c \
     \
+	$(EXECUTION_DIR)execute_and_cleanup.c \
+    \
     $(MEMORY_DIR)ft_xmalloc.c \
 	$(ERROR_DIR)error_parsing_return.c\
 	$(ERROR_DIR)error_synthaxe.c\
@@ -45,9 +47,9 @@ SRC = \
     $(PARSING_UTILS)ft_iswhitespace.c \
     $(PARSING_UTILS)ft_memcpy.c \
     $(PARSING_UTILS)ft_realloc.c \
-    $(PARSING_UTILS)ft_strdup.c \
+    $(PARSING_UTILS)ft_strdup_oli.c \
     $(PARSING_UTILS)ft_strcat.c \
-    $(PARSING_UTILS)ft_strndup.c \
+    $(PARSING_UTILS)ft_strndup_oli.c \
     $(PARSING_UTILS)ft_strcpy.c \
     $(PARSING_UTILS)ft_strcmp.c \
     $(PARSING_UTILS)ft_itoa.c \
@@ -63,6 +65,7 @@ SRC = \
 HEADERS = \
 		   includes/minishell.h \
 			includes/lexer.h \
+			includes/heredoc.h \
 			includes/parser.h \
 			includes/parsing_utils.h \
 			includes/types.h \

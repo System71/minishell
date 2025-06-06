@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 04:50:09 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/27 10:58:24 by prigaudi         ###   ########.fr       */
+/*   Created: 2025/06/06 07:02:17 by okientzl          #+#    #+#             */
+/*   Updated: 2025/06/06 07:05:16 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef LEXER_H
 # define LEXER_H

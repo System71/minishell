@@ -17,7 +17,7 @@ static t_command	*create_command(void)
 {
 	t_command	*cmd;
 
-	cmd = ft_xmalloc(sizeof(t_command));
+	cmd = ft_xmalloc(sizeof(t_command), 8);
 	cmd->args = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
@@ -35,7 +35,7 @@ void	append_arg_to_command(t_command *cmd, char *arg)
 			count++;
 	}
 	cmd->args = ft_realloc(cmd->args, sizeof(char *) *(count),
-			sizeof(char *) *(count + 2));
+			sizeof(char *) *(count + 2), 8);
 	cmd->args[count] = arg;
 	cmd->args[count + 1] = NULL;
 }

@@ -10,8 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
+#include "memory/mem.h"
 
+void	exit_shell(void)
+{
+	ft_putstr_fd("exit\n", 2);
+	rl_clear_history();
+	mem_free_all(60);
+	exit(0);
+}
+
+int	exit_failure(char *message)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(message, 2);
+	return (1);
+}
+// ??????????????????
 static int	code_is_digit(char *code)
 {
 	int	i;

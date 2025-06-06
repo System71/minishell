@@ -6,12 +6,18 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:42:21 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/13 19:23:40 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:38:15 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mem.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+void	ft_free_loop(char *input)
+{
+	free(input);
+	mem_free_all(8);
+}
 
 static t_mem_node	**get_mem_list(int which_list)
 {
