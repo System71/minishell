@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/04 14:53:39 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:32:36 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int	pwd(char **args)
 
 	if (args[1] && !ft_strncmp(args[1], "-", 1))
 	{
-		ft_putstr_fd("minishell: pwd : ", 2);
-		ft_putstr_fd(ft_substr(args[1], 0, 2), 2);
-		ft_putstr_fd(": invalid option\n", 2);
+		triple_putstr_fd("minishell: pwd : ", ft_substr(args[1], 0, 2),
+			": invalid option\n", 2);
 		return (2);
 	}
 	buffer = getcwd(NULL, 0);
@@ -29,46 +28,49 @@ int	pwd(char **args)
 		perror("pwd");
 	ft_putstr_fd(buffer, 1);
 	ft_putstr_fd("\n", 1);
-	free(buffer);
 	return (0);
 }
 
-int	echo(char **full_cmd)
+static void	loop_flag(char **args, int *bad_flag, int *no_flag, int i)
+{
+	int	j;
+
+	j = 2;
+	while (args[i][j])
+	{
+		if (args[i][j] == 'n')
+			j++;
+		else
+		{
+			*bad_flag = 1;
+			ft_putstr_fd(args[i], 1);
+			if (args[i + 1])
+				ft_putstr_fd(" ", 1);
+			break ;
+		}
+	}
+	if (i == 1 && !(*bad_flag))
+		*no_flag = 0;
+}
+
+int	echo(char **args)
 {
 	int	i;
-	int	j;
 	int	no_flag;
 	int	bad_flag;
 
 	no_flag = 1;
 	bad_flag = 0;
 	i = 1;
-	while (full_cmd[i])
+	while (args[i])
 	{
-		if (!ft_strncmp(full_cmd[i], "-n", 2) && !bad_flag)
-		{
-			j = 2;
-			while (full_cmd[i][j])
-			{
-				if (full_cmd[i][j] == 'n')
-					j++;
-				else
-				{
-					bad_flag = 1;
-					ft_putstr_fd(full_cmd[i], 1);
-					if (full_cmd[i + 1])
-						ft_putstr_fd(" ", 1);
-					break ;
-				}
-			}
-			if (i == 1 && !bad_flag)
-				no_flag = 0;
-		}
+		if (!ft_strncmp(args[i], "-n", 2) && !bad_flag)
+			loop_flag(args, &bad_flag, &no_flag, i);
 		else
 		{
 			bad_flag = 1;
-			ft_putstr_fd(full_cmd[i], 1);
-			if (full_cmd[i + 1])
+			ft_putstr_fd(args[i], 1);
+			if (args[i + 1])
 				ft_putstr_fd(" ", 1);
 		}
 		i++;
@@ -80,7 +82,7 @@ int	echo(char **full_cmd)
 
 int	env(char ***my_env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((*my_env)[i])

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/04 09:12:27 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:42:06 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int	my_exit(char **args)
 		exit(EXIT_SUCCESS);
 	if (!code_is_digit(args[1]))
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
+		triple_putstr_fd("minishell: exit: ", args[1],
+			": numeric argument required\n", 2);
 		exit(2);
 	}
 	if (args[2])

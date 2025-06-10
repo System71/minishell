@@ -6,12 +6,19 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 17:30:37 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:34:25 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "./memory/mem.h"
+#include "minishell.h"
+
+void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd)
+{
+	ft_putstr_fd(s1, fd);
+	ft_putstr_fd(s2, fd);
+	ft_putstr_fd(s3, fd);
+}
 
 char	**env_cpy(char **envp)
 {
@@ -35,32 +42,10 @@ char	**env_cpy(char **envp)
 	return (cpy);
 }
 
-void	free_split(char **split)
-{
-	char	**temp;
-
-	temp = split;
-	while (*temp)
-	{
-		free(*temp);
-		temp++;
-	}
-	free(split);
-}
-
+// PASSAGE EN VOID A VOIR
 int	exit_failure(char *message)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(message, 2);
 	return (1);
-}
-
-void	free_all(char **paths, char **full_cmd, char *end_path)
-{
-	if (paths)
-		free_split(paths);
-	if (full_cmd)
-		free_split(full_cmd);
-	if (end_path)
-		free(end_path);
 }

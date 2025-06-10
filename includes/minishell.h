@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/04 09:31:08 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:34:34 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "parsing_utils.h"
 # include "signals.h"
 # include "types.h"
+# include <errno.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -28,11 +29,12 @@
 # include <unistd.h>
 
 // ========== NEW_PIPEX ==========
+void	get_redirection(t_command *current, int *infile, int *outfile);
 void	new_pipex(t_command *current, t_env *my_env);
 
 // ========== BUILTIN ==========
 int		pwd(char **args);
-int		echo(char **argv);
+int		echo(char **args);
 int		env(char ***my_env);
 
 // ========== EXIT ==========
@@ -46,13 +48,19 @@ int		unset(char ***my_env, char **full_cmd);
 int		cd(char ***my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
-int		is_builtin(t_env *my_env, char **args);
+int		is_builtin(t_env *my_env, t_command *current);
 int		cmd_not_built(char ***envp, char **full_cmd);
 
 // ========== UTILS ==========
+void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd);
 int		exit_failure(char *message);
-void	free_all(char **paths, char **full_cmd, char *end_path);
-void	free_split(char **split);
 char	**env_cpy(char **envp);
+
+// ========== CHANGE_ENV UTILS ==========
+int		get_len_env(char **my_env);
+char	*extract_variable(char *str);
+int		remove_variable(char ***my_env, int position);
+int		check_variable_export(char ***my_env, char *arg);
+int		check_variable_unset(char ***my_env, char *arg);
 
 #endif

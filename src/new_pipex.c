@@ -6,13 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/02 14:45:19 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 11:36:45 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	get_redirection(t_command *current, int *infile, int *outfile)
+void	get_redirection(t_command *current, int *infile, int *outfile)
 {
 	while (current->redirs)
 	{
@@ -59,7 +59,8 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			exit_failure("dup2 failed\n");
 	}
-	cmd_not_built(&my_env->env, current->args);
+	if (is_builtin(my_env, current) == -1)
+		cmd_not_built(&my_env->env, current->args);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	if (prev_fd)
@@ -76,8 +77,15 @@ static void	one_command(t_command *current, t_env *my_env)
 {
 	int	infile;
 	int	outfile;
+	int	saved_stdout;
+	int	saved_stdin;
 
-	if (is_builtin(my_env, current->args) == -1)
+	infile = 0;
+	outfile = 0;
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	get_redirection(current, &infile, &outfile);
+	if (is_builtin(my_env, current) == -1)
 	{
 		current->pid = fork();
 		if (current->pid == -1)
@@ -85,8 +93,6 @@ static void	one_command(t_command *current, t_env *my_env)
 		current->status = malloc(sizeof(int));
 		if (current->pid == 0)
 		{
-			infile = 0;
-			outfile = 0;
 			get_redirection(current, &infile, &outfile);
 			cmd_not_built(&my_env->env, current->args);
 		}
@@ -94,6 +100,10 @@ static void	one_command(t_command *current, t_env *my_env)
 		if (WIFEXITED(*(current->status)))
 			my_env->error_code = WEXITSTATUS(*(current->status));
 	}
+	if (infile && dup2(saved_stdin, STDIN_FILENO) == -1)
+		exit_failure("dup2 restore failed");
+	if (outfile && dup2(saved_stdout, STDOUT_FILENO) == -1)
+		exit_failure("dup2 restore failed");
 }
 
 static void	multi_command(t_command *current, t_env *my_env)
@@ -126,12 +136,8 @@ static void	multi_command(t_command *current, t_env *my_env)
 
 void	new_pipex(t_command *current, t_env *my_env)
 {
-	// CAS AVEC UNE SEULE COMMANDE
 	if (!current->next)
-	{
 		one_command(current, my_env);
-	}
-	// CAS AVEC PLUSIEURS COMMANDES
 	else
 		multi_command(current, my_env);
 }
