@@ -6,40 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 11:36:45 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:20:59 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	get_redirection(t_command *current, int *infile, int *outfile)
-{
-	while (current->redirs)
-	{
-		if (current->redirs->type == T_REDIRECT_IN
-			|| current->redirs->type == T_HEREDOC)
-		{
-			*infile = open(current->redirs->target, O_RDONLY);
-			if (dup2(*infile, STDIN_FILENO) == -1)
-				exit_failure("dup2 failed");
-		}
-		else if (current->redirs->type == T_REDIRECT_OUT)
-		{
-			*outfile = open(current->redirs->target, O_CREAT | O_RDWR | O_TRUNC,
-					0644);
-			if (dup2(*outfile, STDOUT_FILENO) == -1)
-				exit_failure("dup2 failed");
-		}
-		else if (current->redirs->type == T_APPEND)
-		{
-			*outfile = open(current->redirs->target,
-					O_CREAT | O_RDWR | O_APPEND, 0644);
-			if (dup2(*outfile, STDOUT_FILENO) == -1)
-				exit_failure("dup2 failed");
-		}
-		current->redirs = current->redirs->next;
-	}
-}
 
 static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
@@ -61,8 +32,7 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	}
 	if (is_builtin(my_env, current) == -1)
 		cmd_not_built(&my_env->env, current->args);
-	close(pipefd[0]);
-	close(pipefd[1]);
+	close_pipefd(pipefd);
 	if (prev_fd)
 		close(prev_fd);
 	if (infile)
@@ -92,18 +62,12 @@ static void	one_command(t_command *current, t_env *my_env)
 			exit_failure("fork : creation failed\n");
 		current->status = malloc(sizeof(int));
 		if (current->pid == 0)
-		{
-			get_redirection(current, &infile, &outfile);
 			cmd_not_built(&my_env->env, current->args);
-		}
 		waitpid(current->pid, current->status, 0);
 		if (WIFEXITED(*(current->status)))
 			my_env->error_code = WEXITSTATUS(*(current->status));
 	}
-	if (infile && dup2(saved_stdin, STDIN_FILENO) == -1)
-		exit_failure("dup2 restore failed");
-	if (outfile && dup2(saved_stdout, STDOUT_FILENO) == -1)
-		exit_failure("dup2 restore failed");
+	restore_std(infile, outfile, saved_stdin, saved_stdout);
 }
 
 static void	multi_command(t_command *current, t_env *my_env)

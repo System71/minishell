@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 16:04:08 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:19:28 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@
 # include <unistd.h>
 
 // ========== NEW_PIPEX ==========
-void	get_redirection(t_command *current, int *infile, int *outfile);
 void	new_pipex(t_command *current, t_env *my_env);
+
+// ========== NEW_PIPEX_UTILS ==========
+void	restore_std(int infile, int outfile, int saved_stdin, int saved_stdout);
+void	close_pipefd(int pipefd[2]);
+void	get_redirection(t_command *current, int *infile, int *outfile);
 
 // ========== BUILTIN ==========
 int		pwd(char **args);

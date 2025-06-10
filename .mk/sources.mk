@@ -10,6 +10,7 @@ SRC = \
     $(SRC_DIR)main.c \
     $(SRC_DIR)signals.c \
     $(SRC_DIR)new_pipex.c \
+    $(SRC_DIR)new_pipex_utils.c \
     $(SRC_DIR)builtin.c \
     $(SRC_DIR)export.c \
     $(SRC_DIR)unset.c \
