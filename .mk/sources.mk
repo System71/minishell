@@ -11,7 +11,8 @@ SRC = \
     $(SRC_DIR)signals.c \
     $(SRC_DIR)new_pipex.c \
     $(SRC_DIR)builtin.c \
-    $(SRC_DIR)change_env.c \
+    $(SRC_DIR)export.c \
+    $(SRC_DIR)unset.c \
     $(SRC_DIR)change_env_utils.c \
     $(SRC_DIR)cmd_process.c \
     $(SRC_DIR)cd.c \

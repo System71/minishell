@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 15:44:02 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:04:08 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,15 @@ int		env(char ***my_env);
 int		my_exit(char **args);
 
 // ========== EXPORT ==========
-int		export(char ***my_env, char **full_cmd);
-int		unset(char ***my_env, char **full_cmd);
+int		export(char ***my_env, char **args);
+
+// ========== UNSET ==========
+int		unset(char ***my_env, char **args);
+
+// ========== CHANGE_ENV UTILS ==========
+int		get_len_env(char **my_env);
+char	*extract_variable(char *str);
+int		remove_variable(char ***my_env, int position);
 
 // ========== CD ==========
 int		cd(char ***my_env, char **full_cmd);
@@ -55,12 +62,5 @@ int		cmd_not_built(char ***my_env, char **args);
 void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd);
 int		exit_failure(char *message);
 char	**env_cpy(char **envp);
-
-// ========== CHANGE_ENV UTILS ==========
-int		get_len_env(char **my_env);
-char	*extract_variable(char *str);
-int		remove_variable(char ***my_env, int position);
-int		check_variable_export(char ***my_env, char *arg);
-int		check_variable_unset(char ***my_env, char *arg);
 
 #endif
