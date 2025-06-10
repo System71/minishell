@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 14:34:34 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:44:02 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		cd(char ***my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
 int		is_builtin(t_env *my_env, t_command *current);
-int		cmd_not_built(char ***envp, char **full_cmd);
+int		cmd_not_built(char ***my_env, char **args);
 
 // ========== UTILS ==========
 void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd);

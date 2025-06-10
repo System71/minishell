@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 14:32:30 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:43:58 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ static void	exec_cmd(char **envp, char **paths, char **args, char *end_path)
 				2);
 			exit(126);
 		}
+		if (errno == ENOENT)
+		{
+			triple_putstr_fd("minishell: ", args[0], ": Command not found\n",
+				2);
+			exit(127);
+		}
 	}
 }
 
@@ -76,7 +82,6 @@ int	cmd_not_built(char ***my_env, char **args)
 	if (!end_path)
 		return (exit_failure("args malloc ft_strjoin"));
 	exec_cmd(*my_env, paths, args, end_path);
-	triple_putstr_fd("minishell: ", args[0], ": command not found\n", 2);
 	exit(127);
 }
 // int	is_builtin(t_env *my_env, char **args)
