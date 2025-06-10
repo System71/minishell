@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:54:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/03 14:19:26 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:21:09 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 	l = 0;
 	while (ft_isalnum(in[s + l]) || in[s + l] == '_')
 		l++;
-	v->name = ft_strndup(in + s, l);
+	v->name = ft_strndup_oli(in + s, l, 8);
 	v->value = ft_getenv(v->name, my_env);
 	if (!v->value)
 		append_str(&v->result, "");
@@ -68,9 +68,9 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current,
 	t_expand_vars	v;
 
 	if (quote == QUOTE_SINGLE)
-		return (ft_strdup(input));
+		return (ft_strdup_oli(input, 8));
 	if (current->type == T_HEREDOC && quote != QUOTE_NONE)
-		return (ft_strdup(input));
+		return (ft_strdup_oli(input, 8));
 	v.result = NULL;
 	v.i = 0;
 	while (input[v.i])
@@ -103,7 +103,7 @@ void	expand_handle(t_token *tokens, t_env *my_env)
 				handle.seg->content = check_expand(handle.old,
 						handle.seg->quote, handle.current, my_env);
 			else
-				handle.seg->content = ft_strdup(handle.old);
+				handle.seg->content = ft_strdup_oli(handle.old, 8);
 			handle.seg->is_expand = handle.had_dollar;
 			handle.seg = handle.seg->next;
 		}

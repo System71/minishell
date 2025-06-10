@@ -11,6 +11,15 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "memory/mem.h"
+
+void	exit_shell(void)
+{
+	ft_putstr_fd("exit\n", 2);
+	rl_clear_history();
+	mem_free_all(60);
+	exit(0);
+}
 
 static int	code_is_digit(char *code)
 {

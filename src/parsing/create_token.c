@@ -26,7 +26,7 @@ char	*concat_segments(t_token *token)
 		total_len += ft_strlen(seg->content);
 		seg = seg->next;
 	}
-	result = ft_xmalloc(total_len + 1);
+	result = ft_xmalloc(total_len + 1, 8);
 	result[0] = '\0';
 	seg = token->segments;
 	while (seg)
@@ -41,8 +41,8 @@ t_token_segment	*create_segment(const char *content, t_quote_type quote)
 {
 	t_token_segment	*seg;
 
-	seg = ft_xmalloc(sizeof(t_token_segment));
-	seg->content = ft_strdup(content);
+	seg = ft_xmalloc(sizeof(t_token_segment), 8);
+	seg->content = ft_strdup_oli(content, 8);
 	seg->quote = quote;
 	seg->is_expand = false;
 	seg->next = NULL;
@@ -80,7 +80,7 @@ t_token	*create_token_with_segment(const char *content, t_quote_type quote)
 {
 	t_token	*token;
 
-	token = ft_xmalloc(sizeof(t_token));
+	token = ft_xmalloc(sizeof(t_token), 8);
 	if (quote == QUOTE_NONE)
 		token->type = get_token_type(content);
 	else

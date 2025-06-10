@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 17:19:28 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:44:02 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+t_env	*init_minishell(char **envp);
+void	execute_and_cleanup(t_command *cmd_list, t_env *my_env);
+
 // ========== NEW_PIPEX ==========
 void	new_pipex(t_command *current, t_env *my_env);
 
@@ -43,6 +46,7 @@ int		env(char ***my_env);
 
 // ========== EXIT ==========
 int		my_exit(char **args);
+void	exit_shell(void);
 
 // ========== EXPORT ==========
 int		export(char ***my_env, char **args);

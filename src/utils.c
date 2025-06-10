@@ -20,27 +20,7 @@ void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd)
 	ft_putstr_fd(s3, fd);
 }
 
-char	**env_cpy(char **envp)
-{
-	char	**cpy;
-	int		envp_len;
-	int		i;
 
-	envp_len = 0;
-	while (envp[envp_len])
-		envp_len++;
-	cpy = malloc(sizeof(char *) * (envp_len + 1));
-	if (!cpy)
-		return (NULL);
-	i = 0;
-	while (i < envp_len)
-	{
-		cpy[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	cpy[i] = NULL;
-	return (cpy);
-}
 
 // PASSAGE EN VOID A VOIR
 int	exit_failure(char *message)

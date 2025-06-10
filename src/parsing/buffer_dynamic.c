@@ -16,10 +16,10 @@ t_dynamic_buffer	*init_dynamic_buffer(void)
 {
 	t_dynamic_buffer	*buf;
 
-	buf = ft_xmalloc(sizeof(t_dynamic_buffer));
+	buf = ft_xmalloc(sizeof(t_dynamic_buffer), 8);
 	buf->capacity = INITIAL_BUFFER_SIZE;
 	buf->len = 0;
-	buf->data = ft_xmalloc(buf->capacity);
+	buf->data = ft_xmalloc(buf->capacity, 8);
 	buf->data[0] = '\0';
 	return (buf);
 }

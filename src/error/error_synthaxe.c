@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:17:08 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 14:05:42 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:39:40 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/types.h"
@@ -59,12 +59,11 @@ bool	check_syntax(t_token *tokens, t_env *my_env)
 {
 	t_check_synt	err_data;
 
-	
 	err_data.code_err = verify_token_sequence(tokens, &err_data);
 	if (err_data.code_err != ERR_NONE)
 	{
-		report_syntax_error(err_data.code_err
-					  , err_data.token_err->segments->content);
+		report_syntax_error(err_data.code_err,
+			err_data.token_err->segments->content);
 		my_env->error_code = 2;
 		return (false);
 	}

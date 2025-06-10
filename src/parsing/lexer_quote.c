@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:30:05 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:01:49 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:27:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	enter_quote_state(t_utils_lexer *storage, t_token **tokens,
 void	process_quote_char(t_utils_lexer *storage, t_token **tokens)
 {
 	if ((storage->state == LEXER_SINGLE_QUOTE && storage->c == '\'')
-			|| (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"'))
+		|| (storage->state == LEXER_DOUBLE_QUOTE && storage->c == '\"'))
 	{
 		if (storage->new_arg == true && storage->buffer->len > 0)
 		{
