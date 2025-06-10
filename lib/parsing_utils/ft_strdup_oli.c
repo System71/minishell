@@ -9,9 +9,9 @@
 /*   Updated: 2025/05/07 17:29:06 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../src/memory/mem.h"
-#include <unistd.h>
+
+#include "minishell.h"
+
 /***** strdup *****/
 char	*ft_strdup_oli(const char *s, int which_list)
 {

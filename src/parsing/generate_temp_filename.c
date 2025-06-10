@@ -9,12 +9,8 @@
 /*   Updated: 2025/05/07 11:56:04 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parse_tempfile.h"
-#include "../memory/mem.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
+
+#include "minishell.h"
 
 static int	read_urandom(void *buf, size_t n)
 {
@@ -75,7 +71,7 @@ static void	build_filename(char *dst,
 
 char	*generate_temp_filename(void)
 {
-	t_tempfile	tf;
+	t_creat_tempfile	tf;
 	int			status;
 
 	tf.filename = ft_xmalloc(BUF_SIZE, 8);

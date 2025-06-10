@@ -9,7 +9,8 @@
 /*   Updated: 2025/05/07 17:22:27 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
+
+#include "minishell.h"
 
 /***** memcpy *****/
 void	*ft_memcpy(void *dest, const void *src, size_t n)

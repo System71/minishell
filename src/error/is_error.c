@@ -9,7 +9,8 @@
 /*   Updated: 2025/05/07 14:08:45 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/types.h"
+
+#include "minishell.h"
 
 bool	is_bonus_token(t_token *cur)
 {

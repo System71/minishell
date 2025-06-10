@@ -9,8 +9,8 @@
 /*   Updated: 2025/04/29 20:26:55 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
-#include "../memory/mem.h"
+
+#include "minishell.h"
 
 t_dynamic_buffer	*init_dynamic_buffer(void)
 {

@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "memory/mem.h"
+#include "minishell.h"
 
 char	**env_cpy(char **envp)
 {

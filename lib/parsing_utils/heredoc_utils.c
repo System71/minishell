@@ -9,7 +9,8 @@
 /*   Updated: 2025/06/06 08:18:20 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/minishell.h"
+
+#include "minishell.h"
 
 void	destroy_file_heredoc(t_command *cmd_list)
 {

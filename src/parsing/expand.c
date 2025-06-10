@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
-#include "../../includes/parsing_utils.h"
-#include "../../includes/types.h"
+#include "minishell.h"
 
 static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 {

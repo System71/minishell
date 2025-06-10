@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include <stdio.h>
+#include "minishell.h"
 
 void	enter_quote_state(t_utils_lexer *storage, t_token **tokens,
 		t_lexer_state new_state, t_quote_type new_quote)

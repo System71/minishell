@@ -9,9 +9,8 @@
 /*   Updated: 2025/05/07 17:03:15 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parser.h"
-#include "../memory/mem.h"
-#include "../../includes/parsing_utils.h"
+
+#include "minishell.h"
 
 static t_command	*create_command(void)
 {

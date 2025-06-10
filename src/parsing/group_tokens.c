@@ -9,9 +9,8 @@
 /*   Updated: 2025/04/29 19:27:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
-#include <unistd.h>
-#include <stdio.h>
+
+#include "minishell.h"
 
 static t_token_segment	*duplicate_segments(t_token_segment *seg)
 {

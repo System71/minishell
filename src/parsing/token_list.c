@@ -9,7 +9,8 @@
 /*   Updated: 2025/06/02 19:16:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
+
+#include "minishell.h"
 
 static t_token	*get_last_token(t_token *tokens)
 {

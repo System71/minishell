@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/parsing_utils.h"
-#include <stdio.h>
+#include "minishell.h"
 
 static void	handle_space(t_utils_lexer *storage, t_token **tokens)
 {

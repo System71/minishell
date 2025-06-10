@@ -9,8 +9,8 @@
 /*   Updated: 2025/05/13 19:49:50 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
-#include <stdio.h>
+
+#include "minishell.h"
 
 void	init_utils_lexer(t_utils_lexer *storage)
 {

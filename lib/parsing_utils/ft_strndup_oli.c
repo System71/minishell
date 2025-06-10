@@ -9,7 +9,8 @@
 /*   Updated: 2025/06/06 10:19:53 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../src/memory/mem.h"
+
+#include "minishell.h"
 
 char	*ft_strndup_oli(const char *s, size_t n, int which_list)
 {

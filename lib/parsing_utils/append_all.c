@@ -9,9 +9,8 @@
 /*   Updated: 2025/06/06 10:28:23 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../includes/types.h"
-#include <stdlib.h>
+
+#include "minishell.h"
 
 int	append_str(char **dest, const char *src)
 {

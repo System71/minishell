@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/types.h" 
-#include "../../includes/parsing_utils.h" 
-#include "../memory/mem.h" 
+#include "minishell.h"
 
 static char	*segments_to_str(t_token_segment *seg)
 {

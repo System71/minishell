@@ -9,9 +9,8 @@
 /*   Updated: 2025/05/07 17:23:29 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h> 
-#include <unistd.h> 
-#include "../../includes/parsing_utils.h" 
+
+#include "minishell.h"
 
 /***** split helper functions *****/
 static int	count_words(char const *s, char c)

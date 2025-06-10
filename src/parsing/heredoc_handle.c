@@ -9,13 +9,8 @@
 /*   Updated: 2025/06/02 19:38:39 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../includes/types.h"
-#include "../../includes/signals.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
+
+#include "minishell.h"
 
 static int	append_heredoc_line(t_heredoc *hd, const char *line)
 {

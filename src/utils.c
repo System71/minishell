@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./memory/mem.h"
 #include "minishell.h"
 
 void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd)
@@ -20,7 +19,13 @@ void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd)
 	ft_putstr_fd(s3, fd);
 }
 
-
+void	exit_shell(void)
+{
+	ft_putstr_fd("exit\n", 2);
+	rl_clear_history();
+	mem_free_all(60);
+	exit(0);
+}
 
 // PASSAGE EN VOID A VOIR
 int	exit_failure(char *message)

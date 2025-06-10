@@ -9,8 +9,8 @@
 /*   Updated: 2025/05/07 17:22:10 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../src/memory/mem.h"
+
+#include "minishell.h"
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size, int wich_list)
 {

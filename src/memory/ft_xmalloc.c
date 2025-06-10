@@ -9,9 +9,8 @@
 /*   Updated: 2025/06/06 10:38:15 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "mem.h"
-#include <stdlib.h>
-#include <stdio.h>
+
+#include "minishell.h"
 
 void	ft_free_loop(char *input)
 {

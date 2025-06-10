@@ -9,8 +9,8 @@
 /*   Updated: 2025/06/06 10:37:07 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/types.h"
-#include "../../includes/parsing_utils.h"
+
+#include "minishell.h"
 
 bool	is_redirection_type(t_token_type type)
 {

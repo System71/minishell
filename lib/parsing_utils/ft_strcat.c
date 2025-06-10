@@ -9,7 +9,8 @@
 /*   Updated: 2025/04/30 07:47:36 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stddef.h>
+
+#include "minishell.h"
 
 void	ft_strcat(char *dest, const char *src)
 {

@@ -9,7 +9,8 @@
 /*   Updated: 2025/05/07 17:21:33 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
+
+#include "minishell.h"
 
 /***** isalnum *****/
 int	ft_isalnum(int c)

@@ -9,12 +9,8 @@
 /*   Updated: 2025/06/02 18:06:47 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-#include "../../includes/parser.h"
-#include "../../includes/parsing_utils.h"
-#include "../memory/mem.h"
-#include <unistd.h>
-#include <fcntl.h>
+
+#include "minishell.h"
 
 static void	write_heredoc_to_file(const char *filename, const char *content)
 {

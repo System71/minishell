@@ -9,9 +9,8 @@
 /*   Updated: 2025/05/07 17:04:00 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
-#include "../../includes/parsing_utils.h"
-#include "../memory/mem.h"
+
+#include "minishell.h"
 
 char	*concat_segments(t_token *token)
 {

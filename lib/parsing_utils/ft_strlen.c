@@ -9,8 +9,9 @@
 /*   Updated: 2025/05/07 17:29:38 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include <unistd.h>
+
+#include "minishell.h"
+
 /***** ft_strlen *****/
 size_t	ft_strlen(const char *s)
 {

@@ -9,8 +9,8 @@
 /*   Updated: 2025/05/06 13:36:36 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/types.h"
-#include <stdio.h>
+
+#include "minishell.h"
 
 void	report_syntax_error(t_syntax_err err, const char *input)
 {

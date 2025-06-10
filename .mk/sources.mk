@@ -10,17 +10,7 @@ PIPEX_DIR      = lib/pipex/
 SRC = \
     $(SRC_DIR)main.c \
     $(SRC_DIR)init_minishell.c \
-    $(SRC_DIR)signals.c \
-    $(SRC_DIR)new_pipex.c \
-    $(SRC_DIR)new_pipex_utils.c \
-    $(SRC_DIR)builtin.c \
-    $(SRC_DIR)export.c \
-    $(SRC_DIR)unset.c \
-    $(SRC_DIR)change_env_utils.c \
-    $(SRC_DIR)cmd_process.c \
-    $(SRC_DIR)cd.c \
     $(SRC_DIR)utils.c \
-    $(SRC_DIR)exit.c \
     \
    $(PARSING_DIR)lexer.c \
     $(PARSING_DIR)parsing.c \
@@ -40,6 +30,16 @@ SRC = \
     $(PARSING_DIR)print_var.c \
     \
 	$(EXECUTION_DIR)execute_and_cleanup.c \
+    $(EXECUTION_DIR)signals.c \
+    $(EXECUTION_DIR)new_pipex.c \
+    $(EXECUTION_DIR)new_pipex_utils.c \
+    $(EXECUTION_DIR)builtin.c \
+    $(EXECUTION_DIR)export.c \
+    $(EXECUTION_DIR)unset.c \
+    $(EXECUTION_DIR)change_env_utils.c \
+    $(EXECUTION_DIR)cmd_process.c \
+    $(EXECUTION_DIR)cd.c \
+    $(EXECUTION_DIR)exit.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
 	$(ERROR_DIR)error_parsing_return.c\
@@ -69,15 +69,9 @@ SRC = \
 
 HEADERS = \
 		   includes/minishell.h \
-			includes/lexer.h \
-			includes/parser.h \
-			includes/parsing_utils.h \
 			includes/types.h \
-			includes/parse_tempfile.h \
-			src/memory/mem.h\
 			includes/ft_printf.h \
 			includes/get_next_line.h \
 			includes/libft.h \
-			includes/pipex.h \
-			includes/signals.h
+			includes/pipex.h
 

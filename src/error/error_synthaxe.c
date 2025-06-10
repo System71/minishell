@@ -9,10 +9,8 @@
 /*   Updated: 2025/06/06 10:39:40 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/types.h"
-#include "../../includes/parsing_utils.h"
-#include "../../includes/lexer.h"
-#include "../../includes/signals.h"
+
+#include "minishell.h"
 
 bool	is_invalid_sequence(t_token *prev, t_token *cur)
 {

@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/parser.h"
-#include "./memory/mem.h"
+#include "minishell.h"
 
 char	*get_prompt(t_env *my_env)
 {

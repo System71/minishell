@@ -9,9 +9,8 @@
 /*   Updated: 2025/05/07 17:22:41 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../src/memory/mem.h"
-#include <unistd.h>
+
+#include "minishell.h"
 
 /***** itoa *****/
 char	*ft_itoa(int n)

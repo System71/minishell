@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/types.h"
-#include "../../includes/parsing_utils.h"
+#include "minishell.h"
 
 char	*ft_getenv(char *name, t_env *my_env)
 {

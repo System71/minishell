@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/parser.h"
-#include "../../includes/signals.h"
-#include "../memory/mem.h"
-#include <stdio.h>
+#include "minishell.h"
 
 t_command	*parse_input(const char *input, t_env *my_env)
 {
