@@ -31,6 +31,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <signal.h>
 # include <stdbool.h>
@@ -41,6 +42,7 @@ void	execute_and_cleanup(t_command *cmd_list, t_env *my_env);
 
 // ========== NEW_PIPEX ==========
 void	new_pipex(t_command *current, t_env *my_env);
+void	execute_command(char **s_cmd, char **env);
 
 // ========== NEW_PIPEX_UTILS ==========
 void	restore_std(int infile, int outfile, int saved_stdin, int saved_stdout);
@@ -92,6 +94,9 @@ void	*ft_xmalloc(int size, int which_list);
 void	mem_register(void *ptr, int which_list);
 void	mem_free_all(int which_list);
 void	ft_free_loop(char *input);
+void	ft_free_double_tab(char **tab, char **tab_2);
+void	ft_free_tab(char **tab, int out_or_not);
+
 
 // ========== LEXER ==========
 t_token				*lexer(const char *input);

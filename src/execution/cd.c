@@ -29,7 +29,7 @@ static char	*get_home(char ***my_env)
 static int	go_home(char ***my_env)
 {
 	char	*destination;
-	char	*error_destination;
+	// char	*error_destination;
 
 	destination = get_home(my_env);
 	if (!destination)
@@ -39,8 +39,9 @@ static int	go_home(char ***my_env)
 	}
 	if (chdir(destination))
 	{
-		error_destination = ft_strjoin("minishell: cd: ", destination);
-		perror(error_destination);
+		// error_destination = ft_strjoin("minishell: cd: ", destination);
+		// perror(error_destination);
+		perror(destination);
 		return (1);
 	}
 	return (0);
@@ -50,7 +51,7 @@ static int	go_last_pwd(char ***my_env)
 {
 	int		i;
 	char	*destination;
-	char	*error_destination;
+	// char	*error_destination;
 
 	i = 0;
 	while ((*my_env)[i])
@@ -64,8 +65,9 @@ static int	go_last_pwd(char ***my_env)
 	}
 	if (chdir(destination))
 	{
-		error_destination = ft_strjoin("minishell: cd: ", destination);
-		perror(error_destination);
+		// error_destination = ft_strjoin("minishell: cd: ", destination);
+		// perror(error_destination);
+		perror(destination);
 		return (1);
 	}
 	ft_putstr_fd(destination, 1);
@@ -76,9 +78,9 @@ static int	go_last_pwd(char ***my_env)
 static int	go_somewhere(char ***my_env, char **full_cmd)
 {
 	char	*destination;
-	char	*error_destination;
+	// char	*error_destination;
 
-	destination = ft_strdup(full_cmd[1]);
+	destination = ft_strdup_oli(full_cmd[1], 8);
 	if (!destination)
 	{
 		exit_failure("destination malloc ft_strdup");
@@ -95,8 +97,9 @@ static int	go_somewhere(char ***my_env, char **full_cmd)
 	}
 	if (chdir(destination))
 	{
-		error_destination = ft_strjoin("minishell: cd: ", destination);
-		perror(error_destination);
+		// error_destination = ft_strjoin("minishell: cd: ", destination);
+		// perror(error_destination);
+		perror(destination);
 		return (1);
 	}
 	return (0);

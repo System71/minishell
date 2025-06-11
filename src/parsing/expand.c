@@ -27,7 +27,6 @@ static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 		append_str(&v->result, "");
 	else
 		append_str(&v->result, v->value);
-	free(v->name);
 	v->i = s + l;
 }
 
@@ -101,7 +100,7 @@ void	expand_handle(t_token *tokens, t_env *my_env)
 				handle.seg->content = check_expand(handle.old,
 						handle.seg->quote, handle.current, my_env);
 			else
-				handle.seg->content = ft_strdup_oli(handle.old, 8);
+				handle.seg->content = handle.old;
 			handle.seg->is_expand = handle.had_dollar;
 			handle.seg = handle.seg->next;
 		}

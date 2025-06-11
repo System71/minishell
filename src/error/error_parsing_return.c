@@ -19,7 +19,7 @@ void	report_syntax_error(t_syntax_err err, const char *input)
 	else if (err == ERR_LINE_CONTINUATION)
 		printf("syntax error: unexpected end of line (\\) in `%s`\n", input);
 	else if (err == ERR_BONUS)
-		printf("We don't make a Bonus\n");
+		printf("syntax error near unexpected token `%s`\n", input);
 	else if (err == ERR_PIPE_AT_EDGE)
 		printf("syntax error near unexpected token `|`\n");
 	else if (err == ERR_CONSECUTIVE_PIPES)

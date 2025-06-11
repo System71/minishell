@@ -57,11 +57,9 @@ static char	**get_split_parts(t_token *cur)
 		return (NULL);
 	if (!ft_strchr(full, ' '))
 	{
-		free(full);
 		return (NULL);
 	}
 	parts = ft_split(full, ' ');
-	free(full);
 	return (parts);
 }
 

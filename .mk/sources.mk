@@ -40,8 +40,10 @@ SRC = \
     $(EXECUTION_DIR)cmd_process.c \
     $(EXECUTION_DIR)cd.c \
     $(EXECUTION_DIR)exit.c \
+    $(EXECUTION_DIR)oliv_exec.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
+    $(MEMORY_DIR)free_child.c \
 	$(ERROR_DIR)error_parsing_return.c\
 	$(ERROR_DIR)error_synthaxe.c\
 	$(ERROR_DIR)is_error.c\

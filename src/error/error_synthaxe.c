@@ -35,18 +35,18 @@ t_syntax_err	verify_token_sequence(t_token *tokens, t_check_synt *err_data)
 	while (cur)
 	{
 		err_data->token_err = cur;
+		if (is_pipe_at_edge(prev, cur))
+		return (ERR_PIPE_AT_EDGE);
+		if (is_consecutive_pipes(prev, cur))
+		return (ERR_CONSECUTIVE_PIPES);
+		if (is_invalid_sequence(prev, cur))
+		return (ERR_INVALID_SEQUENCE);
+		if (is_isolated_op(prev, cur))
+		return (ERR_ISOLATED_OP);
+		if (is_redirect_without_word(cur))
+		return (ERR_MISSING_FILENAME);
 		if (is_bonus_token(cur))
 			return (ERR_BONUS);
-		if (is_pipe_at_edge(prev, cur))
-			return (ERR_PIPE_AT_EDGE);
-		if (is_consecutive_pipes(prev, cur))
-			return (ERR_CONSECUTIVE_PIPES);
-		if (is_isolated_op(prev, cur))
-			return (ERR_ISOLATED_OP);
-		if (is_redirect_without_word(cur))
-			return (ERR_MISSING_FILENAME);
-		if (is_invalid_sequence(prev, cur))
-			return (ERR_INVALID_SEQUENCE);
 		prev = cur;
 		cur = cur->next;
 	}
