@@ -13,6 +13,6 @@
 
 void	execute_and_cleanup(t_command *cmd_list, t_env *my_env)
 {
-	new_pipex(cmd_list, my_env);
+	exec_pipeline(cmd_list, my_env);
 	destroy_file_heredoc(cmd_list);
 }

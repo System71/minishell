@@ -33,4 +33,5 @@ void	exit_failure(char *message, t_env *my_env)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(message, 2);
 	my_env->error_code = 1;
+	exit(1);
 }

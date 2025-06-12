@@ -12,104 +12,110 @@
 
 #include "../includes/minishell.h"
 
-static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
+void	dup2_and_close(int fd, int std)
+{
+	if (fd != std && fd > 2)
+	{
+		dup2(fd, std);
+		close(fd);
+	}
+}
+
+void	close_if_needed(int fd)
+{
+	if (fd > 2)
+		close(fd);
+}
+
+static void	exec_child(
+	t_command *cmd, int in_fd, int out_fd, t_env *env, int *pipefd, int has_next)
 {
 	int	infile;
 	int	outfile;
 
-	infile = 0;
-	outfile = 0;
-	get_redirection(current, &infile, &outfile, my_env);
-	if (!infile && prev_fd)
+	infile = -1;
+	outfile = -1;
+	get_redirection(cmd, &infile, &outfile, env);
+	if (in_fd > 2)
+		dup2_and_close(in_fd, 0);
+	if (has_next)
 	{
-		if (dup2(prev_fd, STDIN_FILENO) == -1)
-			exit_failure("dup2 failed\n", my_env);
+		if (out_fd > 2)
+			dup2_and_close(out_fd, 1);
 	}
-	if (!outfile && current->next)
+	if (pipefd)
 	{
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			exit_failure("dup2 failed\n", my_env);
+		if (pipefd[0] > 2)
+			close(pipefd[0]);
+		if (pipefd[1] > 2)
+			close(pipefd[1]);
 	}
-	if (is_builtin(my_env, current) == -1)
-		cmd_not_built(my_env, current->args);
-	// execute_command(current->args, my_env->env);
-	close_pipefd(pipefd);
-	if (prev_fd)
-		close(prev_fd);
-	if (infile)
-		close(infile);
-	if (outfile)
-		close(outfile);
+	if (infile > 2)
+		dup2_and_close(infile, 0);
+	if (outfile > 2)
+		dup2_and_close(outfile, 1);
+	if (is_builtin(env, cmd) == -1)
+		execute_command(cmd->args, env->env);
+	exit(0);
 }
 
-// if builtin => no fork needed
-// if no builtin => fork needed
-static void	one_command(t_command *current, t_env *my_env)
+static void	pipe_and_fork(
+	t_command *cmd, t_env *env, int *prev_fd, int *pipefd)
 {
-	int	infile;
-	int	outfile;
-	int	saved_stdout;
-	int	saved_stdin;
+	pid_t	pid;
+	int		out_fd;
+	int		has_next;
 
-	infile = 0;
-	outfile = 0;
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (get_redirection(current, &infile, &outfile, my_env))
-	{
-		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
-		return ;
-	}
-	if (is_builtin(my_env, current) == -1)
-	{
-		current->pid = fork();
-		if (current->pid == -1)
-			exit_failure("fork : creation failed\n", my_env);
-		if (current->pid == 0)
-			cmd_not_built(my_env, current->args);
-		// execute_command(current->args, my_env->env);
-		current->status = ft_xmalloc(sizeof(int), 8);
-		waitpid(current->pid, current->status, 0);
-		if (WIFEXITED(*(current->status)))
-			my_env->error_code = WEXITSTATUS(*(current->status));
-	}
-	restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
-}
-
-static void	multi_command(t_command *current, t_env *my_env)
-{
-	int	pipefd[2];
-	int	prev_fd;
-
-	prev_fd = 0;
-	while (current)
+	out_fd = 1;
+	has_next = 0;
+	pipefd[0] = -1;
+	pipefd[1] = -1;
+	if (cmd->next)
 	{
 		if (pipe(pipefd) == -1)
-			exit_failure("pipe : creation failed\n", my_env);
-		current->pid = fork();
-		if (current->pid == -1)
-			exit_failure("fork : creation failed\n", my_env);
-		current->status = ft_xmalloc(sizeof(int), 8);
-		if (current->pid == 0)
-			child(current, pipefd, prev_fd, my_env);
-		close(pipefd[1]);
-		if (prev_fd)
-			close(prev_fd);
-		prev_fd = pipefd[0];
-		waitpid(current->pid, current->status, 0);
-		if (WIFEXITED(*(current->status)))
-			my_env->error_code = WEXITSTATUS(*(current->status));
-		current = current->next;
+			exit_failure("pipe", env);
+		out_fd = pipefd[1];
+		has_next = 1;
 	}
-	close(pipefd[0]);
+	pid = fork();
+	if (pid == -1)
+		exit_failure("fork", env);
+	if (pid == 0)
+		exec_child(cmd, *prev_fd, out_fd, env, pipefd, has_next);
+	cmd->pid = pid;
+	close_if_needed(*prev_fd);
+	if (cmd->next)
+		close(pipefd[1]);
+	*prev_fd = -1;
+	if (cmd->next)
+		*prev_fd = pipefd[0];
 }
 
-void	new_pipex(t_command *current, t_env *my_env)
+static void	wait_all(t_command *cmd)
 {
-	if (current->args == NULL)
-		return ;
-	if (!current->next)
-		one_command(current, my_env);
-	else
-		multi_command(current, my_env);
+	int	status;
+
+	while (cmd)
+	{
+		waitpid(cmd->pid, &status, 0);
+		cmd = cmd->next;
+	}
+}
+
+void	exec_pipeline(t_command *cmd, t_env *env)
+{
+	int		prev_fd;
+	int		pipefd[2];
+	t_command *curr;
+
+	prev_fd = -1;
+	pipefd[0] = -1;
+	pipefd[1] = -1;
+	curr = cmd;
+	while (curr)
+	{
+		pipe_and_fork(curr, env, &prev_fd, pipefd);
+		curr = curr->next;
+	}
+	wait_all(cmd);
 }

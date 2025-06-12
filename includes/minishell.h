@@ -42,7 +42,7 @@ void							execute_and_cleanup(t_command *cmd_list,
 									t_env *my_env);
 
 // ========== NEW_PIPEX ==========
-void							new_pipex(t_command *current, t_env *my_env);
+void							exec_pipeline(t_command *current, t_env *my_env);
 void							execute_command(char **s_cmd, char **env);
 
 // ========== NEW_PIPEX_UTILS ==========
