@@ -62,6 +62,7 @@ static void	handle_single_heredoc(t_token *curr, t_env *my_env)
 		line = readline("> ");
 		if (g_signal == SIGINT)
 		{
+			//bash: warning: here-document at line 19 delimited by end-of-file (wanted `L')
 			printf("LOLOL\n");
 			my_env->error_code = 130;
 			free(line);

@@ -31,8 +31,8 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 			exit_failure("dup2 failed\n");
 	}
 	if (is_builtin(my_env, current) == -1)
-		execute_command(current->args, my_env->env);
-		// cmd_not_built(&my_env->env, current->args);
+		cmd_not_built(&my_env->env, current->args);
+	// execute_command(current->args, my_env->env);
 	close_pipefd(pipefd);
 	if (prev_fd)
 		close(prev_fd);
@@ -62,8 +62,8 @@ static void	one_command(t_command *current, t_env *my_env)
 		if (current->pid == -1)
 			exit_failure("fork : creation failed\n");
 		if (current->pid == 0)
-			execute_command(current->args, my_env->env);
-			// cmd_not_built(&my_env->env, current->args);
+			cmd_not_built(&my_env->env, current->args);
+		// execute_command(current->args, my_env->env);
 		current->status = ft_xmalloc(sizeof(int), 8);
 		waitpid(current->pid, current->status, 0);
 		if (WIFEXITED(*(current->status)))
@@ -102,6 +102,8 @@ static void	multi_command(t_command *current, t_env *my_env)
 
 void	new_pipex(t_command *current, t_env *my_env)
 {
+	if (current->args == NULL)
+		return ;
 	if (!current->next)
 		one_command(current, my_env);
 	else
