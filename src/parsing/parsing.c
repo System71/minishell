@@ -32,8 +32,11 @@ t_command	*parse_input(const char *input, t_env *my_env)
 		mem_free_all(8);
 		return (NULL);
 	}
+	print_tokens(tokens);
+
 	expand_handle(tokens, my_env);
 	split_handle(tokens);
+	print_tokens(tokens);
 	cmd_list = parse_commands(tokens);
 	return (cmd_list);
 }

@@ -129,8 +129,6 @@ void	check_permission(char **s_cmd, char *path)
 	}
 }
 
-
-
 void	execute_command(char **s_cmd, char **env)
 {
 	char	*path;

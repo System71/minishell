@@ -23,10 +23,12 @@ static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 		l++;
 	v->name = ft_strndup_oli(in + s, l, 8);
 	v->value = ft_getenv(v->name, my_env);
-	if (!v->value)
-		append_str(&v->result, "");
-	else
-		append_str(&v->result, v->value);
+	if (v->value)
+    	append_str(&v->result, v->value);
+	// if (!v->value)
+	// 	append_str(&v->result, "");
+	// else
+	// 	append_str(&v->result, v->value);
 	v->i = s + l;
 }
 
@@ -38,7 +40,7 @@ static void	expand_dollar(const char *in, t_expand_vars *v, t_env *my_env)
 		append_str(&v->result, v->buf);
 		v->i += 2;
 	}
-	else if (ft_isalpha(in[v->i + 1]) || in[v->i + 1] == '_')
+	else if (ft_isalpha(in[v->i + 1]) || in[v->i + 1] == '_' || in[v->i + 1] == '\0')
 	{
 		expand_env(in, v, my_env);
 	}

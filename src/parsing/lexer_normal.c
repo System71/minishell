@@ -14,7 +14,10 @@
 
 static void	handle_space(t_utils_lexer *storage, t_token **tokens)
 {
-	flush_buffer(storage, tokens, false);
+	if (storage->new_arg == true)
+		flush_buffer(storage, tokens, false);
+	else
+		flush_buffer(storage, tokens, true);
 	storage->new_arg = true;
 }
 

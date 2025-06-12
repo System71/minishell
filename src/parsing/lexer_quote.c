@@ -44,6 +44,7 @@ void	process_quote_char(t_utils_lexer *storage, t_token **tokens)
 		else
 			flush_buffer(storage, tokens, true);
 		storage->state = LEXER_NORMAL;
+		storage->current_quote = QUOTE_NONE;
 	}
 	else
 	{

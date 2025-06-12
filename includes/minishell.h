@@ -182,10 +182,13 @@ void							set_signals_heredoc(void);
 void							set_signals_child(void);
 
 // ========== HEREDOC ==========
-void							heredoc_handle(t_token *tokens, t_env *my_env);
-char							*generate_temp_filename(void);
-int								read_line_hook(void);
-void							destroy_file_heredoc(t_command *cmd_list);
+void			heredoc_handle(t_token *tokens, t_env *my_env);
+int	append_heredoc_line(t_heredoc *hd, const char *line);
+void	init_hd_struct(t_heredoc *hd, t_token *curr);
+void	heredoc_storage(t_token *curr, t_heredoc hd);
+char		*generate_temp_filename(void);
+int		read_line_hook(void);
+void	destroy_file_heredoc(t_command *cmd_list);
 
 // ========== PARSING_UTILS ==========
 /***** is_ft *****/

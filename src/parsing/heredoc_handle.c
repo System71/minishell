@@ -11,43 +11,16 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	append_heredoc_line(t_heredoc *hd, const char *line)
+void ctrl_d(char *line, t_heredoc hd)
 {
-	size_t	old_len;
-	size_t	line_len;
-	char	*new;
-
-	old_len = hd->content_len;
-	line_len = ft_strlen(line);
-	new = ft_realloc(hd->content, old_len, old_len + line_len + 2, 8);
-	if (!new)
-	{
-		free(hd->content);
-		return (-1);
-	}
-	ft_memcpy(new + old_len, line, line_len);
-	new[old_len + line_len] = '\n';
-	new[old_len + line_len + 1] = '\0';
-	hd->content = new;
-	hd->content_len = old_len + line_len + 1;
-	return (0);
+	printf("warning: here-document delimited by end-of-file (wanted `%s')\n",hd.delimiter);
+	free(line);
 }
 
-static void	init_hd_struct(t_heredoc *hd, t_token *curr)
+void ctrl_c(char *line, t_env *my_env)
 {
-	hd->delimiter = curr->segments->content;
-	hd->content = NULL;
-	hd->content_len = 0;
-	hd->line_count = 0;
-}
-
-void	heredoc_storage(t_token *curr, t_heredoc hd)
-{
-	if (hd.content)
-		curr->segments->content = hd.content;
-	else
-		curr->segments->content = ft_strdup_oli("", 8);
+	my_env->error_code = 130;
+	free(line);
 }
 
 static void	handle_single_heredoc(t_token *curr, t_env *my_env)
@@ -60,16 +33,15 @@ static void	handle_single_heredoc(t_token *curr, t_env *my_env)
 	while (1)
 	{
 		line = readline("> ");
-		if (g_signal == SIGINT)
+		if (!line)
 		{
-			//bash: warning: here-document at line 19 delimited by end-of-file (wanted `L')
-			printf("LOLOL\n");
-			my_env->error_code = 130;
-			free(line);
-			return ;
+			ctrl_d(line, hd);
+			break;
 		}
-		if (ft_strcmp(line, hd.delimiter) == 0
-			|| append_heredoc_line(&hd, line) < 0)
+		if (g_signal == SIGINT)
+			return (ctrl_c(line, my_env));
+		if (append_heredoc_line(&hd, line) < 0
+			|| ft_strcmp(line, hd.delimiter) == 0)
 		{
 			free(line);
 			break ;
