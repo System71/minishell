@@ -6,15 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/04 15:03:50 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:39:42 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/parser.h"
-#include "../../includes/signals.h"
-#include "../memory/mem.h"
-#include <stdio.h>
+#include "minishell.h"
 
 t_command	*parse_input(const char *input, t_env *my_env)
 {
@@ -25,7 +21,7 @@ t_command	*parse_input(const char *input, t_env *my_env)
 	tokens = lexer(input);
 	if (!tokens || !check_syntax(tokens, my_env))
 	{
-		mem_free_all();
+		mem_free_all(8);
 		return (NULL);
 	}
 	tokens = group_tokens(tokens);
@@ -33,7 +29,7 @@ t_command	*parse_input(const char *input, t_env *my_env)
 	if (g_signal == SIGINT)
 	{
 		g_signal = 0;
-		mem_free_all();
+		mem_free_all(8);
 		return (NULL);
 	}
 	expand_handle(tokens, my_env);

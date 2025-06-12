@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 17:29:20 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:29:20 by okientzl         ###   ########.fr       */
+/*   Created: 2025/04/22 11:04:51 by okientzl          #+#    #+#             */
+/*   Updated: 2025/06/06 10:19:53 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/***** ft_strlcpy *****/
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strndup_oli(const char *s, size_t n, int which_list)
 {
+	char	*dup;
+	size_t	len;
 	size_t	i;
 
-	if (!dst || !src)
-	{
-		write(2, "Error : pointer NULL in ft_strlcpy\n", 35);
-		return (0);
-	}
+	len = 0;
+	while (s[len] && len < n)
+		len++;
+	dup = ft_xmalloc(len + 1, which_list);
 	i = 0;
-	if (size > 0)
+	while (i < len)
 	{
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	while (src[i])
+		dup[i] = s[i];
 		i++;
-	return (i);
+	}
+	dup[i] = '\0';
+	return (dup);
 }

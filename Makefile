@@ -6,7 +6,7 @@
 #    By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 13:04:53 by prigaudi          #+#    #+#              #
-#    Updated: 2025/04/17 11:04:22 by okientzl         ###   ########.fr        #
+#    Updated: 2025/06/12 14:29:12 by prigaudi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ include .mk/sources.mk
 OBJ_FILES  := $(SRC:.c=.o)
 OBJ        := $(addprefix $(OBJ_DIR)/, $(OBJ_FILES))
 
-all: make_libft make_pipex $(NAME)
+all: make_libft $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/libft.a -o $(NAME) -lreadline
@@ -33,9 +33,6 @@ $(OBJ_DIR)/%.o: %.c $(HEADERS) Makefile
 
 make_libft:
 	make -C $(LIBFT_DIR) --no-print-directory
-
-make_pipex :
-	make -C $(PIPEX_DIR) --no-print-directory
 
 clean:
 	find . -name $(OBJ_DIR) -type d -exec rm -rf {} +

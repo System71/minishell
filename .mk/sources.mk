@@ -1,26 +1,17 @@
 SRC_DIR        = src/
 PARSING_DIR    = $(SRC_DIR)parsing/
+EXECUTION_DIR    = $(SRC_DIR)execution/
 MEMORY_DIR    = $(SRC_DIR)memory/
 ERROR_DIR    = $(SRC_DIR)error/
 PARSING_UTILS  = lib/parsing_utils/
 LIBFT_DIR      = lib/libft/
-PIPEX_DIR      = lib/pipex/
 
 SRC = \
     $(SRC_DIR)main.c \
-    $(SRC_DIR)signals.c \
-    $(SRC_DIR)new_pipex.c \
-    $(SRC_DIR)new_pipex_utils.c \
-    $(SRC_DIR)builtin.c \
-    $(SRC_DIR)export.c \
-    $(SRC_DIR)unset.c \
-    $(SRC_DIR)change_env_utils.c \
-    $(SRC_DIR)cmd_process.c \
-    $(SRC_DIR)cd.c \
+    $(SRC_DIR)init_minishell.c \
     $(SRC_DIR)utils.c \
-    $(SRC_DIR)exit.c \
     \
-    $(PARSING_DIR)lexer.c \
+   $(PARSING_DIR)lexer.c \
     $(PARSING_DIR)parsing.c \
     $(PARSING_DIR)parser.c \
     $(PARSING_DIR)cmd_list.c \
@@ -37,7 +28,21 @@ SRC = \
     $(PARSING_DIR)split_handle.c \
     $(PARSING_DIR)print_var.c \
     \
+	$(EXECUTION_DIR)execute_and_cleanup.c \
+    $(EXECUTION_DIR)signals.c \
+    $(EXECUTION_DIR)new_pipex.c \
+    $(EXECUTION_DIR)new_pipex_utils.c \
+    $(EXECUTION_DIR)builtin.c \
+    $(EXECUTION_DIR)export.c \
+    $(EXECUTION_DIR)unset.c \
+    $(EXECUTION_DIR)change_env_utils.c \
+    $(EXECUTION_DIR)cmd_process.c \
+    $(EXECUTION_DIR)cd.c \
+    $(EXECUTION_DIR)exit.c \
+    $(EXECUTION_DIR)oliv_exec.c \
+    \
     $(MEMORY_DIR)ft_xmalloc.c \
+    $(MEMORY_DIR)free_child.c \
 	$(ERROR_DIR)error_parsing_return.c\
 	$(ERROR_DIR)error_synthaxe.c\
 	$(ERROR_DIR)is_error.c\
@@ -48,9 +53,9 @@ SRC = \
     $(PARSING_UTILS)ft_iswhitespace.c \
     $(PARSING_UTILS)ft_memcpy.c \
     $(PARSING_UTILS)ft_realloc.c \
-    $(PARSING_UTILS)ft_strdup.c \
+    $(PARSING_UTILS)ft_strdup_oli.c \
     $(PARSING_UTILS)ft_strcat.c \
-    $(PARSING_UTILS)ft_strndup.c \
+    $(PARSING_UTILS)ft_strndup_oli.c \
     $(PARSING_UTILS)ft_strcpy.c \
     $(PARSING_UTILS)ft_strcmp.c \
     $(PARSING_UTILS)ft_itoa.c \
@@ -65,15 +70,8 @@ SRC = \
 
 HEADERS = \
 		   includes/minishell.h \
-			includes/lexer.h \
-			includes/parser.h \
-			includes/parsing_utils.h \
 			includes/types.h \
-			includes/parse_tempfile.h \
-			src/memory/mem.h\
 			includes/ft_printf.h \
 			includes/get_next_line.h \
-			includes/libft.h \
-			includes/pipex.h \
-			includes/signals.h
+			includes/libft.h 
 

@@ -9,11 +9,11 @@
 /*   Updated: 2025/05/07 17:29:06 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../src/memory/mem.h"
-#include <unistd.h>
+
+#include "minishell.h"
+
 /***** strdup *****/
-char	*ft_strdup_oli(const char *s)
+char	*ft_strdup_oli(const char *s, int which_list)
 {
 	size_t	len;
 	char	*copy;
@@ -24,7 +24,7 @@ char	*ft_strdup_oli(const char *s)
 		return (NULL);
 	}
 	len = ft_strlen(s);
-	copy = ft_xmalloc((len + 1) * sizeof(char));
+	copy = ft_xmalloc((len + 1) * sizeof(char), which_list);
 	ft_memcpy(copy, s, len);
 	copy[len] = '\0';
 	return (copy);

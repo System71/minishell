@@ -9,8 +9,9 @@
 /*   Updated: 2025/05/07 17:28:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include <unistd.h>
+
+#include "minishell.h"
+
 /***** strcmp *****/
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -32,6 +33,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
+
 /***** strncmp *****/
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

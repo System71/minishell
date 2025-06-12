@@ -10,41 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "./memory/mem.h"
-
-static t_env	*init_env(int argc, char **argv, char **envp)
-{
-	t_env	*cpy_env;
-
-	(void)argc;
-	(void)argv;
-	cpy_env = malloc(sizeof(t_env));
-	if (!cpy_env)
-		return (NULL);
-	cpy_env->env = env_cpy(envp);
-	if (!cpy_env->env)
-		exit_failure("env copy crashed");
-	cpy_env->error_code = 0;
-	return (cpy_env);
-}
-
-static void	destroy_file_heredoc(t_command *cmd_list)
-{
-	while (cmd_list)
-	{
-		while (cmd_list->redirs)
-		{
-			if (cmd_list->redirs->type == T_HEREDOC)
-			{
-				if (unlink(cmd_list->redirs->target) == -1)
-					perror("unlink failed");
-			}
-			cmd_list->redirs = cmd_list->redirs->next;
-		}
-		cmd_list = cmd_list->next;
-	}
-}
+#include "minishell.h"
 
 char	*get_prompt(t_env *my_env)
 {
@@ -54,20 +20,11 @@ char	*get_prompt(t_env *my_env)
 	return (prompt);
 }
 
-void	ft_free_loop(char *input)
+void	shell_loop(t_env *my_env)
 {
-	free(input);
-	mem_free_all();
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_command	*cmd_list;
-	t_env		*my_env;
 	char		*input;
+	t_command	*cmd_list;
 
-	my_env = init_env(argc, argv, envp);
-	rl_event_hook = read_line_hook;
 	while (1)
 	{
 		set_signals_interactive();
@@ -80,19 +37,24 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		if (!input)
-		{
-			ft_putstr_fd("exit\n", 2);
-			break ;
-		}
+			exit_shell();
 		if (*input)
 			add_history(input);
 		cmd_list = parse_input(input, my_env);
-		if (cmd_list != NULL)
-		{
-			new_pipex(cmd_list, my_env);
-			destroy_file_heredoc(cmd_list);
-		}
+		if (cmd_list)
+			execute_and_cleanup(cmd_list, my_env);
 		ft_free_loop(input);
 	}
-	mem_free_all();
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_env	*my_env;
+
+	(void)argc;
+	(void)argv;
+	my_env = init_minishell(envp);
+	shell_loop(my_env);
+	mem_free_all(60);
+	return (0);
 }

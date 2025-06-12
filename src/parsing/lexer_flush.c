@@ -9,7 +9,8 @@
 /*   Updated: 2025/06/02 19:16:46 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/lexer.h"
+
+#include "minishell.h"
 
 void	flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
 {

@@ -114,6 +114,15 @@ typedef struct s_tempfile
 	int						len;
 	char					*filename;
 }							t_tempfile;
+
+typedef struct s_creat_tempfile
+{
+	char         *filename;
+	unsigned char rnd[RANDOM_BYTES];
+	char         hexpart[RANDOM_BYTES * 2 + 1];
+	int          tries;
+	int          fd;
+}   t_creat_tempfile;
 /***********************************/
 /**********     EXPAND    **********/
 typedef struct s_expand_vars
@@ -154,5 +163,13 @@ typedef struct s_env
 	char					**env;
 	int						error_code;
 }							t_env;
+
+/***********************************/
+/**********    MEMORY    **********/
+typedef struct s_mem_node
+{
+	void				*ptr;
+	struct s_mem_node	*next;
+}		t_mem_node;
 
 #endif

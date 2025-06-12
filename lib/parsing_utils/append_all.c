@@ -6,12 +6,11 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:43:15 by okientzl          #+#    #+#             */
-/*   Updated: 2025/04/22 11:43:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:28:23 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../includes/types.h"
-#include <stdlib.h>
+
+#include "minishell.h"
 
 int	append_str(char **dest, const char *src)
 {
@@ -23,7 +22,7 @@ int	append_str(char **dest, const char *src)
 	if (*dest)
 		old_len = ft_strlen(*dest);
 	src_len = ft_strlen(src);
-	new_str = ft_realloc(*dest, old_len, old_len + src_len + 1);
+	new_str = ft_realloc(*dest, old_len, old_len + src_len + 1, 8);
 	if (!new_str)
 	{
 		free(*dest);
@@ -43,7 +42,7 @@ int	append_char(t_dynamic_buffer *buf, char c)
 	if (buf->len + 1 >= buf->capacity)
 	{
 		new_capacity = buf->capacity * 2;
-		new_data = ft_realloc(buf->data, buf->capacity, new_capacity);
+		new_data = ft_realloc(buf->data, buf->capacity, new_capacity, 8);
 		if (!new_data)
 			return (0);
 		buf->data = new_data;

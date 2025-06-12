@@ -9,9 +9,8 @@
 /*   Updated: 2025/05/07 17:22:41 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../src/memory/mem.h"
-#include <unistd.h>
+
+#include "minishell.h"
 
 /***** itoa *****/
 char	*ft_itoa(int n)
@@ -22,7 +21,7 @@ char	*ft_itoa(int n)
 
 	ln = n;
 	len = get_int_size(n);
-	result = ft_xmalloc((len + 1) * sizeof(char));
+	result = ft_xmalloc((len + 1) * sizeof(char), 8);
 	if (!result)
 	{
 		write(2, "Error : Fail malloc ft_itoa\n", 28);

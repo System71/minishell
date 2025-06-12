@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
-#include "../../includes/types.h" 
-#include "../../includes/parsing_utils.h" 
-#include "../memory/mem.h" 
+#include "minishell.h"
 
 static char	*segments_to_str(t_token_segment *seg)
 {
@@ -28,7 +25,7 @@ static char	*segments_to_str(t_token_segment *seg)
 		total += ft_strlen(s->content);
 		s = s->next;
 	}
-	buf = ft_xmalloc(total + 1);
+	buf = ft_xmalloc(total + 1, 8);
 	buf[0] = '\0';
 	s = seg;
 	while (s)
@@ -60,11 +57,9 @@ static char	**get_split_parts(t_token *cur)
 		return (NULL);
 	if (!ft_strchr(full, ' '))
 	{
-		free(full);
 		return (NULL);
 	}
 	parts = ft_split(full, ' ');
-	free(full);
 	return (parts);
 }
 
@@ -78,7 +73,7 @@ static void	insert_remaining_parts(t_token *cur, char **parts, t_token *next)
 	i = 1;
 	while (parts[i])
 	{
-		new = ft_xmalloc(sizeof(*new));
+		new = ft_xmalloc(sizeof(*new), 8);
 		new->type = T_WORD;
 		new->segments = NULL;
 		add_segment_to_token(new, parts[i], QUOTE_NONE);

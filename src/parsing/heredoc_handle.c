@@ -9,13 +9,8 @@
 /*   Updated: 2025/06/02 19:38:39 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/parsing_utils.h"
-#include "../../includes/types.h"
-#include "../../includes/signals.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
+
+#include "minishell.h"
 
 static int	append_heredoc_line(t_heredoc *hd, const char *line)
 {
@@ -25,7 +20,7 @@ static int	append_heredoc_line(t_heredoc *hd, const char *line)
 
 	old_len = hd->content_len;
 	line_len = ft_strlen(line);
-	new = ft_realloc(hd->content, old_len, old_len + line_len + 2);
+	new = ft_realloc(hd->content, old_len, old_len + line_len + 2, 8);
 	if (!new)
 	{
 		free(hd->content);
@@ -52,7 +47,7 @@ void	heredoc_storage(t_token *curr, t_heredoc hd)
 	if (hd.content)
 		curr->segments->content = hd.content;
 	else
-		curr->segments->content = ft_strdup("");
+		curr->segments->content = ft_strdup_oli("", 8);
 }
 
 static void	handle_single_heredoc(t_token *curr, t_env *my_env)
@@ -67,6 +62,7 @@ static void	handle_single_heredoc(t_token *curr, t_env *my_env)
 		line = readline("> ");
 		if (g_signal == SIGINT)
 		{
+			//bash: warning: here-document at line 19 delimited by end-of-file (wanted `L')
 			printf("LOLOL\n");
 			my_env->error_code = 130;
 			free(line);

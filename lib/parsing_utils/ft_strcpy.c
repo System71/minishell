@@ -9,7 +9,8 @@
 /*   Updated: 2025/05/07 17:28:57 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
+
+#include "minishell.h"
 
 /***** ft_strcpy *****/
 int	ft_strcpy(char *dst, const char *src)
