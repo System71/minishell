@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 07:52:39 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/13 09:13:54 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ t_command						*parse_commands(t_token *tokens);
 bool							is_redirection_type(t_token_type type);
 void							append_arg_to_command(t_command *cmd,
 									char *arg);
-t_command						*init_or_get_current_command(
-									t_command **cmd_list,
+t_command						*init_or_get_current_command(t_command **cmd_list,
 									t_command *current_cmd);
 
 // ========== DEBUG ==========

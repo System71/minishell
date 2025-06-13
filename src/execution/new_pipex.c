@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 15:31:07 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:36:12 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,18 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
 	int	infile;
 	int	outfile;
+	int	saved_stdout;
+	int	saved_stdin;
 
 	infile = 0;
 	outfile = 0;
-	get_redirection(current, &infile, &outfile, my_env);
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (get_redirection(current, &infile, &outfile, my_env))
+	{
+		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
+		return ;
+	}
 	if (!infile && prev_fd)
 	{
 		if (dup2(prev_fd, STDIN_FILENO) == -1)
@@ -78,9 +86,11 @@ static void	one_command(t_command *current, t_env *my_env)
 
 static void	multi_command(t_command *current, t_env *my_env)
 {
-	int	pipefd[2];
-	int	prev_fd;
+	int			pipefd[2];
+	int			prev_fd;
+	t_command	*head;
 
+	head = current;
 	prev_fd = 0;
 	while (current)
 	{
@@ -96,6 +106,11 @@ static void	multi_command(t_command *current, t_env *my_env)
 		if (prev_fd)
 			close(prev_fd);
 		prev_fd = pipefd[0];
+		current = current->next;
+	}
+	current = head;
+	while (current)
+	{
 		waitpid(current->pid, current->status, 0);
 		if (WIFEXITED(*(current->status)))
 			my_env->error_code = WEXITSTATUS(*(current->status));

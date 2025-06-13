@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:04:01 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 15:30:34 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/13 09:14:59 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,16 @@ int	get_redirection(t_command *current, int *infile, int *outfile,
 			*infile = open(current->redirs->target, O_RDONLY);
 			if (*infile == -1)
 			{
-				exit_failure("open failed\n", my_env);
+				ft_putstr_fd("minishell : ", 2);
+				perror(current->redirs->target);
+				my_env->error_code = 1;
 				return (1);
 			}
 			if (dup2(*infile, STDIN_FILENO) == -1)
 			{
-				exit_failure("dup2 failed\n", my_env);
+				ft_putstr_fd("minishell : ", 2);
+				perror(current->redirs->target);
+				my_env->error_code = 1;
 				return (1);
 			}
 		}
@@ -53,12 +57,16 @@ int	get_redirection(t_command *current, int *infile, int *outfile,
 					0644);
 			if (*outfile == -1)
 			{
-				exit_failure("open failed\n", my_env);
+				ft_putstr_fd("minishell : ", 2);
+				perror(current->redirs->target);
+				my_env->error_code = 1;
 				return (1);
 			}
 			if (dup2(*outfile, STDOUT_FILENO) == -1)
 			{
-				exit_failure("dup2 failed\n", my_env);
+				ft_putstr_fd("minishell : ", 2);
+				perror(current->redirs->target);
+				my_env->error_code = 1;
 				return (1);
 			}
 		}
@@ -68,12 +76,16 @@ int	get_redirection(t_command *current, int *infile, int *outfile,
 					O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (*outfile == -1)
 			{
-				exit_failure("open failed\n", my_env);
+				ft_putstr_fd("minishell : ", 2);
+				perror(current->redirs->target);
+				my_env->error_code = 1;
 				return (1);
 			}
 			if (dup2(*outfile, STDOUT_FILENO) == -1)
 			{
-				exit_failure("dup2 failed\n", my_env);
+				ft_putstr_fd("minishell : ", 2);
+				perror(current->redirs->target);
+				my_env->error_code = 1;
 				return (1);
 			}
 		}
