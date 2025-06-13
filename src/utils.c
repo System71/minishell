@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 14:52:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:01:53 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exit_shell(void)
 	ft_putstr_fd("exit\n", 2);
 	rl_clear_history();
 	mem_free_all(60);
-	exit(0);
+	exit(130);
 }
 
 // PASSAGE EN VOID A VOIR

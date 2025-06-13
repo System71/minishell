@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 10:36:12 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:03:10 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	}
 	if (is_builtin(my_env, current) == -1)
 		cmd_not_built(my_env, current->args);
-	// execute_command(current->args, my_env->env);
 	close_pipefd(pipefd);
 	if (prev_fd)
 		close(prev_fd);
@@ -74,8 +73,10 @@ static void	one_command(t_command *current, t_env *my_env)
 		if (current->pid == -1)
 			exit_failure("fork : creation failed\n", my_env);
 		if (current->pid == 0)
+		{
+			set_signals_child();
 			cmd_not_built(my_env, current->args);
-		// execute_command(current->args, my_env->env);
+		}
 		current->status = ft_xmalloc(sizeof(int), 8);
 		waitpid(current->pid, current->status, 0);
 		if (WIFEXITED(*(current->status)))
@@ -101,7 +102,10 @@ static void	multi_command(t_command *current, t_env *my_env)
 			exit_failure("fork : creation failed\n", my_env);
 		current->status = ft_xmalloc(sizeof(int), 8);
 		if (current->pid == 0)
+		{
+			set_signals_child();
 			child(current, pipefd, prev_fd, my_env);
+		}
 		close(pipefd[1]);
 		if (prev_fd)
 			close(prev_fd);
@@ -121,7 +125,7 @@ static void	multi_command(t_command *current, t_env *my_env)
 
 void	new_pipex(t_command *current, t_env *my_env)
 {
-	if (current->args == NULL)
+	if (current->args == NULL || *current->args[0] == '\0')
 		return ;
 	if (!current->next)
 		one_command(current, my_env);
