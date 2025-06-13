@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+
+
 int	is_path_absolute_or_relative(char *cmd)
 {
 	int	len;

@@ -47,7 +47,7 @@ static void	handle_infile(
 		close(*infile);
 	*infile = open(file, O_RDONLY);
 	if (*infile == -1)
-		exit_failure("open failed\n", my_env, do_exit);
+		exit_failure(file, my_env, do_exit);
 	if (dup2(*infile, STDIN_FILENO) == -1)
 		exit_failure(file, my_env, do_exit);
 }

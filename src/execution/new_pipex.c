@@ -12,6 +12,51 @@
 
 #include "../includes/minishell.h"
 
+void	free_tab_dup(char **tab)
+{
+	int i = 0;
+	if (!tab)
+		return;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+char	**ft_strdup_tab(char **tab)
+{
+	int		count;
+	char	**dup;
+	int		i;
+
+	if (!tab)
+		return (NULL);
+	count = 0;
+	while (tab[count])
+		count++;
+	dup = malloc(sizeof(char *) * (count + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		dup[i] = ft_strdup(tab[i]);
+		if (!dup[i])
+		{
+			// Libère tout si erreur d'allocation partielle
+			while (--i >= 0)
+				free(dup[i]);
+			free(dup);
+			return (NULL);
+		}
+		i++;
+	}
+	dup[count] = NULL;
+	return (dup);
+}
+
 void	dup2_and_close(int fd, int std)
 {
 	if (fd != std && fd > 2)
@@ -55,9 +100,19 @@ static void	exec_child(
 	if (outfile > 2)
 		dup2_and_close(outfile, 1);
 	if (is_builtin(cmd))
+	{
 		exec_builtin(env, cmd);
+		mem_free_all(8);
+		mem_free_all(60);
+	}
 	else
-		execute_command(cmd->args, env->env);
+	{
+		char **args = ft_strdup_tab(cmd->args);
+		char **my_env = ft_strdup_tab(env->env);
+		mem_free_all(8);
+		mem_free_all(60);
+		execute_command(args, my_env);
+	}
 	exit(0);
 }
 

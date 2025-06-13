@@ -131,5 +131,5 @@ int	exec_builtin(t_env *my_env, t_command *current)
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
 		my_env->error_code = my_exit(current->args);
-	return (my_env->error_code);
+	return (0);
 }

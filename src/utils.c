@@ -34,5 +34,8 @@ void	exit_failure(char *message, t_env *my_env,int do_exit)
 	perror(message);
 	my_env->error_code = 1;
 	if (do_exit)
+	{
+		mem_free_all(8);
 		exit(1);
+	}
 }

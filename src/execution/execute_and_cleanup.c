@@ -28,6 +28,7 @@ void	execute_and_cleanup(t_command *cmd_list, t_env *my_env)
 	}
 	else
 	{
+		// set_signals_child();
 		exec_pipeline(cmd_list, my_env);
 	}
 
