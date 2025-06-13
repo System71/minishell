@@ -72,7 +72,7 @@ static void	build_filename(char *dst,
 char	*generate_temp_filename(void)
 {
 	t_creat_tempfile	tf;
-	int			status;
+	int					status;
 
 	tf.filename = ft_xmalloc(BUF_SIZE, 8);
 	tf.tries = 0;

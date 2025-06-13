@@ -11,13 +11,15 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-void ctrl_d(char *line, t_heredoc hd)
+
+void	ctrl_d(char *line, t_heredoc hd)
 {
-	printf("warning: here-document delimited by end-of-file (wanted `%s')\n",hd.delimiter);
+	printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
+		hd.delimiter);
 	free(line);
 }
 
-void ctrl_c(char *line, t_env *my_env)
+void	ctrl_c(char *line, t_env *my_env)
 {
 	my_env->error_code = 130;
 	free(line);
@@ -36,7 +38,7 @@ static void	handle_single_heredoc(t_token *curr, t_env *my_env)
 		if (!line)
 		{
 			ctrl_d(line, hd);
-			break;
+			break ;
 		}
 		if (g_signal == SIGINT)
 			return (ctrl_c(line, my_env));

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 07:49:42 by okientzl          #+#    #+#             */
+/*   Updated: 2025/06/13 07:54:16 by okientzl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TYPE_H
 # define TYPE_H
 
@@ -117,12 +129,12 @@ typedef struct s_tempfile
 
 typedef struct s_creat_tempfile
 {
-	char         *filename;
-	unsigned char rnd[RANDOM_BYTES];
-	char         hexpart[RANDOM_BYTES * 2 + 1];
-	int          tries;
-	int          fd;
-}   t_creat_tempfile;
+	char					*filename;
+	unsigned char			rnd[RANDOM_BYTES];
+	char					hexpart[RANDOM_BYTES * 2 + 1];
+	int						tries;
+	int						fd;
+}							t_creat_tempfile;
 /***********************************/
 /**********     EXPAND    **********/
 typedef struct s_expand_vars
