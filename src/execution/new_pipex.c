@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 12:03:10 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:05:08 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (get_redirection(current, &infile, &outfile, my_env))
 	{
+		
 		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
 		return ;
 	}

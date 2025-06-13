@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 12:01:53 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:57:08 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,17 @@ void	exit_failure(char *message, t_env *my_env)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(message, 2);
 	my_env->error_code = 1;
+}
+
+void	free_split(char **split)
+{
+	int i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

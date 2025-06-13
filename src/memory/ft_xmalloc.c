@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_xmalloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:42:21 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/06 10:38:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:05:52 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	mem_register(void *ptr, int which_list)
 	*head = node;
 }
 
+//60 = environnement
+//8 = boucle
 void	mem_free_all(int which_list)
 {
 	t_mem_node	*cur;
