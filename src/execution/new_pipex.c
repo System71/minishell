@@ -35,7 +35,7 @@ static void	exec_child(
 
 	infile = -1;
 	outfile = -1;
-	get_redirection(cmd, &infile, &outfile, env);
+	get_redirection(cmd, &infile, &outfile, env, 1);
 	if (in_fd > 2)
 		dup2_and_close(in_fd, 0);
 	if (has_next)
@@ -54,7 +54,9 @@ static void	exec_child(
 		dup2_and_close(infile, 0);
 	if (outfile > 2)
 		dup2_and_close(outfile, 1);
-	if (is_builtin(env, cmd) == -1)
+	if (is_builtin(cmd))
+		exec_builtin(env, cmd);
+	else
 		execute_command(cmd->args, env->env);
 	exit(0);
 }
@@ -73,13 +75,13 @@ static void	pipe_and_fork(
 	if (cmd->next)
 	{
 		if (pipe(pipefd) == -1)
-			exit_failure("pipe", env);
+			exit_failure("pipe", env, 0);
 		out_fd = pipefd[1];
 		has_next = 1;
 	}
 	pid = fork();
 	if (pid == -1)
-		exit_failure("fork", env);
+		exit_failure("fork", env, 0);
 	if (pid == 0)
 		exec_child(cmd, *prev_fd, out_fd, env, pipefd, has_next);
 	cmd->pid = pid;
@@ -91,15 +93,22 @@ static void	pipe_and_fork(
 		*prev_fd = pipefd[0];
 }
 
-static void	wait_all(t_command *cmd)
+static void	wait_all(t_command *cmd, t_env *env)
 {
 	int	status;
+	int	last_status;
 
+	last_status = 0;
 	while (cmd)
 	{
 		waitpid(cmd->pid, &status, 0);
+		last_status = status;
 		cmd = cmd->next;
 	}
+	if (WIFEXITED(last_status))
+		env->error_code = WEXITSTATUS(last_status);
+	else
+		env->error_code = 1;
 }
 
 void	exec_pipeline(t_command *cmd, t_env *env)
@@ -117,5 +126,5 @@ void	exec_pipeline(t_command *cmd, t_env *env)
 		pipe_and_fork(curr, env, &prev_fd, pipefd);
 		curr = curr->next;
 	}
-	wait_all(cmd);
+	wait_all(cmd, env);
 }

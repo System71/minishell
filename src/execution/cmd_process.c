@@ -29,7 +29,7 @@ char	**get_paths(t_env *my_env)
 					ft_strlen(*(my_env->env)));
 			if (!extracted_path)
 			{
-				exit_failure("full_path malloc extracted_path", my_env);
+				exit_failure("full_path malloc extracted_path", my_env, 1);
 			}
 			break ;
 		}
@@ -51,7 +51,7 @@ static void	exec_cmd(char **paths, char **args, char *end_path, t_env *my_env)
 	{
 		full_path = ft_strjoin(paths[i], end_path);
 		if (!full_path)
-			exit_failure("full_path malloc ft_strjoin", my_env);
+			exit_failure("full_path malloc ft_strjoin", my_env, 1);
 		execve(full_path, args, my_env->env);
 	}
 	if (errno == EACCES)
@@ -81,20 +81,41 @@ int	cmd_not_built(t_env *my_env, char **args)
 	paths = get_paths(my_env);
 	if (!paths)
 	{
-		exit_failure("get_paths", my_env);
+		exit_failure("get_paths", my_env, 1);
 		return (1);
 	}
 	end_path = ft_strjoin("/", args[0]);
 	if (!end_path)
 	{
-		exit_failure("args malloc ft_strjoin", my_env);
+		exit_failure("args malloc ft_strjoin", my_env, 1);
 		return (1);
 	}
 	exec_cmd(paths, args, end_path, my_env);
 	exit(127);
 }
-// int	is_builtin(t_env *my_env, char **args)
-int	is_builtin(t_env *my_env, t_command *current)
+
+int	is_builtin(t_command *current)
+{
+	if (!current->args || !current->args[0])
+		return (0);
+	if (!ft_strncmp(current->args[0], "echo", 5))
+		return (1);
+	if (!ft_strncmp(current->args[0], "cd", 3))
+		return (1);
+	if (!ft_strncmp(current->args[0], "pwd", 4))
+		return (1);
+	if (!ft_strncmp(current->args[0], "export", 7))
+		return (1);
+	if (!ft_strncmp(current->args[0], "unset", 6))
+		return (1);
+	if (!ft_strncmp(current->args[0], "env", 4))
+		return (1);
+	if (!ft_strncmp(current->args[0], "exit", 5))
+		return (1);
+	return (0);
+}
+
+int	exec_builtin(t_env *my_env, t_command *current)
 {
 	if (!ft_strncmp(current->args[0], "echo", ft_strlen("echo") + 1))
 		my_env->error_code = echo(current->args);
@@ -110,7 +131,5 @@ int	is_builtin(t_env *my_env, t_command *current)
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
 		my_env->error_code = my_exit(current->args);
-	else
-		return (-1);
 	return (my_env->error_code);
 }

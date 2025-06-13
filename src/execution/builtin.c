@@ -23,7 +23,7 @@ int	pwd(char **args, t_env *my_env)
 	{
 		flag = ft_substr(args[1], 0, 2);
 		if (!flag)
-			exit_failure("error malloc flag",my_env);
+			exit_failure("error malloc flag",my_env, 0);
 		triple_putstr_fd("minishell: pwd : ", flag, ": invalid option\n", 2);
 		free(flag);
 		return (2);

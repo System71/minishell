@@ -48,10 +48,10 @@ void							execute_command(char **s_cmd, char **env);
 // ========== NEW_PIPEX_UTILS ==========
 void							restore_std(int infile, int outfile,
 									int saved_stdin, int saved_stdout,
-									t_env *my_env);
+									t_env *my_env, int do_exit);
 void							close_pipefd(int pipefd[2]);
 int								get_redirection(t_command *current, int *infile,
-									int *outfile, t_env *my_env);
+									int *outfile, t_env *my_env, int do_exit);
 
 // ========== BUILTIN ==========
 int								pwd(char **args, t_env *my_env);
@@ -77,13 +77,14 @@ int								remove_variable(char ***my_env, int position);
 int								cd(t_env *my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
-int								is_builtin(t_env *my_env, t_command *current);
+int								is_builtin(t_command *current);
+int								exec_builtin(t_env *my_env, t_command *current);
 int								cmd_not_built(t_env *my_env, char **args);
 
 // ========== UTILS ==========
 void							triple_putstr_fd(char *s1, char *s2, char *s3,
 									int fd);
-void							exit_failure(char *message, t_env *my_env);
+void							exit_failure(char *message, t_env *my_env,int do_exit);
 char							**env_cpy(char **envp);
 
 // ========== ERROR ==========

@@ -28,10 +28,11 @@ void	exit_shell(void)
 }
 
 // PASSAGE EN VOID A VOIR
-void	exit_failure(char *message, t_env *my_env)
+void	exit_failure(char *message, t_env *my_env,int do_exit)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(message, 2);
+	perror(message);
 	my_env->error_code = 1;
-	exit(1);
+	if (do_exit)
+		exit(1);
 }
