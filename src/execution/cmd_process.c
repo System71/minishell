@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 16:17:18 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:26:14 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ static void	exec_cmd(char **paths, char **args, char *end_path, t_env *my_env)
 }
 
 // if execve doesnt work we return 127
-void	cmd_not_built(t_env *my_env, char **args, int saved_stdin,
-		int saved_stdout)
+void	cmd_not_built(t_env *my_env, char **args)
 {
 	char	**paths;
 	char	*end_path;
@@ -109,13 +108,16 @@ void	cmd_not_built(t_env *my_env, char **args, int saved_stdin,
 	exec_cmd(paths, args, end_path, my_env);
 	free_split(paths);
 	free(end_path);
-	close(saved_stdin);
-	close(saved_stdout);
+	mem_free_all(60);
+	mem_free_all(8);
 	exit(my_env->error_code);
 }
 // int	is_builtin(t_env *my_env, char **args)
-int	is_builtin(t_env *my_env, t_command *current)
+int	is_builtin(t_env *my_env, t_command *current, int saved_stdin,
+		int saved_stdout)
 {
+	close(saved_stdin);
+	close(saved_stdout);
 	if (!ft_strncmp(current->args[0], "echo", ft_strlen("echo") + 1))
 		my_env->error_code = echo(current->args);
 	else if (!ft_strncmp(current->args[0], "cd", ft_strlen("cd") + 1))
@@ -134,5 +136,5 @@ int	is_builtin(t_env *my_env, t_command *current)
 		return (-1);
 	mem_free_all(60);
 	mem_free_all(8);
-	exit(EXIT_SUCCESS);
+	return (0);
 }

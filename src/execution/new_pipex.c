@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 16:14:00 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:33:03 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			exit_failure("dup2 failed\n", my_env);
 	}
-	if (is_builtin(my_env, current) == -1)
-		cmd_not_built(my_env, current->args, saved_stdin, saved_stdin);
-	close_pipefd(pipefd);
 	if (prev_fd)
 		close(prev_fd);
 	if (infile)
 		close(infile);
 	if (outfile)
 		close(outfile);
+	close_pipefd(pipefd);
+	if (is_builtin(my_env, current, saved_stdin, saved_stdout) == -1)
+		cmd_not_built(my_env, current->args);
 }
 
 // if builtin => no fork needed
@@ -67,22 +67,34 @@ static void	one_command(t_command *current, t_env *my_env)
 		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
 		return ;
 	}
-	if (is_builtin(my_env, current) == -1)
+	if (is_builtin(my_env, current, saved_stdin, saved_stdout) == -1)
 	{
 		current->pid = fork();
 		if (current->pid == -1)
 			exit_failure("fork : creation failed\n", my_env);
 		if (current->pid == 0)
 		{
+			if (infile)
+				close(infile);
+			if (outfile)
+				close(outfile);
+			close(saved_stdin);
+			close(saved_stdout);
 			set_signals_child();
-			cmd_not_built(my_env, current->args, saved_stdin, saved_stdout);
+			cmd_not_built(my_env, current->args);
 		}
 		current->status = ft_xmalloc(sizeof(int), 8);
 		waitpid(current->pid, current->status, 0);
 		if (WIFEXITED(*(current->status)))
 			my_env->error_code = WEXITSTATUS(*(current->status));
 	}
+	else
+		exit(EXIT_SUCCESS);
 	restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
+	if (infile)
+		close(infile);
+	if (outfile)
+		close(outfile);
 	close(saved_stdin);
 	close(saved_stdout);
 }
