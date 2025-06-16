@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:36:31 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 07:07:16 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:47:35 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,28 @@ static void	run_child_command(t_exec_ctx *ctx)
 	char	**my_env;
 
 	if (is_builtin(ctx->cmd))
-		exec_builtin(ctx->env, ctx->cmd);
+		exec_builtin(ctx->env, ctx->cmd, true);
 	else
 	{
-		args = ft_strdup_tab(ctx->cmd->args);
-		my_env = ft_strdup_tab(ctx->env->env);
-		execute_command(args, my_env);
+		if (ctx->cmd->args)
+		{
+			args = ft_strdup_tab(ctx->cmd->args);
+			my_env = ft_strdup_tab(ctx->env->env);
+			mem_free_all(8);
+			mem_free_all(60);
+			execute_command(args, my_env);
+		}
+		else
+		{
+			mem_free_all(8);
+			mem_free_all(60);	
+		}
 	}
 }
 
 void	exec_child(t_exec_ctx *ctx)
 {
-	get_redirection(ctx->cmd, ctx->io, ctx->env, 1);
+	get_redirection(ctx->cmd, ctx->io, ctx->env, ctx);
 	setup_child_fds(ctx);
 	close_child_pipes(ctx->pipefd);
 	dup_redir_fds(ctx->io);

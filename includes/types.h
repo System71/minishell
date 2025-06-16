@@ -192,6 +192,7 @@ typedef struct s_io
 	int	outfile;
 	int	saved_stdin;
 	int	saved_stdout;
+	int	do_exit;
 }	t_io;
 
 typedef struct s_exec_ctx

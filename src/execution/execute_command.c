@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:00:18 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 07:06:22 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:39:23 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	execute_command(char **s_cmd, char **env)
 		ft_putstr_fd(s_cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		ft_free_tab(s_cmd);
+		ft_free_tab(env);
 		exit(127);
 	}
 	check_permission(s_cmd, path);
@@ -73,6 +74,7 @@ void	execute_command(char **s_cmd, char **env)
 		perror(s_cmd[0]);
 		free(path);
 		ft_free_tab(s_cmd);
+		ft_free_tab(env);
 		if (err == EISDIR || err == EACCES || err == ENOEXEC)
 			exit(126);
 		else if (err == ENOENT)

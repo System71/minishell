@@ -6,11 +6,19 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 07:02:46 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 07:09:04 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:39:46 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_io_saves(t_io *io)
+{
+	if (io->saved_stdin > 2)
+		close(io->saved_stdin);
+	if (io->saved_stdout > 2)
+		close(io->saved_stdout);
+}
 
 int	is_path_absolute_or_relative(char *cmd)
 {

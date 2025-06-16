@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:48:56 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 04:48:58 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:51:37 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	setup_pipe_and_ctx(
 	if (cmd->next)
 	{
 		if (pipe(pctx->pipefd) == -1)
-			exit_failure("pipe", pctx->env, 0);
+			exit_failure("pipe", pctx->env, 0, NULL);
 	}
 }
 
@@ -28,7 +28,7 @@ static void	fork_and_exec(
 	t_command *cmd, t_pipe_ctx *pctx)
 {
 	pid_t		pid;
-	t_exec_ctx	ctx;
+	t_exec_ctx	ctx = {0};
 
 	ctx.cmd = cmd;
 	ctx.env = pctx->env;
@@ -37,9 +37,10 @@ static void	fork_and_exec(
 	ctx.out_fd = pctx->pipefd[1];
 	ctx.pipefd = pctx->pipefd;
 	ctx.has_next = (cmd->next != NULL);
+	ctx.io->do_exit = 1;
 	pid = fork();
 	if (pid == -1)
-		exit_failure("fork", pctx->env, 0);
+		exit_failure("fork", pctx->env, 0, NULL);
 	if (pid == 0)
 	{
 		set_signals_child();
@@ -94,5 +95,6 @@ void	exec_pipeline(t_command *cmd, t_env *env, t_io *io)
 			pctx.prev_fd = pctx.pipefd[0];
 		curr = curr->next;
 	}
+	cleanup_pipe_ctx(&pctx);
 	wait_all(cmd, env);
 }

@@ -6,35 +6,42 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:28:14 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 04:54:32 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:06:51 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	restore_std(t_io *io, t_env *my_env, int do_exit)
+void	restore_std(t_io *io, t_env *my_env)
 {
 	if (io->infile > 2)
 	{
 		if (dup2(io->saved_stdin, STDIN_FILENO) == -1)
-			exit_failure("dup2 restore failed", my_env, do_exit);
+			exit_failure("dup2 restore failed", my_env, io->do_exit, NULL);
 		close(io->infile);
 	}
 	if (io->outfile > 2)
 	{
 		if (dup2(io->saved_stdout, STDOUT_FILENO) == -1)
-			exit_failure("dup2 restore failed", my_env, do_exit);
+			exit_failure("dup2 restore failed", my_env, io->do_exit, NULL);
 		close(io->outfile);
 	}
 }
 
+void	cleanup_pipe_ctx(t_pipe_ctx *pctx)
+{
+	close_if_needed(pctx->prev_fd);
+	close_pipefd(pctx->pipefd);
+}
+
 void	close_pipefd(int pipefd[2])
 {
-	if (pipefd[0] > 2)
-		close(pipefd[0]);
-	if (pipefd[1] > 2)
-		close(pipefd[1]);
+	if (!pipefd)
+		return;
+	close_if_needed(pipefd[0]);
+	close_if_needed(pipefd[1]);
 }
+
 
 void	dup2_and_close(int fd, int std)
 {
@@ -47,6 +54,7 @@ void	dup2_and_close(int fd, int std)
 
 void	close_if_needed(int fd)
 {
-	if (fd > 2)
+	if (fd != -1 && fd > 2 && fd < 1024)
 		close(fd);
+
 }

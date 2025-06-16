@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 07:05:05 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 07:46:22 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,20 @@ char							*get_path(char **cmd, char **env);
 char							*find_executable(char **allpath, char **cmd);
 char							*my_getenv(char *name, char **env);
 int								is_path_absolute_or_relative(char *cmd);
-
+void							close_io_saves(t_io *io);
 
 // ========== IO_UTILS ==========
 char							**ft_strdup_tab(char **tab);
 void							ft_free_tab(char **tab);
 void							dup2_and_close(int fd, int std);
 void							close_if_needed(int fd);
+void							cleanup_pipe_ctx(t_pipe_ctx *pctx);
 
 // ========== GETREDIRECTION ==========
-void							restore_std(t_io *io, t_env *my_env,
-									int do_exit);
+void							restore_std(t_io *io, t_env *my_env);
 void							close_pipefd(int pipefd[2]);
 int								get_redirection(t_command *cmd, t_io *io,
-									t_env *my_env, int do_exit);
+									t_env *my_env, t_exec_ctx *ctx);
 
 // ========== BUILTIN ==========
 int								pwd(char **args, t_env *my_env);
@@ -90,14 +90,14 @@ int								cd(t_env *my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
 int								is_builtin(t_command *current);
-int								exec_builtin(t_env *my_env, t_command *current);
+int								exec_builtin(t_env *my_env, t_command *current, bool child);
 int								cmd_not_built(t_env *my_env, char **args);
 
 // ========== UTILS ==========
 void							triple_putstr_fd(char *s1, char *s2, char *s3,
 									int fd);
 void							exit_failure(char *message, t_env *my_env,
-									int do_exit);
+									int do_exit, t_exec_ctx *ctx);
 char							**env_cpy(char **envp);
 
 // ========== ERROR ==========

@@ -59,6 +59,7 @@ static int	compare_loop(char ***my_env, char *arg)
 // check forbidden characters
 static int	check_variable_unset(char ***my_env, char *arg)
 {
+	dprintf(2, "Test\n");
 	if (*arg == '-')
 	{
 		triple_putstr_fd("export: ", ft_substr(arg, 0, 2), ": invalid option\n",

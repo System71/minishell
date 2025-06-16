@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 14:52:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:20:57 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,22 @@ void	exit_shell(void)
 }
 
 // PASSAGE EN VOID A VOIR
-void	exit_failure(char *message, t_env *my_env, int do_exit)
+void	exit_failure(char *message, t_env *my_env, int do_exit, t_exec_ctx *ctx)
 {
 	ft_putstr_fd("minishell: ", 2);
 	perror(message);
 	my_env->error_code = 1;
+	if (ctx)
+	{
+		close_if_needed(ctx->in_fd);
+		close_if_needed(ctx->out_fd);
+		if (ctx->pipefd)
+			close_pipefd(ctx->pipefd);
+	}
 	if (do_exit)
 	{
 		mem_free_all(8);
+		mem_free_all(60);
 		exit(1);
 	}
 }
