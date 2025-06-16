@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+int	check_forbidden_char_export(char *variable_name)
+{
+	int	i;
+
+	i = 0;
+	while (variable_name[i])
+	{
+		if (i == 0 && !ft_isalpha(variable_name[i]) && variable_name[i] != '_')
+			return (0);
+		if (variable_name[i] == '=')
+			return (1);
+		if (!ft_isalnum(variable_name[i]) && variable_name[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	get_len_env(char **my_env)
 {
 	int	len;
@@ -22,20 +40,16 @@ int	get_len_env(char **my_env)
 	return (len);
 }
 
-char	*extract_variable(char *str)
+int	variable_match(const char *a, const char *b)
 {
-	char	*extracted_variable;
-	int		i;
-
-	i = 0;
-	while (str[i])
+	int	i = 0;
+	while (a[i] && b[i] && a[i] != '=' && b[i] != '=')
 	{
-		if (str[i] == '=')
-			break ;
+		if (a[i] != b[i])
+			return (0);
 		i++;
 	}
-	extracted_variable = ft_substr(str, 0, i);
-	return (extracted_variable);
+	return ((a[i] == '=' || a[i] == '\0') && (b[i] == '=' || b[i] == '\0'));
 }
 
 int	remove_variable(char ***my_env, int position)
@@ -47,19 +61,14 @@ int	remove_variable(char ***my_env, int position)
 
 	temp = *my_env;
 	len = get_len_env(temp);
-	*my_env = malloc(sizeof(char *) * len);
-	if (!*my_env)
-	{
-		perror("malloc envp");
-		exit(EXIT_FAILURE);
-	}
+	*my_env = ft_xmalloc(sizeof(char *) * len, 60);
 	i = 0;
 	j = -1;
 	while (++j < len)
 	{
 		if (j != position)
 		{
-			(*my_env)[i] = strdup(temp[j]);
+			(*my_env)[i] = ft_strdup_oli(temp[j], 60);
 			i++;
 		}
 	}

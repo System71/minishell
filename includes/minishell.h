@@ -82,8 +82,9 @@ int								unset(char ***my_env, char **args);
 
 // ========== CHANGE_ENV UTILS ==========
 int								get_len_env(char **my_env);
-char							*extract_variable(char *str);
+int								variable_match(const char *a, const char *b);
 int								remove_variable(char ***my_env, int position);
+int								check_forbidden_char_export(char *variable_name);
 
 // ========== CD ==========
 int								cd(t_env *my_env, char **full_cmd);

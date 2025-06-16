@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:27:48 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 15:18:26 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:14:12 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static char	*get_home(t_env *my_env)
 			return (ft_strchr((my_env->env)[i], '=') + 1);
 		}
 		i++;
+		free(variable_name);
 	}
-	free(variable_name);
 	return (NULL);
 }
 
@@ -71,6 +71,7 @@ static int	go_last_pwd(t_env *my_env)
 			break ;
 		}
 		i++;
+		free(variable_name);
 	}
 	if (chdir(destination))
 	{
@@ -79,7 +80,6 @@ static int	go_last_pwd(t_env *my_env)
 	}
 	ft_putstr_fd(destination, 1);
 	ft_putstr_fd("\n", 1);
-	free(variable_name);
 	return (0);
 }
 
@@ -87,14 +87,9 @@ static int	go_somewhere(t_env *my_env, char **args)
 {
 	char	*destination;
 
-	destination = ft_strdup_oli(args[1], 8);
-	if (!destination)
-	{
-		exit_failure("destination malloc ft_strdup", my_env, 0, NULL);
-		return (1);
-	}
 	if (!ft_strcmp(args[1], "-"))
 		return (go_last_pwd(my_env));
+	destination = ft_strdup_oli(args[1], 8);
 	if (!ft_strncmp(&(args[1][0]), "-", 1) && ft_strlen(args[1]) > 1)
 	{
 		triple_putstr_fd("minishell: cd :", ft_substr(args[1], 0, 2),
@@ -106,19 +101,19 @@ static int	go_somewhere(t_env *my_env, char **args)
 		perror(destination);
 		return (1);
 	}
+	// mettre a jour pwd dans l env
 	return (0);
 }
 
 int	cd(t_env *my_env, char **args)
 {
-	// go home if cd empty
-	if (args[2])
+	if (!args[1] || !ft_strcmp(args[1], "~"))
+		return (go_home(my_env));
+	else if (args[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
-	if (!args[1] || !ft_strcmp(args[1], "~"))
-		return (go_home(my_env));
 	else
 		return (go_somewhere(my_env, args));
 	return (0);

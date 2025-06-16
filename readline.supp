@@ -18,3 +18,16 @@
   ...
   obj:*/usr/bin/ls
 }
+
+{
+  cat
+  Memcheck:Leak
+  ...
+  obj:*/usr/bin/cat
+}
+{
+  clear
+  Memcheck:Leak
+  ...
+  obj:*/usr/bin/clear
+}
