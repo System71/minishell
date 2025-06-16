@@ -1,5 +1,17 @@
-#ifndef TYPE_H
-# define TYPE_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/16 05:03:07 by okientzl          #+#    #+#             */
+/*   Updated: 2025/06/16 05:05:11 by okientzl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef TYPES_H
+# define TYPES_H
 
 # include <stdbool.h>
 # include <stdlib.h>
@@ -117,12 +129,12 @@ typedef struct s_tempfile
 
 typedef struct s_creat_tempfile
 {
-	char         *filename;
-	unsigned char rnd[RANDOM_BYTES];
-	char         hexpart[RANDOM_BYTES * 2 + 1];
-	int          tries;
-	int          fd;
-}   t_creat_tempfile;
+	char					*filename;
+	unsigned char			rnd[RANDOM_BYTES];
+	char					hexpart[RANDOM_BYTES * 2 + 1];
+	int						tries;
+	int						fd;
+}							t_creat_tempfile;
 /***********************************/
 /**********     EXPAND    **********/
 typedef struct s_expand_vars
@@ -171,5 +183,34 @@ typedef struct s_mem_node
 	void				*ptr;
 	struct s_mem_node	*next;
 }		t_mem_node;
+
+/***********************************/
+/**********    EXECUTION  **********/
+typedef struct s_io
+{
+	int	infile;
+	int	outfile;
+	int	saved_stdin;
+	int	saved_stdout;
+}	t_io;
+
+typedef struct s_exec_ctx
+{
+	t_command	*cmd;
+	t_env		*env;
+	t_io		*io;
+	int			*pipefd;
+	int			has_next;
+	int			in_fd;
+	int			out_fd;
+}	t_exec_ctx;
+
+typedef struct s_pipe_ctx
+{
+	int		prev_fd;
+	int		pipefd[2];
+	t_io	*io;
+	t_env	*env;
+}	t_pipe_ctx;
 
 #endif

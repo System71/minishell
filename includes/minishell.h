@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 15:23:53 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 07:05:05 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,29 @@ t_env							*init_minishell(char **envp);
 void							execute_and_cleanup(t_command *cmd_list,
 									t_env *my_env);
 
-// ========== NEW_PIPEX ==========
-void							exec_pipeline(t_command *current, t_env *my_env);
+// ========== EXECUTION ==========
+void							exec_pipeline(t_command *cmd, t_env *env,
+									t_io *io);
 void							execute_command(char **s_cmd, char **env);
+void							exec_child(t_exec_ctx *ctx);
+char							*get_path(char **cmd, char **env);
+char							*find_executable(char **allpath, char **cmd);
+char							*my_getenv(char *name, char **env);
+int								is_path_absolute_or_relative(char *cmd);
 
-// ========== NEW_PIPEX_UTILS ==========
-void							restore_std(int infile, int outfile,
-									int saved_stdin, int saved_stdout,
-									t_env *my_env, int do_exit);
+
+// ========== IO_UTILS ==========
+char							**ft_strdup_tab(char **tab);
+void							ft_free_tab(char **tab);
+void							dup2_and_close(int fd, int std);
+void							close_if_needed(int fd);
+
+// ========== GETREDIRECTION ==========
+void							restore_std(t_io *io, t_env *my_env,
+									int do_exit);
 void							close_pipefd(int pipefd[2]);
-int								get_redirection(t_command *current, int *infile,
-									int *outfile, t_env *my_env, int do_exit);
+int								get_redirection(t_command *cmd, t_io *io,
+									t_env *my_env, int do_exit);
 
 // ========== BUILTIN ==========
 int								pwd(char **args, t_env *my_env);
@@ -84,7 +96,8 @@ int								cmd_not_built(t_env *my_env, char **args);
 // ========== UTILS ==========
 void							triple_putstr_fd(char *s1, char *s2, char *s3,
 									int fd);
-void							exit_failure(char *message, t_env *my_env,int do_exit);
+void							exit_failure(char *message, t_env *my_env,
+									int do_exit);
 char							**env_cpy(char **envp);
 
 // ========== ERROR ==========
@@ -102,7 +115,6 @@ void							mem_register(void *ptr, int which_list);
 void							mem_free_all(int which_list);
 void							ft_free_loop(char *input);
 void							ft_free_double_tab(char **tab, char **tab_2);
-void							ft_free_tab(char **tab, int out_or_not);
 
 // ========== LEXER ==========
 t_token							*lexer(const char *input);
@@ -170,7 +182,8 @@ t_command						*parse_commands(t_token *tokens);
 bool							is_redirection_type(t_token_type type);
 void							append_arg_to_command(t_command *cmd,
 									char *arg);
-t_command						*init_or_get_current_command(t_command **cmd_list,
+t_command						*init_or_get_current_command(
+									t_command **cmd_list,
 									t_command *current_cmd);
 
 // ========== DEBUG ==========
@@ -181,15 +194,17 @@ extern volatile sig_atomic_t	g_signal;
 void							set_signals_interactive(void);
 void							set_signals_heredoc(void);
 void							set_signals_child(void);
+void							set_signals_wait(void);
 
 // ========== HEREDOC ==========
-void			heredoc_handle(t_token *tokens, t_env *my_env);
-int	append_heredoc_line(t_heredoc *hd, const char *line);
-void	init_hd_struct(t_heredoc *hd, t_token *curr);
-void	heredoc_storage(t_token *curr, t_heredoc hd);
-char		*generate_temp_filename(void);
-int		read_line_hook(void);
-void	destroy_file_heredoc(t_command *cmd_list);
+void							heredoc_handle(t_token *tokens, t_env *my_env);
+int								append_heredoc_line(t_heredoc *hd,
+									const char *line);
+void							init_hd_struct(t_heredoc *hd, t_token *curr);
+void							heredoc_storage(t_token *curr, t_heredoc hd);
+char							*generate_temp_filename(void);
+int								read_line_hook(void);
+void							destroy_file_heredoc(t_command *cmd_list);
 
 // ========== PARSING_UTILS ==========
 /***** is_ft *****/

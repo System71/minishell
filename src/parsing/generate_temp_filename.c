@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:42:34 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 11:56:04 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/16 04:59:23 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	build_filename(char *dst,
 char	*generate_temp_filename(void)
 {
 	t_creat_tempfile	tf;
-	int			status;
+	int					status;
 
 	tf.filename = ft_xmalloc(BUF_SIZE, 8);
 	tf.tries = 0;

@@ -17,7 +17,6 @@ t_command	*parse_input(const char *input, t_env *my_env)
 	t_token		*tokens;
 	t_command	*cmd_list;
 
-	my_env->error_code = 0;
 	tokens = lexer(input);
 	if (!tokens || !check_syntax(tokens, my_env))
 	{

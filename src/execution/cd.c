@@ -111,6 +111,7 @@ static int	go_somewhere(t_env *my_env, char **args)
 
 int	cd(t_env *my_env, char **args)
 {
+	// go home if cd empty
 	if (args[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);

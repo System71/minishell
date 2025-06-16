@@ -31,7 +31,8 @@ void	shell_loop(t_env *my_env)
 		input = readline(get_prompt(my_env));
 		if (g_signal == SIGINT)
 		{
-			my_env->error_code = 130;
+			if (my_env->error_code < 128)
+				my_env->error_code = 130;
 			g_signal = 0;
 			free(input);
 			continue ;

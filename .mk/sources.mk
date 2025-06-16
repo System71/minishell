@@ -29,9 +29,11 @@ SRC = \
     $(PARSING_DIR)print_var.c \
     \
 	$(EXECUTION_DIR)execute_and_cleanup.c \
+	$(EXECUTION_DIR)exec_child.c \
+	$(EXECUTION_DIR)get_redirection.c \
     $(EXECUTION_DIR)signals.c \
-    $(EXECUTION_DIR)new_pipex.c \
-    $(EXECUTION_DIR)new_pipex_utils.c \
+    $(EXECUTION_DIR)pipeline.c \
+    $(EXECUTION_DIR)io_utils.c \
     $(EXECUTION_DIR)builtin.c \
     $(EXECUTION_DIR)export.c \
     $(EXECUTION_DIR)unset.c \
@@ -39,7 +41,8 @@ SRC = \
     $(EXECUTION_DIR)cmd_process.c \
     $(EXECUTION_DIR)cd.c \
     $(EXECUTION_DIR)exit.c \
-    $(EXECUTION_DIR)oliv_exec.c \
+    $(EXECUTION_DIR)execute_command.c \
+    $(EXECUTION_DIR)exec_cmd_utils.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
     $(MEMORY_DIR)free_child.c \
