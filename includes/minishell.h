@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 14:54:09 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:08:00 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int								cd(t_env *my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
 int								is_builtin(t_env *my_env, t_command *current);
-void							cmd_not_built(t_env *my_env, char **args);
+void							cmd_not_built(t_env *my_env, char **args,
+									int saved_stdin, int saved_stdout);
 
 // ========== UTILS ==========
 void							triple_putstr_fd(char *s1, char *s2, char *s3,
@@ -181,6 +182,7 @@ extern volatile sig_atomic_t	g_signal;
 void							set_signals_interactive(void);
 void							set_signals_heredoc(void);
 void							set_signals_child(void);
+void							set_signals_wait(void);
 
 // ========== HEREDOC ==========
 void							heredoc_handle(t_token *tokens, t_env *my_env);

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 14:05:08 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:14:00 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (get_redirection(current, &infile, &outfile, my_env))
 	{
-		
 		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
 		return ;
 	}
@@ -40,7 +39,7 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 			exit_failure("dup2 failed\n", my_env);
 	}
 	if (is_builtin(my_env, current) == -1)
-		cmd_not_built(my_env, current->args);
+		cmd_not_built(my_env, current->args, saved_stdin, saved_stdin);
 	close_pipefd(pipefd);
 	if (prev_fd)
 		close(prev_fd);
@@ -76,7 +75,7 @@ static void	one_command(t_command *current, t_env *my_env)
 		if (current->pid == 0)
 		{
 			set_signals_child();
-			cmd_not_built(my_env, current->args);
+			cmd_not_built(my_env, current->args, saved_stdin, saved_stdout);
 		}
 		current->status = ft_xmalloc(sizeof(int), 8);
 		waitpid(current->pid, current->status, 0);
@@ -84,6 +83,8 @@ static void	one_command(t_command *current, t_env *my_env)
 			my_env->error_code = WEXITSTATUS(*(current->status));
 	}
 	restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
+	close(saved_stdin);
+	close(saved_stdout);
 }
 
 static void	multi_command(t_command *current, t_env *my_env)
@@ -131,5 +132,8 @@ void	new_pipex(t_command *current, t_env *my_env)
 	if (!current->next)
 		one_command(current, my_env);
 	else
+	{
+		set_signals_wait();
 		multi_command(current, my_env);
+	}
 }
