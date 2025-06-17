@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 08:09:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:37:18 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static int	format_exit_code(int code)
 
 static void	exit_numeric_error(char *arg)
 {
-	triple_putstr_fd("minishell: exit: ", arg, ": numeric argument required\n", 2);
+	triple_putstr_fd("minishell: exit: ",
+		arg, ": numeric argument required\n", 2);
 	mem_free_all(8);
 	mem_free_all(60);
 	exit(2);
@@ -64,7 +65,7 @@ int	my_exit(char **args)
 	if (!is_numeric_exit_code(args[1]))
 		exit_numeric_error(args[1]);
 	if (args[2])
-		return(too_many_args());
+		return (too_many_args());
 	error_code = format_exit_code(ft_atoi(args[1]));
 	mem_free_all(8);
 	mem_free_all(60);

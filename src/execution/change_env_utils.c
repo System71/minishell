@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:18:10 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 16:31:52 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:35:47 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	get_len_env(char **my_env)
 
 int	variable_match(const char *a, const char *b)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (a[i] && b[i] && a[i] != '=' && b[i] != '=')
 	{
 		if (a[i] != b[i])

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 15:44:58 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:41:25 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	pwd(char **args, t_env *my_env)
 	{
 		flag = ft_substr(args[1], 0, 2);
 		if (!flag)
-			exit_failure("error malloc flag",my_env, 0, NULL);
+			exit_failure("error malloc flag", my_env, 0, NULL);
 		triple_putstr_fd("minishell: pwd : ", flag, ": invalid option\n", 2);
 		free(flag);
 		return (2);

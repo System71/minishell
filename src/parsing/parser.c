@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/17 16:20:33 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:30:13 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void	process_redirection_token(t_token *tok, t_command *current_cmd)
 		last->next = redir;
 	}
 }
-
 
 t_command	*parse_commands(t_token *tokens)
 {

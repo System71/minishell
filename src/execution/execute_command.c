@@ -6,11 +6,17 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:00:18 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 10:39:23 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:40:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_if_error(char **s_cmd, char **env)
+{
+	ft_free_tab(s_cmd);
+	ft_free_tab(env);
+}
 
 char	*get_cmd_path(char **s_cmd, char **env)
 {
@@ -65,8 +71,7 @@ void	execute_command(char **s_cmd, char **env)
 	{
 		ft_putstr_fd(s_cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		ft_free_tab(s_cmd);
-		ft_free_tab(env);
+		free_if_error(s_cmd, env);
 		exit(127);
 	}
 	check_permission(s_cmd, path, env);
@@ -75,8 +80,7 @@ void	execute_command(char **s_cmd, char **env)
 		err = errno;
 		perror(s_cmd[0]);
 		free(path);
-		ft_free_tab(s_cmd);
-		ft_free_tab(env);
+		free_if_error(s_cmd, env);
 		if (err == EISDIR || err == EACCES || err == ENOEXEC)
 			exit(126);
 		else if (err == ENOENT)

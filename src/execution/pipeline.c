@@ -28,8 +28,9 @@ static void	fork_and_exec(
 	t_command *cmd, t_pipe_ctx *pctx)
 {
 	pid_t		pid;
-	t_exec_ctx	ctx = {0};
+	t_exec_ctx	ctx;
 
+	ft_memset(&ctx, 0, sizeof(t_exec_ctx));
 	ctx.cmd = cmd;
 	ctx.env = pctx->env;
 	ctx.io = pctx->io;

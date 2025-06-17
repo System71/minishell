@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:36:31 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/16 12:47:35 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:44:10 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	run_child_command(t_exec_ctx *ctx)
 		else
 		{
 			mem_free_all(8);
-			mem_free_all(60);	
+			mem_free_all(60);
 		}
 	}
 }

@@ -37,11 +37,10 @@ void	cleanup_pipe_ctx(t_pipe_ctx *pctx)
 void	close_pipefd(int pipefd[2])
 {
 	if (!pipefd)
-		return;
+		return ;
 	close_if_needed(pipefd[0]);
 	close_if_needed(pipefd[1]);
 }
-
 
 void	dup2_and_close(int fd, int std)
 {
@@ -56,5 +55,4 @@ void	close_if_needed(int fd)
 {
 	if (fd != -1 && fd > 2 && fd < 1024)
 		close(fd);
-
 }

@@ -43,7 +43,7 @@ static void	handle_single_heredoc(t_token *curr, t_env *my_env)
 		if (g_signal == SIGINT)
 			return (ctrl_c(line, my_env));
 		if (ft_strcmp(line, hd.delimiter) == 0
-			||	append_heredoc_line(&hd, line) < 0)
+			|| append_heredoc_line(&hd, line) < 0)
 		{
 			free(line);
 			break ;

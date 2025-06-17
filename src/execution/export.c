@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 15:11:43 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:47:51 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	compare_loop(char ***my_env, char *arg)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while ((*my_env)[i])
 	{
 		if (variable_match((*my_env)[i], arg))
@@ -43,11 +45,13 @@ static int	check_variable_export(char ***my_env, char *arg)
 	return (compare_loop(my_env, arg));
 }
 
-static int	env_loop(char ***my_env, char **temp, char **args, int i, int len)
+static int	env_loop(char ***my_env, char **temp, char **args, int i)
 {
 	int	j;
+	int	len;
 
 	j = 0;
+	len = get_len_env(*my_env);
 	while (j < len)
 	{
 		(*my_env)[j] = ft_strdup_oli(temp[j], 60);
@@ -91,7 +95,7 @@ int	export(char ***my_env, char **args)
 			temp = *my_env;
 			len = get_len_env(*my_env);
 			*my_env = ft_xmalloc(sizeof(char *) * (len + 2), 60);
-			env_loop(my_env, temp, args, i, len);
+			env_loop(my_env, temp, args, i);
 		}
 	}
 	return (0);

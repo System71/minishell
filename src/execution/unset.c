@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:57:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 16:34:47 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:36:46 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	unset(char ***my_env, char **args)
 	{
 		if (*args[i] == '-' || !check_forbidden_char_unset(args[i]))
 		{
-			triple_putstr_fd("unset: ", args[i], ": not a valid identifier\n", 2);
+			triple_putstr_fd("unset:", args[i], ":not valid identifier\n", 2);
 			i++;
-			continue;
+			continue ;
 		}
 		j = 0;
 		while ((*my_env)[j])
@@ -48,7 +48,7 @@ int	unset(char ***my_env, char **args)
 			if (variable_match((*my_env)[j], args[i]))
 			{
 				remove_variable(my_env, j);
-				break;
+				break ;
 			}
 			j++;
 		}

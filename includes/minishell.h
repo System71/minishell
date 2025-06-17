@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 15:20:32 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:33:59 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,19 @@ int								unset(char ***my_env, char **args);
 int								get_len_env(char **my_env);
 int								variable_match(const char *a, const char *b);
 int								remove_variable(char ***my_env, int position);
-int								check_forbidden_char_export(char *variable_name);
+int								check_forbidden_char_export(char
+									*variable_name);
 
 // ========== CD ==========
 int								cd(t_env *my_env, char **full_cmd);
 char							*get_home(t_env *my_env);
-void							update_pwd_vars(char ***envp, const char *old_pwd);
-
+void							update_pwd_vars(char ***envp,
+									const char *old_pwd);
 
 // ========== CMD PROCESS ==========
 int								is_builtin(t_command *current);
-int								exec_builtin(t_env *my_env, t_command *current, bool child);
+int								exec_builtin(t_env *my_env, t_command *current,
+									bool child);
 int								cmd_not_built(t_env *my_env, char **args);
 
 // ========== UTILS ==========
