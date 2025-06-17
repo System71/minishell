@@ -40,6 +40,7 @@ SRC = \
     $(EXECUTION_DIR)change_env_utils.c \
     $(EXECUTION_DIR)cmd_process.c \
     $(EXECUTION_DIR)cd.c \
+    $(EXECUTION_DIR)cd_utils.c \
     $(EXECUTION_DIR)exit.c \
     $(EXECUTION_DIR)execute_command.c \
     $(EXECUTION_DIR)exec_cmd_utils.c \

@@ -42,7 +42,7 @@ static char	*malloc_word(char const *s, char c)
 	len = 0;
 	while (s[len] && s[len] != c)
 		len++;
-	word = (char *)malloc((len + 1) * sizeof(char));
+	word = (char *)ft_xmalloc((len + 1) * sizeof(char), 8);
 	if (!word)
 	{
 		write(2, "Error: Memory allocation failed in malloc_word\n", 47);
@@ -65,7 +65,7 @@ static char	**do_split(char const *s, char c)
 	char	**result;
 	int		i;
 
-	result = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
+	result = (char **)ft_xmalloc((count_words(s, c) + 1) * sizeof(char *), 8);
 	if (!result)
 	{
 		write(2, "Error: Memory allocation failed in ft_split\n", 44);

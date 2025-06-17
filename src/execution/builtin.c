@@ -6,13 +6,12 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/12 14:58:07 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:44:58 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// getcwd(NULL,0) allows memory to be allocated dynamically
 int	pwd(char **args, t_env *my_env)
 {
 	char	*buffer;
@@ -33,7 +32,7 @@ int	pwd(char **args, t_env *my_env)
 		perror("pwd");
 	ft_putstr_fd(buffer, 1);
 	ft_putstr_fd("\n", 1);
-	free(flag);
+	free(buffer);
 	return (0);
 }
 

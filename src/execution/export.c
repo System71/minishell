@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 16:16:36 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:11:43 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	display_export(char ***my_env)
 	i = 0;
 	while ((*my_env)[i])
 	{
+		ft_putstr_fd("export ", 1);
 		ft_putstr_fd((*my_env)[i], 1);
 		ft_putstr_fd("\n", 1);
 		i++;

@@ -6,24 +6,24 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:27:48 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 16:14:12 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:24:48 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_home(t_env *my_env)
+static char	*get_oldpwd(t_env *my_env)
 {
 	int		i;
 	char	*variable_name;
 
 	i = 0;
-	while ((*(my_env->env))[i])
+	while ((my_env->env)[i])
 	{
-		variable_name = ft_substr((my_env->env)[i], 0, 5);
+		variable_name = ft_substr((my_env->env)[i], 0, 7);
 		if (!variable_name)
 			exit_failure("error malloc variable_name", my_env, 0, NULL);
-		if (!ft_strncmp(variable_name, "HOME=", 5))
+		if (!ft_strncmp(variable_name, "OLDPWD=", 7))
 		{
 			free(variable_name);
 			return (ft_strchr((my_env->env)[i], '=') + 1);
@@ -34,10 +34,13 @@ static char	*get_home(t_env *my_env)
 	return (NULL);
 }
 
-static int	go_home(t_env *my_env)
+int	go_home(t_env *my_env)
 {
+	char	old_pwd[4096];
 	char	*destination;
 
+	if (!getcwd(old_pwd, sizeof(old_pwd)))
+		old_pwd[0] = '\0';
 	destination = get_home(my_env);
 	if (!destination)
 	{
@@ -49,29 +52,22 @@ static int	go_home(t_env *my_env)
 		perror(destination);
 		return (1);
 	}
+	update_pwd_vars(&my_env->env, old_pwd);
 	return (0);
 }
 
-static int	go_last_pwd(t_env *my_env)
+int	go_last_pwd(t_env *my_env)
 {
-	int		i;
+	char	old_pwd[4096];
 	char	*destination;
-	char	*variable_name;
 
-	i = 0;
-	while ((my_env->env)[i])
+	if (!getcwd(old_pwd, sizeof(old_pwd)))
+		old_pwd[0] = '\0';
+	destination = get_oldpwd(my_env);
+	if (!destination)
 	{
-		variable_name = ft_substr((my_env->env)[i], 0, 7);
-		if (!variable_name)
-			exit_failure("error malloc variable_name", my_env, 0, NULL);
-		if (!ft_strncmp(variable_name, "OLDPWD=", 7))
-		{
-			destination = ft_strchr((my_env->env)[i], '=') + 1;
-			free(variable_name);
-			break ;
-		}
-		i++;
-		free(variable_name);
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		return (1);
 	}
 	if (chdir(destination))
 	{
@@ -80,20 +76,24 @@ static int	go_last_pwd(t_env *my_env)
 	}
 	ft_putstr_fd(destination, 1);
 	ft_putstr_fd("\n", 1);
+	update_pwd_vars(&my_env->env, old_pwd);
 	return (0);
 }
 
-static int	go_somewhere(t_env *my_env, char **args)
+int	go_somewhere(t_env *my_env, char **args)
 {
+	char	old_pwd[4096];
 	char	*destination;
 
+	if (!getcwd(old_pwd, sizeof(old_pwd)))
+		old_pwd[0] = '\0';
 	if (!ft_strcmp(args[1], "-"))
 		return (go_last_pwd(my_env));
-	destination = ft_strdup_oli(args[1], 8);
-	if (!ft_strncmp(&(args[1][0]), "-", 1) && ft_strlen(args[1]) > 1)
+	destination = args[1];
+	if (!ft_strncmp(destination, "-", 1) && ft_strlen(destination) > 1)
 	{
-		triple_putstr_fd("minishell: cd :", ft_substr(args[1], 0, 2),
-			": invalid option\n", 2);
+		triple_putstr_fd("minishell: cd :",
+			destination, ": invalid option\n", 2);
 		return (2);
 	}
 	if (chdir(destination))
@@ -101,7 +101,7 @@ static int	go_somewhere(t_env *my_env, char **args)
 		perror(destination);
 		return (1);
 	}
-	// mettre a jour pwd dans l env
+	update_pwd_vars(&my_env->env, old_pwd);
 	return (0);
 }
 

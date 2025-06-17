@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 07:46:22 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:20:32 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ int								check_forbidden_char_export(char *variable_name);
 
 // ========== CD ==========
 int								cd(t_env *my_env, char **full_cmd);
+char							*get_home(t_env *my_env);
+void							update_pwd_vars(char ***envp, const char *old_pwd);
+
 
 // ========== CMD PROCESS ==========
 int								is_builtin(t_command *current);
@@ -186,6 +189,7 @@ void							append_arg_to_command(t_command *cmd,
 t_command						*init_or_get_current_command(
 									t_command **cmd_list,
 									t_command *current_cmd);
+int								expand_null(t_token *token);
 
 // ========== DEBUG ==========
 void							print_commands(t_command *cmd_list);

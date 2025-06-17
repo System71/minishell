@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 15:38:11 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:20:35 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	exit_shell(void)
 	exit(0);
 }
 
-// PASSAGE EN VOID A VOIR
 void	exit_failure(char *message, t_env *my_env, int do_exit, t_exec_ctx *ctx)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -46,4 +45,23 @@ void	exit_failure(char *message, t_env *my_env, int do_exit, t_exec_ctx *ctx)
 		mem_free_all(60);
 		exit(1);
 	}
+}
+
+int	expand_null(t_token *token)
+{
+	t_token_segment	*seg;
+
+	if (!token)
+		return (0);
+	if (token->next != NULL)
+		return (0);
+	if (token->type != T_WORD)
+		return (0);
+	seg = token->segments;
+	if (seg && seg->next == NULL)
+	{
+		if (seg->content && seg->content[0] == '\0' && seg->is_expand)
+			return (1);
+	}
+	return (0);
 }
