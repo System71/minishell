@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 11:07:27 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:51:20 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,47 @@ void							new_pipex(t_command *current, t_env *my_env);
 void							execute_command(char **s_cmd, char **env);
 
 // ========== NEW_PIPEX_UTILS ==========
-void							restore_std(int infile, int outfile,
-									int saved_stdin, int saved_stdout,
-									t_env *my_env);
+int								init_redirections(t_redirections_exec *redirections);
+void							close_all(t_redirections_exec *redirections);
 void							close_pipefd(int pipefd[2]);
-int								get_redirection(t_command *current, int *infile,
+int								get_redirection(t_command *current,
+									t_redirections_exec *redirections,
+									t_env *my_env);
+
+// ========== MULTI_COMMAND_UTILS ==========
+void							wait_loop(t_command *current, t_env *my_env);
+void							child(t_command *current, int pipefd[2],
+									int prev_fd, t_env *my_env);
+
+// ========== GET_REDIRECTION_UTILS ==========
+void							restore_std(t_redirections_exec *redirections);
+int								redir_in(t_command *current, int *infile,
+									t_env *my_env);
+int								redir_out(t_command *current, int *outfile,
+									t_env *my_env);
+int								redir_out_append(t_command *current,
 									int *outfile, t_env *my_env);
 
 // ========== BUILTIN ==========
-int								pwd(char **args, t_env *my_env);
+int								pwd(char **args);
 int								echo(char **args);
 int								env(char ***my_env);
 
 // ========== EXIT ==========
-int								my_exit(char **args);
+int								my_exit(char **args,
+									t_redirections_exec *redirections);
 void							exit_shell(void);
 
 // ========== EXPORT ==========
 int								export(char ***my_env, char **args);
+
+// ========== EXPORT UTILS ==========
+int								check_forbidden_char_export(char *variable_name);
+int								compare_loop(char ***my_env, char *arg);
+int								check_variable_export(char ***my_env,
+									char *arg);
+int								env_loop(char ***my_env, char **temp,
+									char **args, int i, int len);
 
 // ========== UNSET ==========
 int								unset(char ***my_env, char **args);
@@ -77,13 +100,14 @@ int								remove_variable(char ***my_env, int position);
 int								cd(t_env *my_env, char **full_cmd);
 
 // ========== CMD PROCESS ==========
-int								is_builtin(t_env *my_env, t_command *current);
+int								is_builtin(t_env *my_env, t_command *current,
+									t_redirections_exec *redirections);
 void							cmd_not_built(t_env *my_env, char **args);
 
 // ========== UTILS ==========
 void							triple_putstr_fd(char *s1, char *s2, char *s3,
 									int fd);
-void							exit_failure(char *message, t_env *my_env);
+int								exit_failure(char *message);
 char							**env_cpy(char **envp);
 void							free_split(char **split);
 

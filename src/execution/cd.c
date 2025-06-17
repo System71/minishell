@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:27:48 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:28:29 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:00:07 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static char	*get_home(t_env *my_env)
 	{
 		variable_name = ft_substr((my_env->env)[i], 0, 5);
 		if (!variable_name)
-			exit_failure("error malloc variable_name", my_env);
+		{
+			exit_failure("error malloc variable_name");
+			return (NULL);
+		}
 		if (!ft_strncmp(variable_name, "HOME=", 5))
 		{
 			free(variable_name);
@@ -41,10 +44,7 @@ static int	go_home(t_env *my_env)
 
 	destination = get_home(my_env);
 	if (!destination)
-	{
-		exit_failure("cd: HOME not set\n", my_env);
-		return (1);
-	}
+		return (exit_failure("cd: HOME not set\n"));
 	if (chdir(destination))
 	{
 		perror(destination);
@@ -64,7 +64,7 @@ static int	go_last_pwd(t_env *my_env)
 	{
 		variable_name = ft_substr((my_env->env)[i], 0, 7);
 		if (!variable_name)
-			exit_failure("error malloc variable_name", my_env);
+			return (exit_failure("error malloc variable_name"));
 		if (!ft_strncmp(variable_name, "OLDPWD=", 7))
 		{
 			destination = ft_strchr((my_env->env)[i], '=') + 1;
@@ -75,10 +75,7 @@ static int	go_last_pwd(t_env *my_env)
 		free(variable_name);
 	}
 	if (chdir(destination))
-	{
-		perror(destination);
-		return (1);
-	}
+		return (exit_failure("No such file or directory\n"));
 	ft_putstr_fd(destination, 1);
 	ft_putstr_fd("\n", 1);
 	return (0);
@@ -91,7 +88,7 @@ static int	go_somewhere(t_env *my_env, char **args)
 	destination = ft_strdup_oli(args[1], 8);
 	if (!destination)
 	{
-		exit_failure("destination malloc ft_strdup", my_env);
+		exit_failure("destination malloc ft_strdup\n");
 		return (1);
 	}
 	if (!ft_strcmp(args[1], "-"))

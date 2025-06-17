@@ -32,8 +32,11 @@ SRC = \
     $(EXECUTION_DIR)signals.c \
     $(EXECUTION_DIR)new_pipex.c \
     $(EXECUTION_DIR)new_pipex_utils.c \
+    $(EXECUTION_DIR)multi_command_utils.c \
+    $(EXECUTION_DIR)get_redirection_utils.c \
     $(EXECUTION_DIR)builtin.c \
     $(EXECUTION_DIR)export.c \
+    $(EXECUTION_DIR)export_utils.c \
     $(EXECUTION_DIR)unset.c \
     $(EXECUTION_DIR)change_env_utils.c \
     $(EXECUTION_DIR)cmd_process.c \

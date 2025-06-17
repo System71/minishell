@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 07:49:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/17 12:58:56 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:35:26 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ typedef enum e_syntax_err
 
 typedef struct s_check_synt
 {
-	t_syntax_err	code_err;
-	t_token			*token_err;
+	t_syntax_err			code_err;
+	t_token					*token_err;
 }							t_check_synt;
 
 typedef struct s_utils_lexer
@@ -180,8 +180,18 @@ typedef struct s_env
 /**********    MEMORY    **********/
 typedef struct s_mem_node
 {
-	void				*ptr;
-	struct s_mem_node	*next;
-}		t_mem_node;
+	void					*ptr;
+	struct s_mem_node		*next;
+}							t_mem_node;
+
+/***********************************/
+/**********    REDIRECTIONS    **********/
+typedef struct s_redirections_exec
+{
+	int					infile;
+	int					outfile;
+	int					saved_stdout;
+	int					saved_stdin;
+}							t_redirections_exec;
 
 #endif

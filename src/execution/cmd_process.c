@@ -6,38 +6,50 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:06:53 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:48:59 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_paths(t_env *my_env)
+static int	get_paths_loop(t_env *my_env, char **extracted_path)
 {
-	char	**paths;
 	char	*substr;
-	char	*extracted_path;
 
 	while (*(my_env->env))
 	{
 		substr = ft_substr(*(my_env->env), 0, 5);
 		if (!substr)
-			return (NULL);
+			return (1);
 		if (ft_strncmp(substr, "PATH=", 5) == 0)
 		{
-			extracted_path = ft_substr(*(my_env->env), 5,
+			*extracted_path = ft_substr(*(my_env->env), 5,
 					ft_strlen(*(my_env->env)));
-			if (!extracted_path)
+			if (!*extracted_path)
 			{
-				exit_failure("full_path malloc extracted_path", my_env);
+				exit_failure("full_path malloc extracted_path");
 				free(substr);
-				return (NULL);
+				return (1);
 			}
 			free(substr);
 			break ;
 		}
 		free(substr);
 		(my_env->env)++;
+	}
+	return (0);
+}
+
+char	**get_paths(t_env *my_env)
+{
+	char	**paths;
+	char	*extracted_path;
+
+	extracted_path = NULL;
+	if (get_paths_loop(my_env, &extracted_path))
+	{
+		free(extracted_path);
+		return (NULL);
 	}
 	paths = ft_split(extracted_path, ':');
 	if (!paths)
@@ -60,7 +72,7 @@ static void	exec_cmd(char **paths, char **args, char *end_path, t_env *my_env)
 		full_path = ft_strjoin(paths[i], end_path);
 		if (!full_path)
 		{
-			exit_failure("full_path malloc ft_strjoin", my_env);
+			exit_failure("full_path malloc ft_strjoin");
 			return ;
 		}
 		execve(full_path, args, my_env->env);
@@ -70,13 +82,11 @@ static void	exec_cmd(char **paths, char **args, char *end_path, t_env *my_env)
 	{
 		triple_putstr_fd("minishell: ", args[0], ": Permission denied\n", 2);
 		my_env->error_code = 126;
-		return ;
 	}
-	if (errno == ENOENT)
+	else if (errno == ENOENT)
 	{
 		triple_putstr_fd("minishell: ", args[0], ": Command not found\n", 2);
 		my_env->error_code = 127;
-		return ;
 	}
 }
 
@@ -94,16 +104,12 @@ void	cmd_not_built(t_env *my_env, char **args)
 	}
 	paths = get_paths(my_env);
 	if (!paths)
-	{
-		exit_failure("get_paths", my_env);
-		exit(my_env->error_code);
-	}
+		exit(exit_failure("get_paths"));
 	end_path = ft_strjoin("/", args[0]);
 	if (!end_path)
 	{
-		exit_failure("args malloc ft_strjoin", my_env);
 		free(paths);
-		exit(my_env->error_code);
+		exit(exit_failure("args malloc ft_strjoin"));
 	}
 	exec_cmd(paths, args, end_path, my_env);
 	free_split(paths);
@@ -112,15 +118,16 @@ void	cmd_not_built(t_env *my_env, char **args)
 	mem_free_all(8);
 	exit(127);
 }
-// int	is_builtin(t_env *my_env, char **args)
-int	is_builtin(t_env *my_env, t_command *current)
+
+int	is_builtin(t_env *my_env, t_command *current,
+		t_redirections_exec *redirections)
 {
 	if (!ft_strncmp(current->args[0], "echo", ft_strlen("echo") + 1))
 		my_env->error_code = echo(current->args);
 	else if (!ft_strncmp(current->args[0], "cd", ft_strlen("cd") + 1))
 		my_env->error_code = cd(my_env, current->args);
 	else if (!ft_strncmp(current->args[0], "pwd", ft_strlen("pwd") + 1))
-		my_env->error_code = pwd(current->args, my_env);
+		my_env->error_code = pwd(current->args);
 	else if (!ft_strncmp(current->args[0], "export", ft_strlen("export") + 1))
 		my_env->error_code = export(&my_env->env, current->args);
 	else if (!ft_strncmp(current->args[0], "unset", ft_strlen("unset") + 1))
@@ -128,9 +135,8 @@ int	is_builtin(t_env *my_env, t_command *current)
 	else if (!ft_strncmp(current->args[0], "env", ft_strlen("env") + 1))
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
-		my_env->error_code = my_exit(current->args);
+		my_env->error_code = my_exit(current->args,redirections);
 	else
 		return (-1);
-	// mem_free_all(8);
-	return (0);
+	return (my_env->error_code);
 }

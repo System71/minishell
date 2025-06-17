@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/06 10:42:06 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:50:25 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,17 @@ static int	get_error_code(int code)
 	return (code);
 }
 
-int	my_exit(char **args)
+int	my_exit(char **args, t_redirections_exec *redirections)
 {
 	int	error_code;
 
 	if (!args[1])
+	{
+		close_all(redirections);
+		mem_free_all(60);
+		mem_free_all(8);
 		exit(EXIT_SUCCESS);
+	}
 	if (!code_is_digit(args[1]))
 	{
 		triple_putstr_fd("minishell: exit: ", args[1],

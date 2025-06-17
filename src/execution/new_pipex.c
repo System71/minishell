@@ -6,107 +6,45 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:18:27 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:47:04 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
+static void	one_command_wait(t_command *current, t_env *my_env)
 {
-	int	infile;
-	int	outfile;
-	int	saved_stdout;
-	int	saved_stdin;
-
-	infile = 0;
-	outfile = 0;
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (get_redirection(current, &infile, &outfile, my_env))
-	{
-		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
-		return ;
-	}
-	if (!infile && prev_fd)
-	{
-		if (dup2(prev_fd, STDIN_FILENO) == -1)
-			exit_failure("dup2 failed\n", my_env);
-	}
-	if (!outfile && current->next)
-	{
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			exit_failure("dup2 failed\n", my_env);
-	}
-	if (prev_fd)
-		close(prev_fd);
-	if (infile)
-		close(infile);
-	if (outfile)
-		close(outfile);
-	close_pipefd(pipefd);
-	close(saved_stdin);
-	close(saved_stdout);
-	if (is_builtin(my_env, current) == -1)
-		cmd_not_built(my_env, current->args);
-	mem_free_all(8);
-	mem_free_all(60);
-	exit(EXIT_SUCCESS);
+	waitpid(current->pid, &current->status, 0);
+	if (WIFEXITED(current->status))
+		my_env->error_code = WEXITSTATUS(current->status);
 }
 
 // if builtin => no fork needed
 // if no builtin => fork needed
 static void	one_command(t_command *current, t_env *my_env)
 {
-	int	infile;
-	int	outfile;
-	int	saved_stdout;
-	int	saved_stdin;
+	t_redirections_exec	*redirections;
 
-	infile = 0;
-	outfile = 0;
-	saved_stdin = dup(STDIN_FILENO);
-	if (fcntl(saved_stdin, F_GETFD) == -1)
+	redirections = ft_xmalloc(sizeof(t_redirection), 60);
+	init_redirections(redirections);
+	if (!get_redirection(current, redirections, my_env))
 	{
-		perror("saved_fd invalid before dup2");
-	}
-	saved_stdout = dup(STDOUT_FILENO);
-	if (get_redirection(current, &infile, &outfile, my_env))
-	{
-		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
-		return ;
-	}
-	if (is_builtin(my_env, current) == -1)
-	{
-		current->pid = fork();
-		if (current->pid == -1)
-			exit_failure("fork : creation failed\n", my_env);
-		if (current->pid == 0)
+		if (is_builtin(my_env, current,redirections) == -1)
 		{
-			if (infile)
-				close(infile);
-			if (outfile)
-				close(outfile);
-			close(saved_stdin);
-			close(saved_stdout);
-			set_signals_child();
-			cmd_not_built(my_env, current->args);
+			current->pid = fork();
+			if (current->pid == -1)
+				exit(exit_failure("fork : creation failed\n"));
+			if (current->pid == 0)
+			{
+				close_all(redirections);
+				set_signals_child();
+				cmd_not_built(my_env, current->args);
+			}
+			one_command_wait(current, my_env);
 		}
-		waitpid(current->pid, &current->status, 0);
-		if (WIFEXITED(current->status))
-			my_env->error_code = WEXITSTATUS(current->status);
 	}
-	if (fcntl(saved_stdin, F_GETFD) == -1)
-	{
-		perror("saved_fd invalid before dup2");
-	}
-	restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
-	if (infile)
-		close(infile);
-	if (outfile)
-		close(outfile);
-	close(saved_stdin);
-	close(saved_stdout);
+	restore_std(redirections);
+	close_all(redirections);
 }
 
 static void	multi_command(t_command *current, t_env *my_env)
@@ -120,15 +58,12 @@ static void	multi_command(t_command *current, t_env *my_env)
 	while (current)
 	{
 		if (pipe(pipefd) == -1)
-			exit_failure("pipe : creation failed\n", my_env);
+			exit(exit_failure("pipe : creation failed\n"));
 		current->pid = fork();
 		if (current->pid == -1)
-			exit_failure("fork : creation failed\n", my_env);
+			exit(exit_failure("fork : creation failed\n"));
 		if (current->pid == 0)
-		{
-			set_signals_child();
 			child(current, pipefd, prev_fd, my_env);
-		}
 		close(pipefd[1]);
 		if (prev_fd)
 			close(prev_fd);
@@ -136,13 +71,7 @@ static void	multi_command(t_command *current, t_env *my_env)
 		current = current->next;
 	}
 	current = head;
-	while (current)
-	{
-		waitpid(current->pid, &current->status, 0);
-		if (WIFEXITED(current->status))
-			my_env->error_code = WEXITSTATUS(current->status);
-		current = current->next;
-	}
+	wait_loop(current, my_env);
 	close(pipefd[0]);
 }
 
