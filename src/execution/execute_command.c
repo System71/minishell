@@ -31,7 +31,7 @@ char	*get_cmd_path(char **s_cmd, char **env)
 	return (path);
 }
 
-void	check_permission(char **s_cmd, char *path)
+void	check_permission(char **s_cmd, char *path, char **env)
 {
 	struct stat	st;
 
@@ -41,6 +41,7 @@ void	check_permission(char **s_cmd, char *path)
 		ft_putstr_fd(": Is a directory\n", 2);
 		free(path);
 		ft_free_tab(s_cmd);
+		ft_free_tab(env);
 		exit(126);
 	}
 	if (access(path, X_OK) != 0)
@@ -49,6 +50,7 @@ void	check_permission(char **s_cmd, char *path)
 		ft_putstr_fd(": permission denied\n", 2);
 		free(path);
 		ft_free_tab(s_cmd);
+		ft_free_tab(env);
 		exit(126);
 	}
 }
@@ -67,7 +69,7 @@ void	execute_command(char **s_cmd, char **env)
 		ft_free_tab(env);
 		exit(127);
 	}
-	check_permission(s_cmd, path);
+	check_permission(s_cmd, path, env);
 	if (execve(path, s_cmd, env) == -1)
 	{
 		err = errno;

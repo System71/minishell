@@ -45,12 +45,10 @@ static void	exit_numeric_error(char *arg)
 	exit(2);
 }
 
-static void	exit_too_many_args(void)
+static int	too_many_args(void)
 {
 	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-	mem_free_all(8);
-	mem_free_all(60);
-	exit(2);
+	return (1);
 }
 
 int	my_exit(char **args)
@@ -66,7 +64,7 @@ int	my_exit(char **args)
 	if (!is_numeric_exit_code(args[1]))
 		exit_numeric_error(args[1]);
 	if (args[2])
-		exit_too_many_args();
+		return(too_many_args());
 	error_code = format_exit_code(ft_atoi(args[1]));
 	mem_free_all(8);
 	mem_free_all(60);

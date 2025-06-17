@@ -89,6 +89,22 @@ static void	process_redirection_token(t_token *tok, t_command *current_cmd)
 	}
 }
 
+int	expand_null(t_token *token)
+{
+	t_token_segment	*seg;
+
+	if (!token)
+		return (0);
+	if (token->type != T_WORD)
+		return (0);
+	seg = token->segments;
+	if (seg && seg->next == NULL)
+	{
+		if (seg->content && seg->content[0] == '\0' && seg->is_expand)
+			return (1);
+	}
+	return (0);
+}
 t_command	*parse_commands(t_token *tokens)
 {
 	t_command	*cmd_list;
@@ -96,20 +112,19 @@ t_command	*parse_commands(t_token *tokens)
 
 	cmd_list = NULL;
 	current_cmd = NULL;
+	if (tokens->next == NULL)
+	{
+		if (expand_null(tokens))
+			return (NULL);
+	}
 	while (tokens != NULL)
 	{
-		if (tokens->type == T_PIPE)
-		{
-			current_cmd = NULL;
-		}
-		else
-		{
-			current_cmd = init_or_get_current_command(&cmd_list, current_cmd);
-			if (tokens->type == T_WORD)
-				process_word_token(tokens, current_cmd);
-			else if (is_redirection_type(tokens->type))
-				process_redirection_token(tokens, current_cmd);
-		}
+		current_cmd = init_or_get_current_command(&cmd_list, current_cmd);
+		if (tokens->type == T_WORD)
+			process_word_token(tokens, current_cmd);
+		else if (is_redirection_type(tokens->type))
+			process_redirection_token(tokens, current_cmd);
+
 		tokens = tokens->next;
 	}
 	return (cmd_list);
