@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 14:43:00 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:15:49 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	export(char ***my_env, char **args)
 	int		len;
 	int		i;
 
+	len = get_len_env(*my_env);
 	if (!args[1])
 		display_export(my_env);
 	else
@@ -42,9 +43,8 @@ int	export(char ***my_env, char **args)
 			if (check_variable_export(my_env, args[i]))
 				return (1);
 			temp = *my_env;
-			len = get_len_env(*my_env);
 			*my_env = ft_xmalloc(sizeof(char *) * (len + 2), 60);
-			env_loop(my_env, temp, args, i, len);
+			env_loop(my_env, temp, args, i);
 		}
 	}
 	return (0);

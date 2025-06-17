@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:57:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 14:45:54 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:08:00 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,6 @@ static int	check_forbidden_char_unset(char *variable_name)
 	return (1);
 }
 
-static int	compare_loop_unset(char ***my_env, char *arg)
-{
-	char	*variable_to_add;
-	char	*variable_to_compare;
-	int		i;
-
-	variable_to_add = extract_variable(arg);
-	i = 0;
-	while ((*my_env)[i])
-	{
-		variable_to_compare = extract_variable((*my_env)[i]);
-		if (!variable_to_compare)
-		{
-			perror("malloc variable_to_compare");
-			free(variable_to_add);
-			exit(EXIT_FAILURE);
-		}
-		if (!ft_strncmp(variable_to_add, variable_to_compare,
-				ft_strlen(variable_to_compare)))
-		{
-			remove_variable(my_env, i);
-			free(variable_to_add);
-			free(variable_to_compare);
-			return (0);
-		}
-		i++;
-		free(variable_to_compare);
-	}
-	free(variable_to_add);
-	return (0);
-}
-
 // remove variable if it exists
 // check forbidden characters
 static int	check_variable_unset(char ***my_env, char *arg)
@@ -75,7 +43,7 @@ static int	check_variable_unset(char ***my_env, char *arg)
 		triple_putstr_fd("export: ", arg, ": not a valid identifier\n", 2);
 		return (1);
 	}
-	return (compare_loop_unset(my_env, arg));
+	return (compare_loop(my_env, arg));
 }
 
 int	unset(char ***my_env, char **args)
@@ -84,30 +52,25 @@ int	unset(char ***my_env, char **args)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (args[i])
+	i = -1;
+	while (args[++i])
 	{
 		if (check_variable_unset(my_env, args[i]))
 			return (1);
-		j = 0;
-		while ((*my_env)[j])
+		j = -1;
+		while ((*my_env)[++j])
 		{
 			variable_to_compare = extract_variable((*my_env)[j]);
 			if (!variable_to_compare)
-			{
-				perror("malloc variable_to_compare");
-				exit(EXIT_FAILURE);
-			}
+				exit(exit_failure("malloc variable_to_compare failed"));
 			if (!ft_strncmp(args[i], (*my_env)[j], ft_strlen(args[i])))
 			{
 				remove_variable(my_env, j);
 				free(variable_to_compare);
 				return (0);
 			}
-			j++;
 			free(variable_to_compare);
 		}
-		i++;
 	}
 	return (0);
 }

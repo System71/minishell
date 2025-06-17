@@ -6,13 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:16:30 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 17:41:30 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:20:18 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	restore_std(t_redirections_exec *redirections)
+void	restore_std(t_redir_exec *redirections)
 {
 	if (redirections->infile && (dup2(redirections->saved_stdin,
 				STDIN_FILENO) == -1))

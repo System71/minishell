@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 17:47:04 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:19:37 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static void	one_command_wait(t_command *current, t_env *my_env)
 // if no builtin => fork needed
 static void	one_command(t_command *current, t_env *my_env)
 {
-	t_redirections_exec	*redirections;
+	t_redir_exec	*redirections;
 
 	redirections = ft_xmalloc(sizeof(t_redirection), 60);
 	init_redirections(redirections);
 	if (!get_redirection(current, redirections, my_env))
 	{
-		if (is_builtin(my_env, current,redirections) == -1)
+		if (is_builtin(my_env, current, redirections) == -1)
 		{
 			current->pid = fork();
 			if (current->pid == -1)

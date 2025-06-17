@@ -6,12 +6,12 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 07:49:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/17 16:35:26 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:22:22 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPE_H
-# define TYPE_H
+#ifndef TYPES_H
+# define TYPES_H
 
 # include <stdbool.h>
 # include <stdlib.h>
@@ -186,12 +186,12 @@ typedef struct s_mem_node
 
 /***********************************/
 /**********    REDIRECTIONS    **********/
-typedef struct s_redirections_exec
+typedef struct s_redir_exec
 {
 	int					infile;
 	int					outfile;
 	int					saved_stdout;
 	int					saved_stdin;
-}							t_redirections_exec;
+}							t_redir_exec;
 
 #endif

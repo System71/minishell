@@ -6,13 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:04:01 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 17:41:20 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:19:48 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_redirections(t_redirections_exec *redirections)
+int	init_redirections(t_redir_exec *redirections)
 {
 	redirections->infile = 0;
 	redirections->outfile = 0;
@@ -25,7 +25,7 @@ int	init_redirections(t_redirections_exec *redirections)
 	return (0);
 }
 
-void	close_all(t_redirections_exec *redirections)
+void	close_all(t_redir_exec *redirections)
 {
 	if (redirections->infile)
 		close(redirections->infile);
@@ -41,7 +41,7 @@ void	close_pipefd(int pipefd[2])
 	close(pipefd[1]);
 }
 
-int	get_redirection(t_command *current, t_redirections_exec *redirections,
+int	get_redirection(t_command *current, t_redir_exec *redirections,
 		t_env *my_env)
 {
 	while (current->redirs)

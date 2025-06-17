@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:12:04 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 17:48:43 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:20:07 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	wait_loop(t_command *current, t_env *my_env)
 	}
 }
 
-void	pipe_redirections(t_redirections_exec *redirections, t_command *current,
+void	pipe_redirections(t_redir_exec *redirections, t_command *current,
 		int prev_fd, int pipefd[2])
 {
 	if (!redirections->infile && prev_fd)
@@ -40,7 +40,7 @@ void	pipe_redirections(t_redirections_exec *redirections, t_command *current,
 
 void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
-	t_redirections_exec	*redirections;
+	t_redir_exec	*redirections;
 
 	redirections = ft_xmalloc(sizeof(t_redirection), 60);
 	init_redirections(redirections);

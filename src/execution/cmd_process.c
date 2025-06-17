@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 17:48:59 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:20:31 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	cmd_not_built(t_env *my_env, char **args)
 }
 
 int	is_builtin(t_env *my_env, t_command *current,
-		t_redirections_exec *redirections)
+		t_redir_exec *redirections)
 {
 	if (!ft_strncmp(current->args[0], "echo", ft_strlen("echo") + 1))
 		my_env->error_code = echo(current->args);
@@ -135,7 +135,7 @@ int	is_builtin(t_env *my_env, t_command *current,
 	else if (!ft_strncmp(current->args[0], "env", ft_strlen("env") + 1))
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
-		my_env->error_code = my_exit(current->args,redirections);
+		my_env->error_code = my_exit(current->args, redirections);
 	else
 		return (-1);
 	return (my_env->error_code);
