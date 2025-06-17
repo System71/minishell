@@ -51,7 +51,7 @@ static int	env_loop(char ***my_env, char **temp, char **args, int i)
 	int	len;
 
 	j = 0;
-	len = get_len_env(*my_env);
+	len = get_len_env(temp);
 	while (j < len)
 	{
 		(*my_env)[j] = ft_strdup_oli(temp[j], 60);
