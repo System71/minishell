@@ -12,29 +12,7 @@
 
 #include "minishell.h"
 
-static void	write_heredoc_to_file(const char *filename, const char *content)
-{
-	int		fd;
-	size_t	len;
-	ssize_t	ret;
 
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (fd < 0)
-	{
-		perror("minishell: open heredoc temp");
-		exit(EXIT_FAILURE);
-	}
-	len = ft_strlen(content);
-	ret = write(fd, content, len);
-	if (ret < 0 || (size_t)ret != len)
-	{
-		mem_free_all(8);
-		perror("minishell: write heredoc temp");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
-}
 
 static void	process_word_token(t_token *tok, t_command *current_cmd)
 {
@@ -89,6 +67,25 @@ static void	process_redirection_token(t_token *tok, t_command *current_cmd)
 	}
 }
 
+int	expand_null(t_token *token)
+{
+	t_token_segment	*seg;
+
+	if (!token)
+		return (0);
+	if (token->next != NULL)
+		return (0);
+	if (token->type != T_WORD)
+		return (0);
+	seg = token->segments;
+	if (seg && seg->next == NULL)
+	{
+		if (seg->content && seg->content[0] == '\0' && seg->is_expand)
+			return (1);
+	}
+	return (0);
+}
+
 t_command	*parse_commands(t_token *tokens)
 {
 	t_command	*cmd_list;
@@ -96,6 +93,8 @@ t_command	*parse_commands(t_token *tokens)
 
 	cmd_list = NULL;
 	current_cmd = NULL;
+	if (expand_null(tokens))
+		return (NULL);
 	while (tokens != NULL)
 	{
 		if (tokens->type == T_PIPE)

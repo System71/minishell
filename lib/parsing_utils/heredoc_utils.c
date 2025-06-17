@@ -12,6 +12,30 @@
 
 #include "minishell.h"
 
+void	write_heredoc_to_file(const char *filename, const char *content)
+{
+	int		fd;
+	size_t	len;
+	ssize_t	ret;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd < 0)
+	{
+		perror("minishell: open heredoc temp");
+		exit(EXIT_FAILURE);
+	}
+	len = ft_strlen(content);
+	ret = write(fd, content, len);
+	if (ret < 0 || (size_t)ret != len)
+	{
+		mem_free_all(8);
+		perror("minishell: write heredoc temp");
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}
+
 int	append_heredoc_line(t_heredoc *hd, const char *line)
 {
 	size_t	old_len;

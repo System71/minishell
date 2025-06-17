@@ -217,6 +217,8 @@ void							heredoc_storage(t_token *curr, t_heredoc hd);
 char							*generate_temp_filename(void);
 int								read_line_hook(void);
 void							destroy_file_heredoc(t_command *cmd_list);
+void							write_heredoc_to_file(const char *filename,
+									const char *content);
 
 // ========== PARSING_UTILS ==========
 /***** is_ft *****/
