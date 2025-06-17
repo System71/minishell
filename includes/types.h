@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 07:49:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/13 07:54:16 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:58:56 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_command
 	char					**args;
 	t_redirection			*redirs;
 	pid_t					pid;
-	int						*status;
+	int						status;
 	struct s_command		*next;
 }							t_command;
 /***********************************/

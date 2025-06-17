@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 18:26:14 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:06:53 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,11 @@ void	cmd_not_built(t_env *my_env, char **args)
 	free(end_path);
 	mem_free_all(60);
 	mem_free_all(8);
-	exit(my_env->error_code);
+	exit(127);
 }
 // int	is_builtin(t_env *my_env, char **args)
-int	is_builtin(t_env *my_env, t_command *current, int saved_stdin,
-		int saved_stdout)
+int	is_builtin(t_env *my_env, t_command *current)
 {
-	close(saved_stdin);
-	close(saved_stdout);
 	if (!ft_strncmp(current->args[0], "echo", ft_strlen("echo") + 1))
 		my_env->error_code = echo(current->args);
 	else if (!ft_strncmp(current->args[0], "cd", ft_strlen("cd") + 1))
@@ -134,7 +131,6 @@ int	is_builtin(t_env *my_env, t_command *current, int saved_stdin,
 		my_env->error_code = my_exit(current->args);
 	else
 		return (-1);
-	mem_free_all(60);
-	mem_free_all(8);
+	// mem_free_all(8);
 	return (0);
 }

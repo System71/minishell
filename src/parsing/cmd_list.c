@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 07:55:02 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:03:15 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:03:43 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_command	*create_command(void)
 	cmd->args = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
+	cmd->status = -1;
 	return (cmd);
 }
 
@@ -33,8 +34,8 @@ void	append_arg_to_command(t_command *cmd, char *arg)
 		while (cmd->args[count])
 			count++;
 	}
-	cmd->args = ft_realloc(cmd->args, sizeof(char *) *(count),
-			sizeof(char *) *(count + 2), 8);
+	cmd->args = ft_realloc(cmd->args, sizeof(char *) * (count), sizeof(char *)
+			* (count + 2), 8);
 	cmd->args[count] = arg;
 	cmd->args[count + 1] = NULL;
 }
@@ -64,7 +65,7 @@ static void	append_command(t_command **cmd_list, t_command *new_cmd)
 }
 
 t_command	*init_or_get_current_command(t_command **cmd_list,
-						t_command *current_cmd)
+		t_command *current_cmd)
 {
 	t_command	*new_cmd;
 

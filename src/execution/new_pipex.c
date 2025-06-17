@@ -6,11 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 18:33:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:18:27 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
@@ -45,8 +45,13 @@ static void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	if (outfile)
 		close(outfile);
 	close_pipefd(pipefd);
-	if (is_builtin(my_env, current, saved_stdin, saved_stdout) == -1)
+	close(saved_stdin);
+	close(saved_stdout);
+	if (is_builtin(my_env, current) == -1)
 		cmd_not_built(my_env, current->args);
+	mem_free_all(8);
+	mem_free_all(60);
+	exit(EXIT_SUCCESS);
 }
 
 // if builtin => no fork needed
@@ -61,13 +66,17 @@ static void	one_command(t_command *current, t_env *my_env)
 	infile = 0;
 	outfile = 0;
 	saved_stdin = dup(STDIN_FILENO);
+	if (fcntl(saved_stdin, F_GETFD) == -1)
+	{
+		perror("saved_fd invalid before dup2");
+	}
 	saved_stdout = dup(STDOUT_FILENO);
 	if (get_redirection(current, &infile, &outfile, my_env))
 	{
 		restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
 		return ;
 	}
-	if (is_builtin(my_env, current, saved_stdin, saved_stdout) == -1)
+	if (is_builtin(my_env, current) == -1)
 	{
 		current->pid = fork();
 		if (current->pid == -1)
@@ -83,13 +92,14 @@ static void	one_command(t_command *current, t_env *my_env)
 			set_signals_child();
 			cmd_not_built(my_env, current->args);
 		}
-		current->status = ft_xmalloc(sizeof(int), 8);
-		waitpid(current->pid, current->status, 0);
-		if (WIFEXITED(*(current->status)))
-			my_env->error_code = WEXITSTATUS(*(current->status));
+		waitpid(current->pid, &current->status, 0);
+		if (WIFEXITED(current->status))
+			my_env->error_code = WEXITSTATUS(current->status);
 	}
-	else
-		exit(EXIT_SUCCESS);
+	if (fcntl(saved_stdin, F_GETFD) == -1)
+	{
+		perror("saved_fd invalid before dup2");
+	}
 	restore_std(infile, outfile, saved_stdin, saved_stdout, my_env);
 	if (infile)
 		close(infile);
@@ -114,7 +124,6 @@ static void	multi_command(t_command *current, t_env *my_env)
 		current->pid = fork();
 		if (current->pid == -1)
 			exit_failure("fork : creation failed\n", my_env);
-		current->status = ft_xmalloc(sizeof(int), 8);
 		if (current->pid == 0)
 		{
 			set_signals_child();
@@ -129,9 +138,9 @@ static void	multi_command(t_command *current, t_env *my_env)
 	current = head;
 	while (current)
 	{
-		waitpid(current->pid, current->status, 0);
-		if (WIFEXITED(*(current->status)))
-			my_env->error_code = WEXITSTATUS(*(current->status));
+		waitpid(current->pid, &current->status, 0);
+		if (WIFEXITED(current->status))
+			my_env->error_code = WEXITSTATUS(current->status);
 		current = current->next;
 	}
 	close(pipefd[0]);

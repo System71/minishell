@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:18:10 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/13 10:05:47 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:02:52 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,14 @@ int	remove_variable(char ***my_env, int position)
 
 	temp = *my_env;
 	len = get_len_env(temp);
-	*my_env = malloc(sizeof(char *) * len);
-	if (!*my_env)
-	{
-		perror("malloc envp");
-		exit(EXIT_FAILURE);
-	}
+	*my_env = ft_xmalloc(sizeof(char *) * len, 60);
 	i = 0;
 	j = -1;
 	while (++j < len)
 	{
 		if (j != position)
 		{
-			(*my_env)[i] = strdup(temp[j]);
+			(*my_env)[i] = ft_strdup_oli(temp[j], 60);
 			i++;
 		}
 	}

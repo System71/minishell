@@ -6,18 +6,22 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:04:01 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/16 18:27:45 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:03:04 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	restore_std(int infile, int outfile, int saved_stdin, int saved_stdout,
 		t_env *my_env)
 {
-	if (infile && dup2(saved_stdin, STDIN_FILENO) == -1)
+	if (infile && (dup2(saved_stdin, STDIN_FILENO) == -1))
 	{
-		exit_failure("dup2 restore failed\n", my_env);
+		perror("dup2");
+		printf("infile=%d\n", infile);
+		printf("saves_stdin=%d\n", saved_stdin);
+		printf("stdin_fileno=%d\n", STDIN_FILENO);
+		exit_failure("dup2 restoire failed\n", my_env);
 	}
 	if (outfile && dup2(saved_stdout, STDOUT_FILENO) == -1)
 	{

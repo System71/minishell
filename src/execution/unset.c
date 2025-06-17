@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:57:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/10 16:34:47 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:59:06 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,21 @@ static int	compare_loop(char ***my_env, char *arg)
 		if (!variable_to_compare)
 		{
 			perror("malloc variable_to_compare");
+			free(variable_to_add);
 			exit(EXIT_FAILURE);
 		}
 		if (!ft_strncmp(variable_to_add, variable_to_compare,
 				ft_strlen(variable_to_compare)))
 		{
 			remove_variable(my_env, i);
+			free(variable_to_add);
+			free(variable_to_compare);
 			return (0);
 		}
 		i++;
+		free(variable_to_compare);
 	}
+	free(variable_to_add);
 	return (0);
 }
 
@@ -88,12 +93,19 @@ int	unset(char ***my_env, char **args)
 		while ((*my_env)[j])
 		{
 			variable_to_compare = extract_variable((*my_env)[j]);
+			if (!variable_to_compare)
+			{
+				perror("malloc variable_to_compare");
+				exit(EXIT_FAILURE);
+			}
 			if (!ft_strncmp(args[i], (*my_env)[j], ft_strlen(args[i])))
 			{
 				remove_variable(my_env, j);
+				free(variable_to_compare);
 				return (0);
 			}
 			j++;
+			free(variable_to_compare);
 		}
 		i++;
 	}
