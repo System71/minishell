@@ -6,13 +6,13 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:16:30 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 14:36:07 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:18:39 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	restore_std(t_redir_exec *redirections)
+void	restore_std(t_infileoutfile *redirections)
 {
 	if (redirections->infile && (dup2(redirections->saved_stdin,
 				STDIN_FILENO) == -1))
@@ -36,6 +36,7 @@ static int	my_dup2(t_command *current, int file, t_env *my_env, int old_std)
 
 int	redir_in(t_command *current, int *infile, t_env *my_env)
 {
+	printf("target=%s\n", current->redirs->target);
 	*infile = open(current->redirs->target, O_RDONLY);
 	if (*infile == -1)
 	{

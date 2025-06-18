@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 07:49:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/17 18:22:22 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:15:54 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,12 @@ typedef struct s_mem_node
 
 /***********************************/
 /**********    REDIRECTIONS    **********/
-typedef struct s_redir_exec
+typedef struct s_infileoutfile
 {
 	int					infile;
 	int					outfile;
 	int					saved_stdout;
 	int					saved_stdin;
-}							t_redir_exec;
+}							t_infileoutfile;
 
 #endif

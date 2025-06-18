@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:20:31 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:18:52 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ void	cmd_not_built(t_env *my_env, char **args)
 	exit(127);
 }
 
-int	is_builtin(t_env *my_env, t_command *current,
-		t_redir_exec *redirections)
+int	is_builtin(t_env *my_env, t_command *current, t_infileoutfile *redirections)
 {
 	if (!ft_strncmp(current->args[0], "echo", ft_strlen("echo") + 1))
 		my_env->error_code = echo(current->args);

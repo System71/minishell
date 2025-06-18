@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:20:40 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:19:27 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	get_error_code(int code)
 	return (code);
 }
 
-int	my_exit(char **args, t_redir_exec *redirections)
+int	my_exit(char **args, t_infileoutfile *redirections)
 {
 	int	error_code;
 

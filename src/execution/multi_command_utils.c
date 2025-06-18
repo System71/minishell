@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:12:04 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 14:45:49 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:16:19 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	wait_loop(t_command *current, t_env *my_env)
 	}
 }
 
-void	pipe_redirections(t_redir_exec *redirections, t_command *current,
+void	pipe_redirections(t_infileoutfile *redirections, t_command *current,
 		int prev_fd, int pipefd[2])
 {
 	if (!redirections->infile && prev_fd)
@@ -40,14 +40,20 @@ void	pipe_redirections(t_redir_exec *redirections, t_command *current,
 
 void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
-	t_redir_exec	*redirections;
+	t_infileoutfile	*redirections;
 
-	redirections = ft_xmalloc(sizeof(t_redirection), 60);
+	redirections = ft_xmalloc(sizeof(t_redirection), 8);
 	init_redirections(redirections);
 	set_signals_child();
 	if (get_redirection(current, redirections, my_env))
 	{
 		restore_std(redirections);
+		if (prev_fd)
+			close(prev_fd);
+		close_pipefd(pipefd);
+		close_all(redirections);
+		mem_free_all(8);
+		mem_free_all(60);
 		exit(EXIT_FAILURE);
 	}
 	pipe_redirections(redirections, current, prev_fd, pipefd);
