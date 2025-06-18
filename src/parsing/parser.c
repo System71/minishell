@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/02 18:06:47 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:51:24 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 static void	process_word_token(t_token *tok, t_command *current_cmd)
 {
@@ -27,7 +25,7 @@ static t_redirection	*build_redirection(t_token *tok)
 	t_redirection	*redir;
 	char			*tmp;
 
-	redir = ft_xmalloc(sizeof * redir, 8);
+	redir = ft_xmalloc(sizeof(redir), 8);
 	if (tok->type == T_HEREDOC)
 	{
 		tmp = generate_temp_filename();

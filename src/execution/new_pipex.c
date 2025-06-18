@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:19:37 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:25:28 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ static void	multi_command(t_command *current, t_env *my_env)
 void	new_pipex(t_command *current, t_env *my_env)
 {
 	if (current->args == NULL || *current->args[0] == '\0')
+	{
+		printf("je suis la\n");
+		my_env->error_code = 1;
 		return ;
+	}
 	if (!current->next)
 		one_command(current, my_env);
 	else

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:42:13 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:23:32 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:47:43 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	env_loop(char ***my_env, char **temp, char **args, int i)
 	int	j;
 	int	len;
 
-	len = get_len_env(*my_env);
+	len = get_len_env(temp);
 	j = 0;
 	while (j < len)
 	{

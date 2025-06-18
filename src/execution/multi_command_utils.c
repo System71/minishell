@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:12:04 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:20:07 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:45:49 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	if (get_redirection(current, redirections, my_env))
 	{
 		restore_std(redirections);
-		return ;
+		exit(EXIT_FAILURE);
 	}
 	pipe_redirections(redirections, current, prev_fd, pipefd);
 	if (prev_fd)
