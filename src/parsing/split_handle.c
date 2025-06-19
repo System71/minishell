@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:44:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:20:35 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:15:26 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static char	*segments_to_str(t_token_segment *seg)
 {
-	size_t				total;
-	t_token_segment		*s;
-	char				*buf;
+	size_t			total;
+	t_token_segment	*s;
+	char			*buf;
 
 	total = 0;
 	s = seg;
@@ -59,7 +59,7 @@ static char	**get_split_parts(t_token *cur)
 	{
 		return (NULL);
 	}
-	parts = ft_split(full, ' ');
+	parts = ft_split_exec(full, ' ');
 	return (parts);
 }
 

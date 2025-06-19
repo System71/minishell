@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:23:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/19 19:02:46 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:14:17 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char	**do_split(char const *s, char c)
 }
 
 /***** ft_split *****/
-char	**ft_split(char const *s, char c)
+char	**ft_split_exec(char const *s, char c)
 {
 	if (!s)
 	{

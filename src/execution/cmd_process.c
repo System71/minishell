@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 19:05:17 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:15:04 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**get_paths(t_env *my_env)
 		free(extracted_path);
 		return (NULL);
 	}
-	paths = ft_split(extracted_path, ':');
+	paths = ft_split_exec(extracted_path, ':');
 	if (!paths)
 	{
 		free(extracted_path);

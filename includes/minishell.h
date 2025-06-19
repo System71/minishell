@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:56:57 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:14:39 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,6 @@ int								ft_strcmp(const char *s1, const char *s2);
 char							*ft_strdup_oli(const char *s, int which_list);
 char							*ft_strndup_oli(const char *s, size_t n,
 									int which_list);
-char							**ft_split(char const *s, char c);
+char							**ft_split_exec(char const *s, char c);
 
 #endif
