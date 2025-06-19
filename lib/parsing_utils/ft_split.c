@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:23:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/19 18:39:29 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:02:46 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ char	**ft_split(char const *s, char c)
 {
 	if (!s)
 	{
-		write(2, "Error: Input string is NULL in ft_split\n", 40);
 		return (NULL);
 	}
 	return (do_split(s, c));

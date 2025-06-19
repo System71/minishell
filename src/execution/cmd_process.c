@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 17:19:47 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:05:17 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ void	cmd_not_built(t_env *my_env, char **args)
 	}
 	paths = get_paths(my_env);
 	if (!paths)
-		exit(exit_failure("get_paths"));
+	{
+		mem_free_all(60);
+		mem_free_all(8);
+		exit(exit_failure("get_paths failed\n"));
+	}
 	end_path = ft_strjoin("/", args[0]);
 	if (!end_path)
 	{
