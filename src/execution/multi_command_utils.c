@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:12:04 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 18:30:27 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:49:02 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@ void	wait_loop(t_command *current, t_env *my_env)
 {
 	while (current)
 	{
-		// waitpid(current->pid, &current->status, 0);
-		// void ft_last_child_status(int status)
-		// {
-		// 	if (WTERMSIG(status) == SIGQUIT)
-		// 		ft_putstr_fd("Quit (core dumped)\n", 1);
-		// 	if (WIFEXITED(status))
-		// 		ft_last_return_value(WEXITSTATUS(status), 1);
-		// 	else if (WIFSIGNALED(status))
-		// 		ft_last_return_value(128 + WTERMSIG(status), 1);
-		// }
+		waitpid(current->pid, &current->status, 0);
+		if (WTERMSIG(current->status) == SIGINT)
+			ft_putchar_fd('\n', 1);
+		if (WTERMSIG(current->status) == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)\n", 1);
 		if (WIFEXITED(current->status))
 			my_env->error_code = WEXITSTATUS(current->status);
+		else if (WIFSIGNALED(current->status))
+			my_env->error_code = 128 + WTERMSIG(current->status);
 		current = current->next;
 	}
 }
@@ -47,6 +44,12 @@ void	pipe_redirections(t_infileoutfile *redirections, t_command *current,
 	}
 }
 
+void	mem_free_alls(void)
+{
+	mem_free_all(8);
+	mem_free_all(60);
+}
+
 void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
 	t_infileoutfile	*redirections;
@@ -61,8 +64,7 @@ void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 			close(prev_fd);
 		close_pipefd(pipefd);
 		close_all(redirections);
-		mem_free_all(8);
-		mem_free_all(60);
+		mem_free_alls();
 		exit(EXIT_FAILURE);
 	}
 	pipe_redirections(redirections, current, prev_fd, pipefd);
@@ -72,7 +74,6 @@ void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 	close_all(redirections);
 	if (is_builtin(my_env, current, redirections) == -1)
 		cmd_not_built(my_env, current->args);
-	mem_free_all(8);
-	mem_free_all(60);
+	mem_free_alls();
 	exit(EXIT_SUCCESS);
 }

@@ -6,21 +6,21 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:04:01 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:48:43 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:04:15 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_redirections(t_infileoutfile *redirections)
+int	init_redirections(t_infileoutfile *redir)
 {
-	redirections->infile = 0;
-	redirections->outfile = 0;
-	redirections->saved_stdin = dup(STDIN_FILENO);
-	if (redirections->saved_stdin == -1)
+	redir->infile = 0;
+	redir->outfile = 0;
+	redir->saved_stdin = dup(STDIN_FILENO);
+	if (redir->saved_stdin == -1)
 		return (1);
-	redirections->saved_stdout = dup(STDOUT_FILENO);
-	if (redirections->saved_stdout == -1)
+	redir->saved_stdout = dup(STDOUT_FILENO);
+	if (redir->saved_stdout == -1)
 		return (1);
 	return (0);
 }

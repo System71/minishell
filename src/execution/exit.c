@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 16:50:24 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:01:59 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,24 @@ static int	get_error_code(int code)
 	return (code);
 }
 
-int	my_exit(char **args, t_infileoutfile *redirections, t_env *my_env)
+static void	exit_too_many(t_infileoutfile *redirections)
+{
+	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+	close_all(redirections);
+	mem_free_alls();
+	exit(2);
+}
+
+static void	exit_with_code(t_infileoutfile *redirections, int *error_code,
+		char *arg)
+{
+	*error_code = get_error_code(ft_atoi(arg));
+	close_all(redirections);
+	mem_free_alls();
+	exit(*error_code);
+}
+
+void	my_exit(char **args, t_infileoutfile *redirections, t_env *my_env)
 {
 	int	error_code;
 
@@ -51,8 +68,7 @@ int	my_exit(char **args, t_infileoutfile *redirections, t_env *my_env)
 	{
 		close_all(redirections);
 		error_code = my_env->error_code;
-		mem_free_all(60);
-		mem_free_all(8);
+		mem_free_alls();
 		exit(error_code);
 	}
 	if (!code_is_digit(args[1]))
@@ -61,24 +77,11 @@ int	my_exit(char **args, t_infileoutfile *redirections, t_env *my_env)
 			": numeric argument required\n", 2);
 		close_all(redirections);
 		error_code = my_env->error_code;
-		mem_free_all(60);
-		mem_free_all(8);
+		mem_free_alls();
 		exit(2);
 	}
 	if (args[2])
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		close_all(redirections);
-		mem_free_all(60);
-		mem_free_all(8);
-		exit(2);
-	}
+		exit_too_many(redirections);
 	else
-	{
-		error_code = get_error_code(ft_atoi(args[1]));
-		close_all(redirections);
-		mem_free_all(60);
-		mem_free_all(8);
-		exit(error_code);
-	}
+		exit_with_code(redirections, &error_code, args[1]);
 }

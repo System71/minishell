@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 20:14:14 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:00:39 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ void	cmd_not_built(t_env *my_env, char **args)
 	paths = get_paths(my_env);
 	if (!paths)
 	{
-		mem_free_all(60);
-		mem_free_all(8);
+		mem_free_alls();
 		exit(exit_failure("get_paths failed\n"));
 	}
 	end_path = ft_strjoin("/", args[0]);
@@ -117,10 +116,8 @@ void	cmd_not_built(t_env *my_env, char **args)
 		exit(exit_failure("args malloc ft_strjoin"));
 	}
 	exec_cmd(paths, args, end_path, my_env);
-	// free_split(paths);
 	free(end_path);
-	mem_free_all(60);
-	mem_free_all(8);
+	mem_free_alls();
 	exit(127);
 }
 
@@ -139,7 +136,7 @@ int	is_builtin(t_env *my_env, t_command *current, t_infileoutfile *redirections)
 	else if (!ft_strncmp(current->args[0], "env", ft_strlen("env") + 1))
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
-		my_env->error_code = my_exit(current->args, redirections, my_env);
+		my_exit(current->args, redirections, my_env);
 	else
 		return (-1);
 	return (my_env->error_code);

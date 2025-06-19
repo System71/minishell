@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:44:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/19 19:15:26 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:13:49 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static char	**get_split_parts(t_token *cur)
 		return (NULL);
 	}
 	parts = ft_split_exec(full, ' ');
+	printf("parts[0]=%s\n", parts[0]);
 	return (parts);
 }
 

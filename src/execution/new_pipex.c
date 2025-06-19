@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 18:27:10 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:40:13 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ static void	one_command_wait(t_command *current, t_env *my_env)
 {
 	set_signals_wait();
 	waitpid(current->pid, &current->status, 0);
-	
+	if (WTERMSIG(current->status) == SIGINT)
+		ft_putchar_fd('\n', 1);
+	if (WTERMSIG(current->status) == SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", 1);
 	if (WIFEXITED(current->status))
 		my_env->error_code = WEXITSTATUS(current->status);
+	else if (WIFSIGNALED(current->status))
+		my_env->error_code = 128 + WTERMSIG(current->status);
 }
 
 // if builtin => no fork needed

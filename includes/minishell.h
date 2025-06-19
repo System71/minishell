@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 19:14:39 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:05:44 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void							new_pipex(t_command *current, t_env *my_env);
 void							execute_command(char **s_cmd, char **env);
 
 // ========== NEW_PIPEX_UTILS ==========
-int								init_redirections(t_infileoutfile *redirections);
+int								init_redirections(t_infileoutfile *redir);
 void							close_all(t_infileoutfile *redirections);
 void							close_pipefd(int pipefd[2]);
 int								get_redirection(t_command *current,
@@ -54,6 +54,7 @@ int								get_redirection(t_command *current,
 									t_env *my_env);
 
 // ========== MULTI_COMMAND_UTILS ==========
+void							mem_free_alls(void);
 void							wait_loop(t_command *current, t_env *my_env);
 void							child(t_command *current, int pipefd[2],
 									int prev_fd, t_env *my_env);
@@ -74,7 +75,7 @@ int								echo(char **args);
 int								env(char ***my_env);
 
 // ========== EXIT ==========
-int								my_exit(char **args,
+void							my_exit(char **args,
 									t_infileoutfile *redirections,
 									t_env *my_env);
 void							exit_shell(void);
@@ -197,7 +198,8 @@ t_command						*parse_commands(t_token *tokens);
 bool							is_redirection_type(t_token_type type);
 void							append_arg_to_command(t_command *cmd,
 									char *arg);
-t_command						*init_or_get_current_command(t_command **cmd_list,
+t_command						*init_or_get_current_command(
+									t_command **cmd_list,
 									t_command *current_cmd);
 
 // ========== DEBUG ==========

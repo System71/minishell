@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:23:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/19 20:05:22 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:19:07 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	**do_split(char const *s, char c)
 	{
 		if (*s != c)
 		{
-			result[i] = malloc_word(s, c);
+			result[i++] = malloc_word(s, c);
 			while (*s && *s != c)
 				s++;
 		}
