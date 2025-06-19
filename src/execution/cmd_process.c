@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 19:15:04 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:14:14 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	cmd_not_built(t_env *my_env, char **args)
 		exit(exit_failure("args malloc ft_strjoin"));
 	}
 	exec_cmd(paths, args, end_path, my_env);
-	free_split(paths);
+	// free_split(paths);
 	free(end_path);
 	mem_free_all(60);
 	mem_free_all(8);

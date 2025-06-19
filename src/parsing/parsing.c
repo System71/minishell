@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:04 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/02 19:39:42 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:06:13 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_command	*parse_input(const char *input, t_env *my_env)
 		return (NULL);
 	}
 	expand_handle(tokens, my_env);
+	print_tokens(tokens);
 	split_handle(tokens);
 	cmd_list = parse_commands(tokens);
 	return (cmd_list);

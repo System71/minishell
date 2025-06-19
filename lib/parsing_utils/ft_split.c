@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:23:29 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/19 19:14:17 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:05:22 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,9 @@ static char	*malloc_word(char const *s, char c)
 	len = 0;
 	while (s[len] && s[len] != c)
 		len++;
-	word = (char *)malloc((len + 1) * sizeof(char));
-	if (!word)
-	{
-		write(2, "Error: Memory allocation failed in malloc_word\n", 47);
-		return (NULL);
-	}
+	word = (char *)ft_xmalloc((len + 1) * sizeof(char), 8);
 	ft_strlcpy(word, s, len + 1);
 	return (word);
-}
-
-static char	**free_all(char **result, int i)
-{
-	while (i > 0)
-		free(result[--i]);
-	free(result);
-	return (NULL);
 }
 
 static char	**do_split(char const *s, char c)
@@ -65,20 +52,13 @@ static char	**do_split(char const *s, char c)
 	char	**result;
 	int		i;
 
-	result = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
-	if (!result)
-	{
-		write(2, "Error: Memory allocation failed in ft_split\n", 44);
-		return (NULL);
-	}
+	result = (char **)ft_xmalloc((count_words(s, c) + 1) * sizeof(char *), 8);
 	i = 0;
 	while (*s)
 	{
 		if (*s != c)
 		{
 			result[i] = malloc_word(s, c);
-			if (!result[i++])
-				return (free_all(result, i - 1));
 			while (*s && *s != c)
 				s++;
 		}
