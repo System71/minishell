@@ -52,7 +52,7 @@ static int	too_many_args(void)
 	return (1);
 }
 
-int	my_exit(char **args)
+int	my_exit(char **args, t_env *my_env)
 {
 	int	error_code;
 

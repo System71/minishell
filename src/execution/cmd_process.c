@@ -48,7 +48,7 @@ int	exec_builtin(t_env *my_env, t_command *current, bool child)
 	else if (!ft_strncmp(current->args[0], "env", ft_strlen("env") + 1))
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
-		my_env->error_code = my_exit(current->args);
+		my_env->error_code = my_exit(current->args, my_env);
 	if (child)
 	{
 		mem_free_all(8);

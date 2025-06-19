@@ -71,7 +71,7 @@ int								echo(char **args);
 int								env(char ***my_env);
 
 // ========== EXIT ==========
-int								my_exit(char **args);
+int								my_exit(char **args, t_env *my_env);
 void							exit_shell(void);
 
 // ========== EXPORT ==========
@@ -253,6 +253,6 @@ int								ft_strcmp(const char *s1, const char *s2);
 char							*ft_strdup_oli(const char *s, int which_list);
 char							*ft_strndup_oli(const char *s, size_t n,
 									int which_list);
-char							**ft_split(char const *s, char c);
+char							**ft_split_exec(char const *s, char c);
 
 #endif

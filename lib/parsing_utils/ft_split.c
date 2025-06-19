@@ -90,7 +90,7 @@ static char	**do_split(char const *s, char c)
 }
 
 /***** ft_split *****/
-char	**ft_split(char const *s, char c)
+char	**ft_split_exec(char const *s, char c)
 {
 	if (!s)
 	{
