@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:04:01 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 17:18:23 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:48:43 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	get_redirection(t_command *current, t_infileoutfile *redirections,
 		if (current->redirs->type == T_REDIRECT_IN
 			|| current->redirs->type == T_HEREDOC)
 		{
-			if (redir_in(current, &redirections->infile, my_env))
+			if (redir_in(current, redirections, my_env))
 				return (1);
 		}
 		else if (current->redirs->type == T_REDIRECT_OUT)

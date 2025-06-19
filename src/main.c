@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 14:30:55 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:05:07 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	shell_loop(t_env *my_env)
 		cmd_list = parse_input(input, my_env);
 		if (cmd_list)
 			execute_and_cleanup(cmd_list, my_env);
-		else
-			my_env->error_code = 0;
 		ft_free_loop(input);
 	}
 }

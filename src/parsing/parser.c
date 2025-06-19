@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/18 14:51:24 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:52:07 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_redirection	*build_redirection(t_token *tok)
 	t_redirection	*redir;
 	char			*tmp;
 
-	redir = ft_xmalloc(sizeof(redir), 8);
+	redir = ft_xmalloc(sizeof(t_redirection), 8);
 	if (tok->type == T_HEREDOC)
 	{
 		tmp = generate_temp_filename();

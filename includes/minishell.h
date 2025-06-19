@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 17:17:34 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:56:57 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void							child(t_command *current, int pipefd[2],
 
 // ========== GET_REDIRECTION_UTILS ==========
 void							restore_std(t_infileoutfile *redirections);
-int								redir_in(t_command *current, int *infile,
+int								redir_in(t_command *current,
+									t_infileoutfile *redirections,
 									t_env *my_env);
 int								redir_out(t_command *current, int *outfile,
 									t_env *my_env);
@@ -74,7 +75,8 @@ int								env(char ***my_env);
 
 // ========== EXIT ==========
 int								my_exit(char **args,
-									t_infileoutfile *redirections);
+									t_infileoutfile *redirections,
+									t_env *my_env);
 void							exit_shell(void);
 
 // ========== EXPORT ==========

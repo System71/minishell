@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:12:04 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 17:16:19 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:01:50 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 {
 	t_infileoutfile	*redirections;
 
-	redirections = ft_xmalloc(sizeof(t_redirection), 8);
+	redirections = ft_xmalloc(sizeof(t_infileoutfile), 8);
 	init_redirections(redirections);
 	set_signals_child();
 	if (get_redirection(current, redirections, my_env))

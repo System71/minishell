@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 17:36:14 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:58:29 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	one_command(t_command *current, t_env *my_env)
 {
 	t_infileoutfile	*redirections;
 
-	redirections = ft_xmalloc(sizeof(t_redirection), 8);
+	redirections = ft_xmalloc(sizeof(t_infileoutfile), 8);
 	init_redirections(redirections);
 	if (!get_redirection(current, redirections, my_env))
 	{

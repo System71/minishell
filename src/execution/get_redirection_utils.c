@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:16:30 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/18 17:18:39 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:45:02 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,17 @@ static int	my_dup2(t_command *current, int file, t_env *my_env, int old_std)
 	return (0);
 }
 
-int	redir_in(t_command *current, int *infile, t_env *my_env)
+int	redir_in(t_command *current, t_infileoutfile *redirections, t_env *my_env)
 {
-	printf("target=%s\n", current->redirs->target);
-	*infile = open(current->redirs->target, O_RDONLY);
-	if (*infile == -1)
+	redirections->infile = open(current->redirs->target, O_RDONLY);
+	if (redirections->infile == -1)
 	{
 		ft_putstr_fd("minishell : ", 2);
 		perror(current->redirs->target);
 		my_env->error_code = 1;
 		return (1);
 	}
-	if (my_dup2(current, *infile, my_env, STDIN_FILENO))
+	if (my_dup2(current, redirections->infile, my_env, STDIN_FILENO))
 		return (1);
 	return (0);
 }
