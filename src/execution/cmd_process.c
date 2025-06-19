@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:56:28 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:19:47 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 static int	get_paths_loop(t_env *my_env, char **extracted_path)
 {
 	char	*substr;
+	int		i;
 
-	while (*(my_env->env))
+	i = -1;
+	while ((my_env->env)[++i])
 	{
-		substr = ft_substr(*(my_env->env), 0, 5);
+		substr = ft_substr((my_env->env)[i], 0, 5);
 		if (!substr)
 			return (1);
 		if (ft_strncmp(substr, "PATH=", 5) == 0)
 		{
-			*extracted_path = ft_substr(*(my_env->env), 5,
-					ft_strlen(*(my_env->env)));
+			*extracted_path = ft_substr((my_env->env)[i], 5,
+					ft_strlen((my_env->env)[i]));
 			if (!*extracted_path)
 			{
 				exit_failure("full_path malloc extracted_path");
@@ -35,7 +37,6 @@ static int	get_paths_loop(t_env *my_env, char **extracted_path)
 			break ;
 		}
 		free(substr);
-		(my_env->env)++;
 	}
 	return (0);
 }
@@ -134,7 +135,7 @@ int	is_builtin(t_env *my_env, t_command *current, t_infileoutfile *redirections)
 	else if (!ft_strncmp(current->args[0], "env", ft_strlen("env") + 1))
 		my_env->error_code = env(&my_env->env);
 	else if (!ft_strncmp(current->args[0], "exit", ft_strlen("exit") + 1))
-		my_env->error_code = my_exit(current->args, redirections,my_env);
+		my_env->error_code = my_exit(current->args, redirections, my_env);
 	else
 		return (-1);
 	return (my_env->error_code);

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:05:07 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:19:30 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_env	*my_env;
 
+	if (isatty(STDIN_FILENO) == 0 || isatty(STDOUT_FILENO) == 0 )
+		return (1);
 	(void)argc;
 	(void)argv;
 	my_env = init_minishell(envp);

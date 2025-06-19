@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:19:27 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 15:03:58 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:48:38 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	pwd(char **args)
 	ft_putstr_fd(buffer, 1);
 	ft_putstr_fd("\n", 1);
 	free(flag);
+	free(buffer);
 	return (0);
 }
 

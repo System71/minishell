@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:40:49 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:58:29 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:27:10 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static void	one_command_wait(t_command *current, t_env *my_env)
 {
+	set_signals_wait();
 	waitpid(current->pid, &current->status, 0);
+	
 	if (WIFEXITED(current->status))
 		my_env->error_code = WEXITSTATUS(current->status);
 }

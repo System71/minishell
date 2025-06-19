@@ -26,6 +26,7 @@ SRC = \
     $(PARSING_DIR)token_list.c \
     $(PARSING_DIR)create_token.c \
     $(PARSING_DIR)split_handle.c \
+    $(PARSING_DIR)print_var.c \
     \
 	$(EXECUTION_DIR)execute_and_cleanup.c \
     $(EXECUTION_DIR)signals.c \

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 16:01:11 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:50:24 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,26 @@ int	my_exit(char **args, t_infileoutfile *redirections, t_env *my_env)
 	{
 		triple_putstr_fd("minishell: exit: ", args[1],
 			": numeric argument required\n", 2);
+		close_all(redirections);
+		error_code = my_env->error_code;
+		mem_free_all(60);
+		mem_free_all(8);
 		exit(2);
 	}
 	if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		close_all(redirections);
+		mem_free_all(60);
+		mem_free_all(8);
 		exit(2);
 	}
 	else
 	{
 		error_code = get_error_code(ft_atoi(args[1]));
+		close_all(redirections);
+		mem_free_all(60);
+		mem_free_all(8);
 		exit(error_code);
 	}
 }

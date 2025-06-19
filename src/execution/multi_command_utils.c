@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:12:04 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:01:50 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:30:27 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,16 @@ void	wait_loop(t_command *current, t_env *my_env)
 {
 	while (current)
 	{
-		waitpid(current->pid, &current->status, 0);
+		// waitpid(current->pid, &current->status, 0);
+		// void ft_last_child_status(int status)
+		// {
+		// 	if (WTERMSIG(status) == SIGQUIT)
+		// 		ft_putstr_fd("Quit (core dumped)\n", 1);
+		// 	if (WIFEXITED(status))
+		// 		ft_last_return_value(WEXITSTATUS(status), 1);
+		// 	else if (WIFSIGNALED(status))
+		// 		ft_last_return_value(128 + WTERMSIG(status), 1);
+		// }
 		if (WIFEXITED(current->status))
 			my_env->error_code = WEXITSTATUS(current->status);
 		current = current->next;
