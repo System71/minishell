@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/20 07:34:10 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:39:00 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	shell_loop(t_env *my_env, char *input,
 			exit_shell(my_env);
 		if (*input)
 			add_history(input);
+		i = 0;
 		while (ft_iswhitespace(input[i]))
 			i++;
 		if (!input[i])

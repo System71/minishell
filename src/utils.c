@@ -6,15 +6,20 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/20 07:34:40 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:13:02 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	eacces_exit(char *arg)
+void	eacces_exit(char *arg, int err)
 {
-	triple_putstr_fd("minishell: ", arg, ": Permission denied\n", 2);
+	if (err == EACCES)
+		triple_putstr_fd("minishell: ", arg, ": Permission denied!!!!\n", 2);
+	else if (err == EISDIR)
+		triple_putstr_fd("minishell: ", arg, ": Is a directory\n", 2);
+	else if (err == ENOEXEC)
+		triple_putstr_fd("minishell: ", arg, ": Exec format error\n", 2);
 	mem_free_alls();
 	exit(126);
 }

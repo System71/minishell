@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/20 07:35:08 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:02:52 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void							triple_putstr_fd(char *s1, char *s2, char *s3,
 int								exit_failure(char *message);
 char							**env_cpy(char **envp);
 void							free_split(char **split);
-void							eacces_exit(char *arg);
+void							eacces_exit(char *arg, int err);
 
 // ========== ERROR ==========
 void							report_syntax_error(t_syntax_err err,
@@ -202,8 +202,7 @@ t_command						*parse_commands(t_token *tokens);
 bool							is_redirection_type(t_token_type type);
 void							append_arg_to_command(t_command *cmd,
 									char *arg);
-t_command						*init_or_get_current_command(
-									t_command **cmd_list,
+t_command						*init_or_get_current_command(t_command **cmd_list,
 									t_command *current_cmd);
 
 // ========== DEBUG ==========

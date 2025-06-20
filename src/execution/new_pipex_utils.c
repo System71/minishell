@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:04:01 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 22:04:15 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:30:29 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	init_redirections(t_infileoutfile *redir)
 {
-	redir->infile = -1;
-	redir->outfile = -1;
+	redir->infile = 0;
+	redir->outfile = 0;
 	redir->saved_stdin = dup(STDIN_FILENO);
 	if (redir->saved_stdin == -1)
 		return (1);
