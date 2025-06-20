@@ -42,7 +42,6 @@ void	exit_shell(t_env *my_env)
 	exit(error_code);
 }
 
-// PASSAGE EN VOID A VOIR
 int	exit_failure(char *message)
 {
 	ft_putstr_fd("minishell: ", 2);

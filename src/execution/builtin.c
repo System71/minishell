@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-// getcwd(NULL,0) allows memory to be allocated dynamically
 int	pwd(char **args)
 {
 	char	*buffer;

@@ -49,8 +49,6 @@ void	mem_register(void *ptr, int which_list)
 	*head = node;
 }
 
-//60 = environnement
-//8 = boucle
 void	mem_free_all(int which_list)
 {
 	t_mem_node	*cur;

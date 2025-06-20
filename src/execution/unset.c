@@ -28,8 +28,6 @@ static int	check_forbidden_char_unset(char *variable_name)
 	return (1);
 }
 
-// remove variable if it exists
-// check forbidden characters
 static int	check_variable_unset(char ***my_env, char *arg)
 {
 	if (*arg == '-')

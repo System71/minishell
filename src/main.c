@@ -12,21 +12,13 @@
 
 #include "minishell.h"
 
-char	*get_prompt(t_env *my_env)
-{
-	static char	prompt[64];
-
-	snprintf(prompt, sizeof(prompt), "[%d] minishell> ", my_env->error_code);
-	return (prompt);
-}
-
 static void	shell_loop(t_env *my_env, char *input,
 						t_command *cmd_list, size_t i)
 {
 	while (1)
 	{
 		set_signals_interactive();
-		input = readline(get_prompt(my_env));
+		input = readline("minishell> ");
 		if (g_signal == SIGINT)
 		{
 			my_env->error_code = 130;
