@@ -36,18 +36,21 @@ static void	one_command(t_command *current, t_env *my_env)
 	init_redirections(redirections);
 	if (!get_redirection(current, redirections, my_env))
 	{
-		if (is_builtin(my_env, current, redirections) == -1)
+		if (current->args != NULL)
 		{
-			current->pid = fork();
-			if (current->pid == -1)
-				exit(exit_failure("fork : creation failed\n"));
-			if (current->pid == 0)
+			if (is_builtin(my_env, current, redirections) == -1)
 			{
-				close_all(redirections);
-				set_signals_child();
-				cmd_not_built(my_env, current->args);
+				current->pid = fork();
+				if (current->pid == -1)
+					exit(exit_failure("fork : creation failed\n"));
+				if (current->pid == 0)
+				{
+					close_all(redirections);
+					set_signals_child();
+					cmd_not_built(my_env, current->args);
+				}
+				one_command_wait(current, my_env);
 			}
-			one_command_wait(current, my_env);
 		}
 	}
 	restore_std(redirections);
@@ -84,11 +87,17 @@ static void	multi_command(t_command *current, t_env *my_env)
 
 void	new_pipex(t_command *current, t_env *my_env)
 {
-	if (current->args == NULL || *current->args[0] == '\0')
+	if (current == NULL)
 	{
-		my_env->error_code = 1;
+		printf("minishell : '': Command not found\n");
+		my_env->error_code = 127;
 		return ;
 	}
+	// if (current->args == NULL || *current->args[0] == '\0')
+	// {
+	// 	my_env->error_code = 1;
+	// 	return ;
+	// }
 	if (!current->next)
 		one_command(current, my_env);
 	else

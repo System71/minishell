@@ -78,7 +78,7 @@ int								env(char ***my_env);
 void							my_exit(char **args,
 									t_infileoutfile *redirections,
 									t_env *my_env);
-void							exit_shell(void);
+void							exit_shell(t_env *my_env);
 
 // ========== EXPORT ==========
 int								export(char ***my_env, char **args);

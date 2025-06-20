@@ -18,7 +18,7 @@ t_command	*parse_input(const char *input, t_env *my_env)
 	t_command	*cmd_list;
 
 	tokens = lexer(input);
-	if (!tokens || !check_syntax(tokens, my_env))
+	if (!check_syntax(tokens, my_env))
 	{
 		mem_free_all(8);
 		return (NULL);

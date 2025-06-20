@@ -101,6 +101,7 @@ void	cmd_not_built(t_env *my_env, char **args)
 	if (errno == EACCES)
 	{
 		triple_putstr_fd("minishell: ", args[0], ": Permission denied\n", 2);
+		mem_free_alls();
 		exit(126);
 	}
 	paths = get_paths(my_env);

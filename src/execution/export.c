@@ -26,6 +26,26 @@ static void	display_export(char ***my_env)
 	}
 }
 
+static bool is_in_env(char *env_name, char **my_env)
+{
+	int		i;
+	size_t	name_len;
+
+	i = 0;
+	name_len = ft_strlen(env_name);
+	while (my_env[i])
+	{
+		if (ft_strncmp(my_env[i], env_name, name_len) == 0
+			&& my_env[i][name_len] == '=')
+		{
+			return (true);
+		}
+		i++;
+	}
+	printf("helo\n");
+	return (false);
+}
+
 int	export(char ***my_env, char **args)
 {
 	char	**temp;
@@ -39,6 +59,8 @@ int	export(char ***my_env, char **args)
 		i = 0;
 		while (args[++i])
 		{
+			if (ft_strchr(args[i], '=') == NULL && is_in_env(args[i], *my_env))
+				continue ;
 			if (check_variable_export(my_env, args[i]))
 				return (1);
 			temp = *my_env;

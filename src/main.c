@@ -24,6 +24,7 @@ void	shell_loop(t_env *my_env)
 {
 	char		*input;
 	t_command	*cmd_list;
+	size_t		i;
 
 	while (1)
 	{
@@ -37,12 +38,17 @@ void	shell_loop(t_env *my_env)
 			continue ;
 		}
 		if (!input)
-			exit_shell();
+			exit_shell(my_env);
 		if (*input)
 			add_history(input);
-		cmd_list = parse_input(input, my_env);
-		if (cmd_list)
-			execute_and_cleanup(cmd_list, my_env);
+
+		i = 0;
+		while (ft_iswhitespace(input[i]))
+			i++;
+		if (!input[i])
+			continue ;
+		cmd_list = parse_input(input + i, my_env);
+		execute_and_cleanup(cmd_list, my_env);
 		ft_free_loop(input);
 	}
 }

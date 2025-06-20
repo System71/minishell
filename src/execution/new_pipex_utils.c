@@ -14,8 +14,8 @@
 
 int	init_redirections(t_infileoutfile *redir)
 {
-	redir->infile = 0;
-	redir->outfile = 0;
+	redir->infile = -1;
+	redir->outfile = -1;
 	redir->saved_stdin = dup(STDIN_FILENO);
 	if (redir->saved_stdin == -1)
 		return (1);
@@ -27,9 +27,9 @@ int	init_redirections(t_infileoutfile *redir)
 
 void	close_all(t_infileoutfile *redirections)
 {
-	if (redirections->infile)
+	if (redirections->infile > 0)
 		close(redirections->infile);
-	if (redirections->outfile)
+	if (redirections->outfile > 0)
 		close(redirections->outfile);
 	close(redirections->saved_stdin);
 	close(redirections->saved_stdout);

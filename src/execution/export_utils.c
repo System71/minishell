@@ -36,7 +36,7 @@ int	check_variable_export(char ***my_env, char *arg)
 {
 	if (*arg == '-')
 	{
-		triple_putstr_fd("export: ", ft_substr(arg, 0, 2), ": invalid option\n",
+		triple_putstr_fd("export: ", arg, ": invalid option\n",
 			2);
 		return (1);
 	}

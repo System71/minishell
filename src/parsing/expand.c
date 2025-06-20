@@ -37,8 +37,7 @@ static void	expand_dollar(const char *in, t_expand_vars *v, t_env *my_env)
 		v->i += 2;
 	}
 	else if (ft_isalpha(in[v->i + 1])
-		|| in[v->i + 1] == '_'
-		|| in[v->i + 1] == '\0')
+		|| in[v->i + 1] == '_')
 	{
 		expand_env(in, v, my_env);
 	}
