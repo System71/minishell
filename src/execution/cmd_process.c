@@ -6,61 +6,11 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:50:18 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/20 10:11:22 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:58:56 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	get_paths_loop(t_env *my_env, char **extracted_path)
-{
-	char	*substr;
-	int		i;
-
-	i = -1;
-	while ((my_env->env)[++i])
-	{
-		substr = ft_substr((my_env->env)[i], 0, 5);
-		if (!substr)
-			return (1);
-		if (ft_strncmp(substr, "PATH=", 5) == 0)
-		{
-			*extracted_path = ft_substr((my_env->env)[i], 5,
-					ft_strlen((my_env->env)[i]));
-			if (!*extracted_path)
-			{
-				exit_failure("full_path malloc extracted_path");
-				free(substr);
-				return (1);
-			}
-			free(substr);
-			break ;
-		}
-		free(substr);
-	}
-	return (0);
-}
-
-char	**get_paths(t_env *my_env)
-{
-	char	**paths;
-	char	*extracted_path;
-
-	extracted_path = NULL;
-	if (get_paths_loop(my_env, &extracted_path))
-	{
-		free(extracted_path);
-		return (NULL);
-	}
-	paths = ft_split_exec(extracted_path, ':');
-	if (!paths)
-	{
-		free(extracted_path);
-		return (NULL);
-	}
-	free(extracted_path);
-	return (paths);
-}
 
 static void	exec_cmd(char **paths, char **args, char *end_path, t_env *my_env)
 {
@@ -90,6 +40,7 @@ static void	exec_cmd(char **paths, char **args, char *end_path, t_env *my_env)
 		my_env->error_code = 127;
 	}
 }
+
 int	is_directory(const char *path)
 {
 	struct stat	sb;
@@ -99,7 +50,6 @@ int	is_directory(const char *path)
 	return (0);
 }
 
-// if execve doesnt work we return 127
 void	cmd_not_built(t_env *my_env, char **args)
 {
 	char	**paths;
@@ -120,7 +70,7 @@ void	cmd_not_built(t_env *my_env, char **args)
 	if (!end_path)
 	{
 		free(paths);
-		// mem_free_alls();
+		mem_free_alls();
 		exit(exit_failure("args malloc ft_strjoin"));
 	}
 	exec_cmd(paths, args, end_path, my_env);

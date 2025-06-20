@@ -14,6 +14,7 @@ SRC = \
    $(PARSING_DIR)lexer.c \
     $(PARSING_DIR)parsing.c \
     $(PARSING_DIR)parser.c \
+    $(PARSING_DIR)parser_utils.c \
     $(PARSING_DIR)cmd_list.c \
     $(PARSING_DIR)buffer_dynamic.c \
     $(PARSING_DIR)expand.c \
@@ -26,7 +27,6 @@ SRC = \
     $(PARSING_DIR)token_list.c \
     $(PARSING_DIR)create_token.c \
     $(PARSING_DIR)split_handle.c \
-    $(PARSING_DIR)print_var.c \
     \
 	$(EXECUTION_DIR)execute_and_cleanup.c \
     $(EXECUTION_DIR)signals.c \
@@ -40,6 +40,7 @@ SRC = \
     $(EXECUTION_DIR)unset.c \
     $(EXECUTION_DIR)change_env_utils.c \
     $(EXECUTION_DIR)cmd_process.c \
+    $(EXECUTION_DIR)cmd_process_utils.c \
     $(EXECUTION_DIR)cd.c \
     $(EXECUTION_DIR)cd_utils.c \
     $(EXECUTION_DIR)exit.c \

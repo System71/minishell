@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/20 10:02:52 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:17:28 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ void							exit_shell(t_env *my_env);
 
 // ========== EXPORT ==========
 int								export(char ***my_env, char **args);
+int								is_export_or_unset(t_command *cmd);
+void							process_export_unset_token(t_token *tok,
+									t_command *current_cmd);
+void							process_normal_token(t_token *tok,
+									t_command *current_cmd);
 
 // ========== EXPORT UTILS ==========
 int								check_forbidden_char_export(char *variable);
@@ -110,6 +115,9 @@ void							update_pwd_vars(char ***envp,
 int								is_builtin(t_env *my_env, t_command *current,
 									t_infileoutfile *redirections);
 void							cmd_not_built(t_env *my_env, char **args);
+char							**get_paths(t_env *my_env);
+int								get_paths_loop(t_env *my_env,
+									char **extracted_path);
 
 // ========== UTILS ==========
 void							triple_putstr_fd(char *s1, char *s2, char *s3,
@@ -126,7 +134,6 @@ bool							check_syntax(t_token *tokens, t_env *my_env);
 
 // ========== DEBUG ==========
 t_token_type					get_token_type(const char *str);
-void							print_tokens(t_token *tokens);
 
 // ========== MEMORY ==========
 void							*ft_xmalloc(int size, int which_list);
@@ -202,11 +209,9 @@ t_command						*parse_commands(t_token *tokens);
 bool							is_redirection_type(t_token_type type);
 void							append_arg_to_command(t_command *cmd,
 									char *arg);
-t_command						*init_or_get_current_command(t_command **cmd_list,
+t_command						*init_or_get_current_command(
+									t_command **cmd_list,
 									t_command *current_cmd);
-
-// ========== DEBUG ==========
-void							print_commands(t_command *cmd_list);
 
 // ========== SIGNALS ==========
 extern volatile sig_atomic_t	g_signal;

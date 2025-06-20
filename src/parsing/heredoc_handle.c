@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-void	ctrl_d(char *line, t_heredoc hd)
+static int	ctrl_d(char *line, t_heredoc hd)
 {
 	printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
 		hd.delimiter);
 	free(line);
+	return (1);
 }
 
 static int	ctrl_c(char *line, t_env *my_env)
@@ -37,10 +38,7 @@ static int	handle_single_heredoc(t_token *curr, t_env *my_env)
 	{
 		line = readline("> ");
 		if (!line)
-		{
-			ctrl_d(line, hd);
-			break ;
-		}
+			return (ctrl_d(line, hd));
 		if (g_signal == SIGINT)
 			return (ctrl_c(line, my_env));
 		if (ft_strcmp(line, hd.delimiter) == 0 || append_heredoc_line(&hd,

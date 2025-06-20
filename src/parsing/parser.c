@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:47:42 by okientzl          #+#    #+#             */
-/*   Updated: 2025/06/19 15:52:07 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:41:21 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,11 @@
 
 static void	process_word_token(t_token *tok, t_command *current_cmd)
 {
-	t_token_segment *seg;
-
-	seg = tok->segments;
-	while (seg)
-	{
-		if (seg->content)
-			append_arg_to_command(current_cmd, ft_strdup(seg->content));
-		else
-			append_arg_to_command(current_cmd, ft_strdup(""));
-		seg = seg->next;
-	}
+	if (is_export_or_unset(current_cmd))
+		process_export_unset_token(tok, current_cmd);
+	else
+		process_normal_token(tok, current_cmd);
 }
-
 
 static t_redirection	*build_redirection(t_token *tok)
 {
@@ -105,16 +97,13 @@ t_command	*parse_commands(t_token *tokens)
 	while (tokens != NULL)
 	{
 		if (tokens->type == T_PIPE)
-		{
 			current_cmd = NULL;
-		}
 		else
 		{
 			current_cmd = init_or_get_current_command(&cmd_list, current_cmd);
 			if (tokens->type == T_WORD)
 			{
 				process_word_token(tokens, current_cmd);
-
 			}
 			else if (is_redirection_type(tokens->type))
 				process_redirection_token(tokens, current_cmd);

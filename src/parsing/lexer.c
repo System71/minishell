@@ -6,7 +6,7 @@
 /*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:46:53 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/13 19:49:50 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:14:43 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ t_token	*lexer(const char *input)
 		}
 		storage.i++;
 	}
-	
 	clean_last_buffer(&tokens, &storage);
 	if (storage.error != ERR_NONE)
 	{

@@ -16,22 +16,22 @@ int	check_forbidden_char_export(char *variable)
 {
 	int	i;
 
+	if (!variable || variable[0] == '\0')
+		return (0);
 	i = 0;
-	while (variable[i])
+	while (variable[i] && variable[i] != '=')
 	{
 		if (i == 0 && !ft_isalpha(variable[i]) && variable[i] != '_')
 			return (0);
-		if (variable[i] == '=')
-			return (1);
 		if (!ft_isalnum(variable[i]) && variable[i] != '_')
 			return (0);
 		i++;
 	}
+	if (i == 0)
+		return (0);
 	return (1);
 }
 
-// remove variable if it exists
-// check forbidden characters
 int	check_variable_export(char ***my_env, char *arg)
 {
 	if (*arg == '-')
