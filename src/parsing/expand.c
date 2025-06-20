@@ -25,6 +25,8 @@ static void	expand_env(const char *in, t_expand_vars *v, t_env *my_env)
 	v->value = ft_getenv(v->name, my_env);
 	if (v->value)
 		append_str(&v->result, v->value);
+	else
+		append_str(&v->result, "");
 	v->i = s + l;
 }
 
@@ -76,6 +78,8 @@ char	*check_expand(const char *input, t_quote_type quote, t_token *current,
 		else
 			expand_char(input, &v);
 	}
+	if (v.result == NULL)
+		return (ft_strdup_oli("", 8));
 	return (v.result);
 }
 

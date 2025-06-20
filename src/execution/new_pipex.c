@@ -26,8 +26,6 @@ static void	one_command_wait(t_command *current, t_env *my_env)
 		my_env->error_code = 128 + WTERMSIG(current->status);
 }
 
-// if builtin => no fork needed
-// if no builtin => fork needed
 static void	one_command(t_command *current, t_env *my_env)
 {
 	t_infileoutfile	*redirections;
@@ -87,17 +85,11 @@ static void	multi_command(t_command *current, t_env *my_env)
 
 void	new_pipex(t_command *current, t_env *my_env)
 {
-	if (current == NULL)
+	if (current->args == NULL)
 	{
-		printf("minishell : '': Command not found\n");
-		my_env->error_code = 127;
+		my_env->error_code = 1;
 		return ;
 	}
-	// if (current->args == NULL || *current->args[0] == '\0')
-	// {
-	// 	my_env->error_code = 1;
-	// 	return ;
-	// }
 	if (!current->next)
 		one_command(current, my_env);
 	else

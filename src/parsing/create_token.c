@@ -30,7 +30,8 @@ char	*concat_segments(t_token *token)
 	seg = token->segments;
 	while (seg)
 	{
-		ft_strcat(result, seg->content);
+		if (seg->content)
+			ft_strcat(result, seg->content);
 		seg = seg->next;
 	}
 	return (result);
@@ -41,7 +42,10 @@ t_token_segment	*create_segment(const char *content, t_quote_type quote)
 	t_token_segment	*seg;
 
 	seg = ft_xmalloc(sizeof(t_token_segment), 8);
-	seg->content = ft_strdup_oli(content, 8);
+	if (content == NULL)
+		seg->content = ft_strdup_oli("", 8);
+	else
+		seg->content = ft_strdup_oli(content, 8);
 	seg->quote = quote;
 	seg->is_expand = false;
 	seg->next = NULL;

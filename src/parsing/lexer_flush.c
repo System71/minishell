@@ -14,7 +14,9 @@
 
 void	flush_buffer(t_utils_lexer *storage, t_token **tokens, bool mergeable)
 {
-	if (storage->buffer->len > 0)
+	
+		if (storage->buffer->len > 0
+		|| (storage->state != LEXER_NORMAL && storage->current_quote != QUOTE_NONE))
 	{
 		storage->buffer->data[storage->buffer->len] = '\0';
 		add_token_or_segment(tokens, storage->buffer->data,

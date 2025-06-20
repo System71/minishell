@@ -39,12 +39,9 @@ static void	shell_loop(t_env *my_env, char *input,
 		if (*input)
 			add_history(input);
 		i = 0;
-		while (ft_iswhitespace(input[i]))
-			i++;
-		if (!input[i])
-			continue ;
 		cmd_list = parse_input(input + i, my_env);
-		execute_and_cleanup(cmd_list, my_env);
+		if (cmd_list)
+			execute_and_cleanup(cmd_list, my_env);
 		ft_free_loop(input);
 	}
 }

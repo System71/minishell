@@ -55,6 +55,7 @@ t_token	*lexer(const char *input)
 		}
 		storage.i++;
 	}
+	
 	clean_last_buffer(&tokens, &storage);
 	if (storage.error != ERR_NONE)
 	{

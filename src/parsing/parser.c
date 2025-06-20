@@ -14,11 +14,19 @@
 
 static void	process_word_token(t_token *tok, t_command *current_cmd)
 {
-	char	*arg;
+	t_token_segment *seg;
 
-	arg = concat_segments(tok);
-	append_arg_to_command(current_cmd, arg);
+	seg = tok->segments;
+	while (seg)
+	{
+		if (seg->content)
+			append_arg_to_command(current_cmd, ft_strdup(seg->content));
+		else
+			append_arg_to_command(current_cmd, ft_strdup(""));
+		seg = seg->next;
+	}
 }
+
 
 static t_redirection	*build_redirection(t_token *tok)
 {
@@ -78,7 +86,8 @@ int	expand_null(t_token *token)
 	seg = token->segments;
 	if (seg && seg->next == NULL)
 	{
-		if (seg->content && seg->content[0] == '\0' && seg->is_expand)
+		if (seg->content && seg->content[0] == '\0' && seg->is_expand
+			&& seg->quote == QUOTE_NONE)
 			return (1);
 	}
 	return (0);
@@ -103,7 +112,10 @@ t_command	*parse_commands(t_token *tokens)
 		{
 			current_cmd = init_or_get_current_command(&cmd_list, current_cmd);
 			if (tokens->type == T_WORD)
+			{
 				process_word_token(tokens, current_cmd);
+
+			}
 			else if (is_redirection_type(tokens->type))
 				process_redirection_token(tokens, current_cmd);
 		}
