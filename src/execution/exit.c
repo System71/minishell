@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:47:45 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 22:01:59 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:21:01 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static void	exit_too_many(t_infileoutfile *redirections)
 {
 	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 	close_all(redirections);
-	mem_free_alls();
-	exit(2);
 }
 
 static void	exit_with_code(t_infileoutfile *redirections, int *error_code,

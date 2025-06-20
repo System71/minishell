@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:37:28 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:15:49 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:18:43 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static bool	is_in_env(char *env_name, char **my_env)
 		}
 		i++;
 	}
-	printf("helo\n");
 	return (false);
 }
 
