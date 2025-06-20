@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okientzl <okientzl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:29:38 by okientzl          #+#    #+#             */
-/*   Updated: 2025/05/07 17:29:38 by okientzl         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:35:00 by prigaudi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ size_t	ft_strlen(const char *s)
 
 	if (!s)
 	{
-		write(2, "Erreur : pointer NULL ft_strlen\n", 32);
 		return (0);
 	}
 	i = 0;
