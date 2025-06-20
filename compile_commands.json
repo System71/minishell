@@ -367,40 +367,6 @@
    "-I",
    "includes",
    "-c",
-   "src/execution/new_pipex.c",
-   "-o",
-   "obj/src/execution/new_pipex.o"
-  ],
-  "file": "src/execution/new_pipex.c"
- },
- {
-  "directory": "/home/okientzl/Documents/minishell/main",
-  "arguments": [
-   "cc",
-   "-Wall",
-   "-Werror",
-   "-Wextra",
-   "-g3",
-   "-I",
-   "includes",
-   "-c",
-   "src/execution/new_pipex_utils.c",
-   "-o",
-   "obj/src/execution/new_pipex_utils.o"
-  ],
-  "file": "src/execution/new_pipex_utils.c"
- },
- {
-  "directory": "/home/okientzl/Documents/minishell/main",
-  "arguments": [
-   "cc",
-   "-Wall",
-   "-Werror",
-   "-Wextra",
-   "-g3",
-   "-I",
-   "includes",
-   "-c",
    "src/execution/builtin.c",
    "-o",
    "obj/src/execution/builtin.o"
@@ -508,23 +474,6 @@
    "obj/src/execution/exit.o"
   ],
   "file": "src/execution/exit.c"
- },
- {
-  "directory": "/home/okientzl/Documents/minishell/main",
-  "arguments": [
-   "cc",
-   "-Wall",
-   "-Werror",
-   "-Wextra",
-   "-g3",
-   "-I",
-   "includes",
-   "-c",
-   "src/execution/oliv_exec.c",
-   "-o",
-   "obj/src/execution/oliv_exec.o"
-  ],
-  "file": "src/execution/oliv_exec.c"
  },
  {
   "directory": "/home/okientzl/Documents/minishell/main",
@@ -936,6 +885,992 @@
  },
  {
   "directory": "/home/okientzl/Documents/minishell/main",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strlen.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strlen.o"
+  ],
+  "file": "lib/parsing_utils/ft_strlen.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/main.c",
+   "-o",
+   "obj/src/main.o"
+  ],
+  "file": "src/main.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/init_minishell.c",
+   "-o",
+   "obj/src/init_minishell.o"
+  ],
+  "file": "src/init_minishell.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/utils.c",
+   "-o",
+   "obj/src/utils.o"
+  ],
+  "file": "src/utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/lexer.c",
+   "-o",
+   "obj/src/parsing/lexer.o"
+  ],
+  "file": "src/parsing/lexer.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/parsing.c",
+   "-o",
+   "obj/src/parsing/parsing.o"
+  ],
+  "file": "src/parsing/parsing.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/parser.c",
+   "-o",
+   "obj/src/parsing/parser.o"
+  ],
+  "file": "src/parsing/parser.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/cmd_list.c",
+   "-o",
+   "obj/src/parsing/cmd_list.o"
+  ],
+  "file": "src/parsing/cmd_list.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/buffer_dynamic.c",
+   "-o",
+   "obj/src/parsing/buffer_dynamic.o"
+  ],
+  "file": "src/parsing/buffer_dynamic.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/expand.c",
+   "-o",
+   "obj/src/parsing/expand.o"
+  ],
+  "file": "src/parsing/expand.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/generate_temp_filename.c",
+   "-o",
+   "obj/src/parsing/generate_temp_filename.o"
+  ],
+  "file": "src/parsing/generate_temp_filename.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/group_tokens.c",
+   "-o",
+   "obj/src/parsing/group_tokens.o"
+  ],
+  "file": "src/parsing/group_tokens.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/heredoc_handle.c",
+   "-o",
+   "obj/src/parsing/heredoc_handle.o"
+  ],
+  "file": "src/parsing/heredoc_handle.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/lexer_flush.c",
+   "-o",
+   "obj/src/parsing/lexer_flush.o"
+  ],
+  "file": "src/parsing/lexer_flush.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/lexer_normal.c",
+   "-o",
+   "obj/src/parsing/lexer_normal.o"
+  ],
+  "file": "src/parsing/lexer_normal.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/lexer_quote.c",
+   "-o",
+   "obj/src/parsing/lexer_quote.o"
+  ],
+  "file": "src/parsing/lexer_quote.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/token_list.c",
+   "-o",
+   "obj/src/parsing/token_list.o"
+  ],
+  "file": "src/parsing/token_list.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/create_token.c",
+   "-o",
+   "obj/src/parsing/create_token.o"
+  ],
+  "file": "src/parsing/create_token.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/split_handle.c",
+   "-o",
+   "obj/src/parsing/split_handle.o"
+  ],
+  "file": "src/parsing/split_handle.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/parsing/print_var.c",
+   "-o",
+   "obj/src/parsing/print_var.o"
+  ],
+  "file": "src/parsing/print_var.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/execute_and_cleanup.c",
+   "-o",
+   "obj/src/execution/execute_and_cleanup.o"
+  ],
+  "file": "src/execution/execute_and_cleanup.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/signals.c",
+   "-o",
+   "obj/src/execution/signals.o"
+  ],
+  "file": "src/execution/signals.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/new_pipex.c",
+   "-o",
+   "obj/src/execution/new_pipex.o"
+  ],
+  "file": "src/execution/new_pipex.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/new_pipex_utils.c",
+   "-o",
+   "obj/src/execution/new_pipex_utils.o"
+  ],
+  "file": "src/execution/new_pipex_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/multi_command_utils.c",
+   "-o",
+   "obj/src/execution/multi_command_utils.o"
+  ],
+  "file": "src/execution/multi_command_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/get_redirection_utils.c",
+   "-o",
+   "obj/src/execution/get_redirection_utils.o"
+  ],
+  "file": "src/execution/get_redirection_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/builtin.c",
+   "-o",
+   "obj/src/execution/builtin.o"
+  ],
+  "file": "src/execution/builtin.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/export.c",
+   "-o",
+   "obj/src/execution/export.o"
+  ],
+  "file": "src/execution/export.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/export_utils.c",
+   "-o",
+   "obj/src/execution/export_utils.o"
+  ],
+  "file": "src/execution/export_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/unset.c",
+   "-o",
+   "obj/src/execution/unset.o"
+  ],
+  "file": "src/execution/unset.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/change_env_utils.c",
+   "-o",
+   "obj/src/execution/change_env_utils.o"
+  ],
+  "file": "src/execution/change_env_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/cmd_process.c",
+   "-o",
+   "obj/src/execution/cmd_process.o"
+  ],
+  "file": "src/execution/cmd_process.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/cd.c",
+   "-o",
+   "obj/src/execution/cd.o"
+  ],
+  "file": "src/execution/cd.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/execution/exit.c",
+   "-o",
+   "obj/src/execution/exit.o"
+  ],
+  "file": "src/execution/exit.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/memory/ft_xmalloc.c",
+   "-o",
+   "obj/src/memory/ft_xmalloc.o"
+  ],
+  "file": "src/memory/ft_xmalloc.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/memory/free_child.c",
+   "-o",
+   "obj/src/memory/free_child.o"
+  ],
+  "file": "src/memory/free_child.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/error/error_parsing_return.c",
+   "-o",
+   "obj/src/error/error_parsing_return.o"
+  ],
+  "file": "src/error/error_parsing_return.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/error/error_synthaxe.c",
+   "-o",
+   "obj/src/error/error_synthaxe.o"
+  ],
+  "file": "src/error/error_synthaxe.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "src/error/is_error.c",
+   "-o",
+   "obj/src/error/is_error.o"
+  ],
+  "file": "src/error/is_error.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_isalnum.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_isalnum.o"
+  ],
+  "file": "lib/parsing_utils/ft_isalnum.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_isalpha.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_isalpha.o"
+  ],
+  "file": "lib/parsing_utils/ft_isalpha.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_isdigit.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_isdigit.o"
+  ],
+  "file": "lib/parsing_utils/ft_isdigit.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_iswhitespace.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_iswhitespace.o"
+  ],
+  "file": "lib/parsing_utils/ft_iswhitespace.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_memcpy.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_memcpy.o"
+  ],
+  "file": "lib/parsing_utils/ft_memcpy.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_realloc.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_realloc.o"
+  ],
+  "file": "lib/parsing_utils/ft_realloc.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strdup_oli.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strdup_oli.o"
+  ],
+  "file": "lib/parsing_utils/ft_strdup_oli.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strcat.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strcat.o"
+  ],
+  "file": "lib/parsing_utils/ft_strcat.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strndup_oli.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strndup_oli.o"
+  ],
+  "file": "lib/parsing_utils/ft_strndup_oli.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strcpy.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strcpy.o"
+  ],
+  "file": "lib/parsing_utils/ft_strcpy.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strcmp.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strcmp.o"
+  ],
+  "file": "lib/parsing_utils/ft_strcmp.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_itoa.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_itoa.o"
+  ],
+  "file": "lib/parsing_utils/ft_itoa.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/get_int_size.c",
+   "-o",
+   "obj/lib/parsing_utils/get_int_size.o"
+  ],
+  "file": "lib/parsing_utils/get_int_size.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/append_all.c",
+   "-o",
+   "obj/lib/parsing_utils/append_all.o"
+  ],
+  "file": "lib/parsing_utils/append_all.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/heredoc_utils.c",
+   "-o",
+   "obj/lib/parsing_utils/heredoc_utils.o"
+  ],
+  "file": "lib/parsing_utils/heredoc_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/expand_utils.c",
+   "-o",
+   "obj/lib/parsing_utils/expand_utils.o"
+  ],
+  "file": "lib/parsing_utils/expand_utils.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/is_fonction.c",
+   "-o",
+   "obj/lib/parsing_utils/is_fonction.o"
+  ],
+  "file": "lib/parsing_utils/is_fonction.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_strchr.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_strchr.o"
+  ],
+  "file": "lib/parsing_utils/ft_strchr.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-g3",
+   "-I",
+   "includes",
+   "-c",
+   "lib/parsing_utils/ft_split.c",
+   "-o",
+   "obj/lib/parsing_utils/ft_split.o"
+  ],
+  "file": "lib/parsing_utils/ft_split.c"
+ },
+ {
+  "directory": "/home/okientzl/Documents/minishell/final",
   "arguments": [
    "cc",
    "-Wall",

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:59:43 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 21:50:22 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 07:34:10 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ char	*get_prompt(t_env *my_env)
 	return (prompt);
 }
 
-void	shell_loop(t_env *my_env)
+static void	shell_loop(t_env *my_env, char *input,
+						t_command *cmd_list, size_t i)
 {
-	char		*input;
-	t_command	*cmd_list;
-	size_t		i;
-
 	while (1)
 	{
 		set_signals_interactive();
@@ -41,8 +38,6 @@ void	shell_loop(t_env *my_env)
 			exit_shell(my_env);
 		if (*input)
 			add_history(input);
-
-		i = 0;
 		while (ft_iswhitespace(input[i]))
 			i++;
 		if (!input[i])
@@ -55,14 +50,20 @@ void	shell_loop(t_env *my_env)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*my_env;
+	t_env		*my_env;
+	char		*input;
+	t_command	*cmd_list;
+	size_t		i;
 
+	i = 0;
+	input = NULL;
+	cmd_list = NULL;
 	if (isatty(STDIN_FILENO) == 0 || isatty(STDOUT_FILENO) == 0)
 		return (1);
 	(void)argc;
 	(void)argv;
 	my_env = init_minishell(envp);
-	shell_loop(my_env);
+	shell_loop(my_env, input, cmd_list, i);
 	mem_free_all(60);
 	return (0);
 }

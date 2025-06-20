@@ -26,7 +26,7 @@ static void	display_export(char ***my_env)
 	}
 }
 
-static bool is_in_env(char *env_name, char **my_env)
+static bool	is_in_env(char *env_name, char **my_env)
 {
 	int		i;
 	size_t	name_len;

@@ -6,7 +6,7 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:21:36 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/19 22:05:44 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 07:35:08 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ int								remove_variable(char ***my_env, int position);
 
 // ========== CD ==========
 int								cd(t_env *my_env, char **full_cmd);
+char							*get_oldpwd(t_env *my_env);
+void							update_pwd_vars(char ***envp,
+									const char *old_pwd);
 
 // ========== CMD PROCESS ==========
 int								is_builtin(t_env *my_env, t_command *current,
@@ -114,6 +117,7 @@ void							triple_putstr_fd(char *s1, char *s2, char *s3,
 int								exit_failure(char *message);
 char							**env_cpy(char **envp);
 void							free_split(char **split);
+void							eacces_exit(char *arg);
 
 // ========== ERROR ==========
 void							report_syntax_error(t_syntax_err err,

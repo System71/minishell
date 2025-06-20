@@ -6,11 +6,18 @@
 /*   By: prigaudi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:29:15 by prigaudi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:09:03 by prigaudi         ###   ########.fr       */
+/*   Updated: 2025/06/20 07:34:40 by okientzl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	eacces_exit(char *arg)
+{
+	triple_putstr_fd("minishell: ", arg, ": Permission denied\n", 2);
+	mem_free_alls();
+	exit(126);
+}
 
 void	triple_putstr_fd(char *s1, char *s2, char *s3, int fd)
 {

@@ -41,6 +41,7 @@ SRC = \
     $(EXECUTION_DIR)change_env_utils.c \
     $(EXECUTION_DIR)cmd_process.c \
     $(EXECUTION_DIR)cd.c \
+    $(EXECUTION_DIR)cd_utils.c \
     $(EXECUTION_DIR)exit.c \
     \
     $(MEMORY_DIR)ft_xmalloc.c \
