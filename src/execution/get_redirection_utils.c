@@ -29,8 +29,10 @@ static int	my_dup2(t_command *current, int file, t_env *my_env, int old_std)
 		ft_putstr_fd("minishell : ", 2);
 		perror(current->redirs->target);
 		my_env->error_code = 1;
+		close(file);
 		return (1);
 	}
+	close(file);
 	return (0);
 }
 

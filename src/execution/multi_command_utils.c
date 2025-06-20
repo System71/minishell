@@ -72,8 +72,9 @@ void	child(t_command *current, int pipefd[2], int prev_fd, t_env *my_env)
 		close(prev_fd);
 	close_pipefd(pipefd);
 	close_all(redirections);
-	if (is_builtin(my_env, current, redirections) == -1)
-		cmd_not_built(my_env, current->args);
+	if (current->args)
+		if (is_builtin(my_env, current, redirections) == -1)
+			cmd_not_built(my_env, current->args);
 	mem_free_alls();
 	exit(EXIT_SUCCESS);
 }

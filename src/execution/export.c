@@ -32,7 +32,6 @@ int	export(char ***my_env, char **args)
 	int		len;
 	int		i;
 
-	len = get_len_env(*my_env);
 	if (!args[1])
 		display_export(my_env);
 	else
@@ -43,6 +42,7 @@ int	export(char ***my_env, char **args)
 			if (check_variable_export(my_env, args[i]))
 				return (1);
 			temp = *my_env;
+			len = get_len_env(*my_env);
 			*my_env = ft_xmalloc(sizeof(char *) * (len + 2), 60);
 			env_loop(my_env, temp, args, i);
 		}
